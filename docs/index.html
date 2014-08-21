@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Conf node</title>
+	<script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
+
+
+	<script type="text/javascript">
+	  var apiKey    = "44878302";
+	  var sessionId = "1_MX40NDg3ODMwMn5-U2F0IEp1biAyOCAxMjoxMzoxMyBQRFQgMjAxNH4wLjQxMjA4NzU2fn4";
+	  var token     = "T1==cGFydG5lcl9pZD00NDg3ODMwMiZzaWc9YzFiZjQ1NDE1MWFiYjI3YzRmNGYwM2FmN2ZlNTVkOWE3YTBhNjUzYTpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5EZzNPRE13TW41LVUyRjBJRXAxYmlBeU9DQXhNam94TXpveE15QlFSRlFnTWpBeE5INHdMalF4TWpBNE56VTJmbjQmY3JlYXRlX3RpbWU9MTQwMzk4MzI1MyZub25jZT0wLjk1MTI2MTMwMzMxMjc4NTcmZXhwaXJlX3RpbWU9MTQwNDA2OTE5MA==";
+	 
+	  var session = OT.initSession(apiKey, sessionId);
+	 
+	  session.on("streamCreated", function(event) {
+	    session.subscribe(event.stream);
+	  });
+	 
+	  session.connect(token, function(error) {
+	    var publisher = OT.initPublisher();
+	    session.publish(publisher);
+	  });
+	</script>
+	
+</head>
+<body>
+
+</body>
+</html>
