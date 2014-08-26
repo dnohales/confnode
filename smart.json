@@ -1,0 +1,8 @@
+{
+  "packages": {
+    "iron-router": {},
+    "spin": {},
+    "bootstrap-3": {},
+    "accounts-ui-bs3-and-blaze": {}
+  }
+}
