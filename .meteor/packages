@@ -5,8 +5,11 @@
 
 insecure
 standard-app-packages
-iron-router
-spin
+cmather:iron-router@0.8.2
+sacha:spin@2.0.4
 accounts-password
-bootstrap-3
-accounts-ui-bs3-and-blaze
+mrt:accounts-ui-bs3-and-blaze@0.4.2
+mizzao:bootstrap-3
+mikewhy:taggingjs
+mrt:bootstrap-3-switch
+

@@ -11,8 +11,24 @@ Template.postSubmit.events({
     Meteor.call('post', post, function(error, id) {
       if (error)
         return alert(error.reason);
-        
-        Router.go('postPage', {_id: id});
+
+      Router.go('postPage', {_id: id});
     });
   }
 });
+
+Template.postSubmit.rendered = function () {
+  var my_custom_options = {
+    "no-duplicate": true,
+    "no-duplicate-callback": window.alert,
+    "no-duplicate-text": "Duplicate tags",
+    "type-zone-class": "type-zone",
+    "tag-box-class": "tagging",
+    "forbidden-chars": [",", ".", "_", "?"]
+  };
+  var t = $("#tagBox").tagging(my_custom_options);
+  t[0].addClass("form-control");
+
+  $('.make-switch').bootstrapSwitch();
+  
+}
