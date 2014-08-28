@@ -1,3 +1,13 @@
+
+
+#invites .tag {
+  background: none repeat scroll 0 0 #428bca;
+}
+
+#invites .tag span{
+  background: none repeat scroll 0 0 #2674B9;
+}
+
 .grid-block, .main, .post, .comments li, .comment-form {
   background: #fff;
   -webkit-border-radius: 3px;

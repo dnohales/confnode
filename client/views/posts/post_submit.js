@@ -26,8 +26,11 @@ Template.postSubmit.rendered = function () {
     "tag-box-class": "tagging",
     "forbidden-chars": [",", ".", "_", "?"]
   };
-  var t = $("#tagBox").tagging(my_custom_options);
+  var t = $("#roomtags").tagging(my_custom_options);
   t[0].addClass("form-control");
+  
+  var t1 = $("#invites").tagging(my_custom_options);
+  t1[0].addClass("form-control");
 
   $('.make-switch').bootstrapSwitch();
   
