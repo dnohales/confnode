@@ -33,5 +33,6 @@ Template.postSubmit.rendered = function () {
   t1[0].addClass("form-control");
 
   $('.make-switch').bootstrapSwitch();
-  
+  $('.datetimepicker').datetimepicker();
+
 }

@@ -1,7 +1,7 @@
 accounts-base@1.0.0
 accounts-password@1.0.0
 application-configuration@1.0.0
-autoupdate@1.0.4
+autoupdate@1.0.5
 binary-heap@1.0.0
 blaze-tools@1.0.0
 blaze@1.0.3
@@ -54,6 +54,7 @@ srp@1.0.0
 standard-app-packages@1.0.0
 stylus@1.0.3
 templating@1.0.4
+tsega:bootstrap3-datetimepicker@0.2.0
 ui@1.0.0
 underscore@1.0.0
 webapp@1.0.2
