@@ -8,7 +8,7 @@
   background: none repeat scroll 0 0 #2674B9;
 }
 
-.grid-block, .main, .post, .comments li, .comment-form {
+.grid-block, .main, .room, .comments li, .comment-form {
   background: #fff;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -38,51 +38,51 @@
         #spinner {
           height: 300px; }
 
-          .post {
+          .room {
             /* For modern browsers */
             /* For IE 6/7 (trigger hasLayout) */
             *zoom: 1;
             position: relative;
             opacity: 1; }
-            .post:before, .post:after {
+            .room:before, .room:after {
               content: "";
               display: table; }
-              .post:after {
+              .room:after {
                 clear: both; }
-                .post.invisible {
+                .room.invisible {
                   opacity: 0; }
-                  .post.instant {
+                  .room.instant {
                     -webkit-transition: none;
                     -moz-transition: none;
                     -o-transition: none;
                     transition: none; }
-                    .post.animate{
+                    .room.animate{
                       -webkit-transition: all 300ms 0ms;
                       -webkit-transition-delay: ease-in;
                       -moz-transition: all 300ms 0ms ease-in;
                       -o-transition: all 300ms 0ms ease-in;
                       transition: all 300ms 0ms ease-in; }
-                      .post .upvote {
+                      .room .upvote {
                         display: block;
                         margin: 7px 12px 0 0;
                         float: left; }
-                        .post .post-content {
+                        .room .room-content {
                           float: left; }
-                          .post .post-content h3 {
+                          .room .room-content h3 {
                             margin: 0;
                             line-height: 1.4;
                             font-size: 18px; }
-                            .post .post-content h3 a {
+                            .room .room-content h3 a {
                               display: inline-block;
                               margin-right: 5px; }
-                              .post .post-content h3 span {
+                              .room .room-content h3 span {
                                 font-weight: normal;
                                 font-size: 14px;
                                 display: inline-block;
                                 color: #aaaaaa; }
-                                .post .post-content p {
+                                .room .room-content p {
                                   margin: 0; }
-                                  .post .discuss {
+                                  .room .discuss {
                                     display: block;
                                     float: right;
                                     margin-top: 7px; }

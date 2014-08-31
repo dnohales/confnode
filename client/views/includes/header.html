@@ -9,13 +9,13 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">conf.node</a>
+        <a class="navbar-brand" href="{{pathFor 'roomsList'}}">conf.node</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          {{#if currentUser}}<li><a href="{{pathFor 'postSubmit'}}">New room</a></li>{{/if}}
+          {{#if currentUser}}<li><a href="{{pathFor 'roomSubmit'}}">New room</a></li>{{/if}}
         </ul>
         <form class="navbar-form navbar-left" role="search">
           <div class="input-group">
