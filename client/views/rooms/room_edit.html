@@ -2,22 +2,22 @@
   <form class="main">
     <div class="form-group">
         <label for="name">Room name</label>
-        <input type="text" class="form-control" id="name" value="" placeholder="Room name">
+        <input type="text" class="form-control" id="name" value="{{name}}" placeholder="Room name">
     </div>
 
     <div class="form-group">
         <label for="desc">Room description</label>
-        <input type="text" class="form-control" id="desc" value="" placeholder="Room description">
+        <input type="text" class="form-control" id="desc" value="{{description}}" placeholder="Room description">
     </div>
 
     <div class="form-group">
         <label for="roomtags">Room tags</label>
-        <div data-tags-input-name="tag" id="roomtagsEdit"></div>
+        <div data-tags-input-name="tag" id="roomtags" value="{{tags}}"></div>
     </div>
 
     <div class="form-group">
         <label for="invites">Guests</label>
-        <div data-tags-input-name="tag" id="invitesEdit"></div>
+        <div data-tags-input-name="tag" id="invites"></div>
     </div>
 
     <div class="form-group">

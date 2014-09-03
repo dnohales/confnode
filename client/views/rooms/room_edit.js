@@ -39,10 +39,10 @@ Template.roomEdit.rendered = function () {
     "tag-box-class": "tagging",
     "forbidden-chars": [",", "?"]
   };
-  var t = $("#roomtagsEdit").tagging(my_custom_options);
+  var t = $("#roomtags").tagging(my_custom_options);
   t[0].addClass("form-control");
   
-  var t1 = $("#invitesEdit").tagging(my_custom_options);
+  var t1 = $("#invites").tagging(my_custom_options);
   t1[0].addClass("form-control");
 
   $('#datetimepicker1').datetimepicker();
