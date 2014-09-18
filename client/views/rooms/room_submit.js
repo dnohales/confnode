@@ -46,7 +46,9 @@ Template.roomSubmit.rendered = function () {
   var t1 = $("#invites").tagging(my_custom_options);
   t1[0].addClass("form-control");
 
-  $('.make-switch').bootstrapSwitch();
+  //$('.make-switch').bootstrapSwitch();
   $('#datetimepicker1').datetimepicker();
+  $("[name='my-checkbox']").bootstrapSwitch();
+  $("[name='my-checkbox0']").bootstrapSwitch();
 
 }

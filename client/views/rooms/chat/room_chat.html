@@ -1,0 +1,33 @@
+<template name="roomChat">
+
+    <!-- /.panel -->
+    <div class="chat-panel panel panel-default">
+        <div class="panel-heading">
+            <i class="glyphicon glyphicon-comment"></i>
+            Chat
+
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+                <ul class="chat">
+                    <!-- message others  -->
+                    {{> chatMsgOther}}
+                    <!-- message current user  -->
+                    {{> chatMsgMe}}
+                </ul>
+        </div>
+                    <!-- /.panel-body -->
+        <div class="panel-footer">
+            <div class="input-group">
+                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send a message ..." />
+                <span class="input-group-btn">
+                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                        Send
+                    </button>
+                </span>
+            </div>
+        </div>  
+                <!-- /.panel-footer -->
+    </div>
+        <!-- /.panel .chat-panel -->
+</template>

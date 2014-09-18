@@ -149,11 +149,11 @@ margin-right: 5px; }
 }
 
 .chat li.left .chat-body {
-    margin-left: 60px;
+    margin-left: 5px;
 }
 
 .chat li.right .chat-body {
-    margin-right: 60px;
+    margin-right: 5px;
 }
 
 .chat li .chat-body p {
@@ -173,4 +173,13 @@ margin-right: 5px; }
 .chat-panel.panel.panel-default{
   float: right;
   width: 300px;
+}
+
+.panel-body {
+  position: relative;
+}
+
+.child{
+  position: absolute;
+  bottom: 0;
 }
