@@ -1,8 +1,15 @@
 Template.roomSubmit.events({
   'submit form': function(e) {
     e.preventDefault();
-    
-      var t, $tag_box;
+
+       var tag = $("#roomtags").tagging();
+        if (!tag) {
+            console.log("fail")    ;
+        } else {
+          var tags = $("#tag").tagging("getTags");
+                      console.log("OK")  ;  
+
+        }
       // We call taggingJS init on all "#tag" divs
       //t = $( "#roomtags" ).tagging();
 
@@ -42,13 +49,14 @@ Template.roomSubmit.rendered = function () {
   };
   var t = $("#roomtags").tagging(my_custom_options);
   t[0].addClass("form-control");
-  
+  console.log( t[0] );
+
   var t1 = $("#invites").tagging(my_custom_options);
   t1[0].addClass("form-control");
 
   //$('.make-switch').bootstrapSwitch();
   $('#datetimepicker1').datetimepicker();
-  $("[name='my-checkbox']").bootstrapSwitch();
-  $("[name='my-checkbox0']").bootstrapSwitch();
+  $("[name='my-checkbox']").bootstrapSwitch('size','mini','mini');
+  $("[name='my-checkbox0']").bootstrapSwitch('size','mini','mini');
 
 }
