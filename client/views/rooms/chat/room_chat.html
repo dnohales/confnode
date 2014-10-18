@@ -1,27 +1,24 @@
 <template name="roomChat">
-
     <!-- /.panel -->
     <div class="chat-panel panel panel-default">
         <div class="panel-heading">
             <i class="glyphicon glyphicon-comment"></i>
             Chat
-
         </div>
         <!-- /.panel-heading -->
         <div class="panel-body">
                 <ul class="chat">
-                    <!-- message others  -->
-                    {{> chatMsgOther}}
-                    <!-- message current user  -->
-                    {{> chatMsgMe}}
+                    {{#each messages}}
+                        {{> chatMsgMe}}
+                    {{/each}}
                 </ul>
         </div>
                     <!-- /.panel-body -->
         <div class="panel-footer">
             <div class="input-group">
-                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send a message ..." />
+                <input id="chat-message" type="text" class="form-control input-sm" placeholder="Send a message ..." />
                 <span class="input-group-btn">
-                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                    <button class="btn btn-warning btn-sm" id="send">
                         Send
                     </button>
                 </span>
@@ -30,4 +27,40 @@
                 <!-- /.panel-footer -->
     </div>
         <!-- /.panel .chat-panel -->
+</template>
+
+<template name="chatMsgMe">
+{{#if user "me"}}
+    <li class="right clearfix">
+
+        <div class="chat-body clearfix">
+                <div class="header">
+                    <!--
+                    <small class=" text-muted">
+                        <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
+                    -->
+                    <strong class="pull-right primary-font">{{user}}</strong>
+                </div>
+            <p>
+                {{message}}
+            </p>
+        </div>
+    </li>
+{{else}}
+    <li class="left clearfix">
+
+        <div class="chat-body clearfix">
+                <div class="header">
+                    <!--
+                    <small class=" text-muted">
+                        <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
+                    -->
+                    <strong class="pull-right primary-font">{{user}}</strong>
+                </div>
+            <p>
+                {{message}}
+            </p>
+        </div>
+    </li>
+{{/if}}
 </template>

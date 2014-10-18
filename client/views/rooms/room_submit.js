@@ -2,6 +2,7 @@ Template.roomSubmit.events({
   'submit form': function(e) {
     e.preventDefault();
 
+/**
        var tag = $("#roomtags").tagging();
         if (!tag) {
             console.log("fail")    ;
@@ -10,6 +11,7 @@ Template.roomSubmit.events({
                       console.log("OK")  ;  
 
         }
+  */ 
       // We call taggingJS init on all "#tag" divs
       //t = $( "#roomtags" ).tagging();
 
