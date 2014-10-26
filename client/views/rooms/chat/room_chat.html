@@ -7,13 +7,13 @@
         </div>
         <!-- /.panel-heading -->
         <div class="panel-body">
-                <ul class="chat">
-                    {{#each messages}}
-                        {{> chatMsgMe}}
-                    {{/each}}
-                </ul>
+            <ul class="chat">
+                {{#each messages}}
+                {{> chatMsgMe}}
+                {{/each}}
+            </ul>
         </div>
-                    <!-- /.panel-body -->
+        <!-- /.panel-body -->
         <div class="panel-footer">
             <div class="input-group">
                 <input id="chat-message" type="text" class="form-control input-sm" placeholder="Send a message ..." />
@@ -23,17 +23,16 @@
                     </button>
                 </span>
             </div>
-        </div>  
-                <!-- /.panel-footer -->
+        </div>
+        <!-- /.panel-footer -->
     </div>
-        <!-- /.panel .chat-panel -->
+    <!-- /.panel .chat-panel -->
 </template>
 
 <template name="chatMsgMe">
-{{#if user "me"}}
-    <li class="right clearfix">
-
-        <div class="chat-body clearfix">
+    {{#if user "me"}}
+        <li class="right clearfix">
+            <div class="chat-body clearfix">
                 <div class="header">
                     <!--
                     <small class=" text-muted">
@@ -41,15 +40,12 @@
                     -->
                     <strong class="pull-right primary-font">{{user}}</strong>
                 </div>
-            <p>
-                {{message}}
-            </p>
-        </div>
-    </li>
-{{else}}
-    <li class="left clearfix">
-
-        <div class="chat-body clearfix">
+                <p>{{message}}</p>
+            </div>
+        </li>
+    {{else}}
+        <li class="left clearfix">
+            <div class="chat-body clearfix">
                 <div class="header">
                     <!--
                     <small class=" text-muted">
@@ -57,10 +53,8 @@
                     -->
                     <strong class="pull-right primary-font">{{user}}</strong>
                 </div>
-            <p>
-                {{message}}
-            </p>
-        </div>
-    </li>
-{{/if}}
+                <p>{{message}}</p>
+            </div>
+        </li>
+    {{/if}}
 </template>

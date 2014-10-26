@@ -1,63 +1,56 @@
 <template name="roomSubmit">
-  <form class="main" role="form">
-    <div class="form-group">
-        <label for="name">Room name</label>
-        <input type="text" class="form-control" id="name" value="" placeholder="Room name">
-    </div>
-
-    <div class="form-group">
-        <label for="desc">Room description</label>
-        <input type="text" class="form-control" id="desc" value="" placeholder="Room description">
-    </div>
-
-    <div class="form-group">
-        <label for="roomtags">Room tags</label>
-        <div data-tags-input-name="tag" id="roomtags"></div>
-    </div>
-
-    <div class="form-group">
-        <label for="invites">Guests</label>
-        <div data-tags-input-name="tag" id="invites"></div>
-    </div>
-
-
-    <div class="form-group form-inline">
-
+    <form class="main" role="form">
         <div class="form-group">
-            <label for="my-checkbox0">Public?</label>
-            <input type="checkbox" name="my-checkbox0" checked>
+            <label for="name">Room name</label>
+            <input type="text" class="form-control" id="name" value="" placeholder="Room name">
         </div>
 
         <div class="form-group">
-            <label for="pin">Access PIN?</label>
-            <input type="password" data-maxlength="6" class="form-control" id="pin" placeholder="Room PIN">
-        </div>
-    </div>
-
-
-    <div class="form-group form-group-sm form-inline">
-
-        <div class="form-group">      
-            <label for="my-checkbox">Scheduled?</label>
-            <input type="checkbox" name="my-checkbox" checked>                  
+            <label for="desc">Room description</label>
+            <input type="text" class="form-control" id="desc" value="" placeholder="Room description">
         </div>
 
         <div class="form-group">
-            <label for="date">Date?</label>
-            <div class='input-group date' id='datetimepicker1'>
-                <input type='text' class="form-control" id="date" data-date-format="DD/MM/YYYY" placeholder="Room Date  "/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+            <label for="roomtags">Room tags</label>
+            <div data-tags-input-name="tag" id="roomtags"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="invites">Guests</label>
+            <div data-tags-input-name="tag" id="invites"></div>
+        </div>
+
+        <div class="form-group form-inline">
+            <div class="form-group">
+                <label for="my-checkbox0">Public?</label>
+                <input type="checkbox" name="my-checkbox0" checked>
+            </div>
+            <div class="form-group">
+                <label for="pin">Access PIN?</label>
+                <input type="password" data-maxlength="6" class="form-control" id="pin" placeholder="Room PIN">
             </div>
         </div>
-    </div>
 
-
-    <div class="control-group">
-        <div class="controls">
-            <input type="submit" value="Create" class="btn btn-primary"/>
+        <div class="form-group form-group-sm form-inline">
+            <div class="form-group">
+                <label for="my-checkbox">Scheduled?</label>
+                <input type="checkbox" name="my-checkbox" checked>
+            </div>
+            <div class="form-group">
+                <label for="date">Date?</label>
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" id="date" data-date-format="DD/MM/YYYY" placeholder="Room Date  "/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
         </div>
-    </div>
-</form>
+
+        <div class="control-group">
+            <div class="controls">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </div>
+    </form>
 </template>

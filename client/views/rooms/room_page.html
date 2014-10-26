@@ -1,26 +1,22 @@
 <template name="roomPage">
-	<!-- {{> roomItem}} -->
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-		<h3 class="panel-title">{{name}}</h3>
-		</div>
-		<div class="panel-body">
-			{{#if ownRoom}}
-			<label for="my-checkbox0">Chat?</label>
-        	<input type="checkbox" name="my-checkbox0" checked>
-    		{{/if}}
+    <!-- {{> roomItem}} -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{name}}</h3>
+        </div>
+        <div class="panel-body">
+            {{#if ownRoom}}
+                <label for="my-checkbox0">Chat?</label>
+                <input type="checkbox" name="my-checkbox0" checked>
+            {{/if}}
 
+            {{> roomChat}}
 
-    		{{> roomChat}}
-    		
-
-			<div class="child panel panel-default">
-				<img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
-				<img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
-				<img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
-			</div>
-
-		</div>
-	</div>
-
+            <div class="child panel panel-default">
+                <img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
+                <img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
+                <img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
+            </div>
+        </div>
+    </div>
 </template>

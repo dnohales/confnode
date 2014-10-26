@@ -1,51 +1,51 @@
 <template name="roomEdit">
-  <form class="main">
-    <div class="form-group">
-        <label for="name">Room name</label>
-        <input type="text" class="form-control" id="name" value="{{name}}" placeholder="Room name">
-    </div>
-
-    <div class="form-group">
-        <label for="desc">Room description</label>
-        <input type="text" class="form-control" id="desc" value="{{description}}" placeholder="Room description">
-    </div>
-
-    <div class="form-group">
-        <label for="roomtags">Room tags</label>
-        <div data-tags-input-name="tag" id="roomtags" value="{{tags}}"></div>
-    </div>
-
-    <div class="form-group">
-        <label for="invites">Guests</label>
-        <div data-tags-input-name="tag" id="invites"></div>
-    </div>
-
-    <div class="form-group">
-        <label for="my-checkbox0">Public?</label>
-        <input type="checkbox" name="my-checkbox0" checked>
-    </div>
-
-    <div class="form-group">
-        <label for="my-checkbox">When?</label>
-        <input type="checkbox" name="my-checkbox" checked>  
-        <div class='input-group date' id='datetimepicker1'>
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-            <input type='text' class="form-control" data-date-format="DD/MM/YYYY"/>
+    <form class="main">
+        <div class="form-group">
+            <label for="name">Room name</label>
+            <input type="text" class="form-control" id="name" value="{{name}}" placeholder="Room name">
         </div>
-    </div>
 
-    <div class="control-group">
-        <div class="controls">
-            <input type="submit" value="Submit" class="btn btn-primary submit"/>
+        <div class="form-group">
+            <label for="desc">Room description</label>
+            <input type="text" class="form-control" id="desc" value="{{description}}" placeholder="Room description">
         </div>
-    </div>
-    <hr/>
-    <div class="control-group">
-        <div class="controls">
-            <a class="btn btn-danger delete" href="#">Delete room</a>
+
+        <div class="form-group">
+            <label for="roomtags">Room tags</label>
+            <div data-tags-input-name="tag" id="roomtags" value="{{tags}}"></div>
         </div>
-    </div>
-</form>
+
+        <div class="form-group">
+            <label for="invites">Guests</label>
+            <div data-tags-input-name="tag" id="invites"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="my-checkbox0">Public?</label>
+            <input type="checkbox" name="my-checkbox0" checked>
+        </div>
+
+        <div class="form-group">
+            <label for="my-checkbox">When?</label>
+            <input type="checkbox" name="my-checkbox" checked>
+            <div class='input-group date' id='datetimepicker1'>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                <input type='text' class="form-control" data-date-format="DD/MM/YYYY"/>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <input type="submit" value="Submit" class="btn btn-primary submit"/>
+            </div>
+        </div>
+        <hr/>
+        <div class="control-group">
+            <div class="controls">
+                <a class="btn btn-danger delete" href="#">Delete room</a>
+            </div>
+        </div>
+    </form>
 </template>

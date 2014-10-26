@@ -1,17 +1,17 @@
 <template name="roomItem">
-  <div class="room">
-    <div class="room-content">
-      <h3><a href="{{url}}">{{name}}</a></h3><span class="label label-default" >{{tags}}</span>
-      <p>
-        presenter {{creator}}
-        {{#if ownRoom}}
-        <a href="{{pathFor 'roomEdit'}}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
-        <a href="#" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
-        {{/if}}
-        <a href="#" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-calendar"></span></a>
-        
-      </p>
+    <div class="room">
+        <div class="room-content">
+            <h3><a href="{{url}}">{{name}}</a></h3><span class="label label-default" >{{tags}}</span>
+            <p>
+                presenter {{creator}}
+                {{#if ownRoom}}
+                    <a href="{{pathFor 'roomEdit'}}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="#" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+                {{/if}}
+                <a href="#" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-calendar"></span></a>
+
+            </p>
+        </div>
+        <a href="{{pathFor 'roomPage'}}" class="discuss btn btn-primary">Join</a>
     </div>
-    <a href="{{pathFor 'roomPage'}}" class="discuss btn btn-primary">Join</a>
-  </div>
 </template>
