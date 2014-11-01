@@ -15,8 +15,8 @@
 Rooms = new Meteor.Collection('rooms');
 
 Rooms.allow({
-    update: ownsDocument,
-    remove: ownsDocument
+    update: Permissions.ownsDocument,
+    remove: Permissions.ownsDocument
 });
 
 Rooms.deny({
@@ -27,40 +27,39 @@ Rooms.deny({
 });
 
 Meteor.methods({
-    room: function(roomAttributes) {
-        var user = Meteor.user(),
-                roomWithSamename = Rooms.findOne({name: roomAttributes.name});
+    roomInsert: function(room) {
+        check(Meteor.userId(), String);
+        console.log(room.schedulingTime);
+        check(room, {
+            name: String,
+            description: String,
+            tags: Array,
+            guests: Array,
+            privacy: Match.OneOf('public', 'private'),
+            accessPin: String,
+            scheduled: Boolean,
+            // See how the fuck match a Date here, tried but Meteor has decided to kill a kitten instead
+            schedulingTime: Match.Any,
+            chat: Boolean
+        });
 
-        // ensure the user is logged in
-        if (!user)
-            throw new Meteor.Error(401, "Please login to create new rooms");
+        if (!room.scheduled)
+            room.schedulingTime = null;
 
-        // ensure the room has a name
-        if (!roomAttributes.name)
-            throw new Meteor.Error(422, 'Please fill in a headline');
+        if (!room.name)
+            throw new Meteor.Error(422, 'Please fill the room name');
 
-        // ensure the room has a atleast one tag
-        if (!roomAttributes.tags)
-            throw new Meteor.Error(422, 'Please fill in a headline');
-
-        //if it is private --- guests , else public guests doesn't mind
-        //if it is scheduled --- datetime , else no datetime
-
-
-        // check that there are no previous Rooms with the same name
-        if (roomAttributes.url && roomWithSameName) {
-            throw new Meteor.Error(302, 'This name has already been used', roomWithSameName._id);
-        }
-
-        // pick out the whitelisted keys
-        var room = _.extend(_.pick(roomAttributes, 'name', 'description', 'tags', 'guests', 'privacy', 'scheduled', 'datetime', 'chat'), {
+        var user = Meteor.user();
+        var room = _.extend(room, {
             userId: user._id,
             creator: user.username,
-            submitted: new Date().getTime()
+            submitted: new Date()
         });
 
         var roomId = Rooms.insert(room);
 
-        return roomId;
+        return {
+            _id: roomId
+        };
     }
 });
