@@ -26,9 +26,10 @@ Template.roomSubmit.events({
             description: $(e.target).find('[id=desc]').val(),
             tags: $(e.target).find('[id=desc]').val(),
             guests: $(e.target).find('[id=desc]').val(),
-            privacy: $(e.target).find('[name=my-checkbox0]').val(),
-            scheduled: $(e.target).find('[name=my-checkbox]').val(),
-            datetime: $(e.target).find('[id=datetimepicker1]').val()
+            privacy: $(e.target).find('[name=my-checkbox0]').bootstrapSwitch('state'),
+            scheduled: $(e.target).find('[name=my-checkbox]').bootstrapSwitch('state'),
+            datetime: $(e.target).find('[id=datetimepicker1]').val(),
+            chat: $(e.target).find('[name=my-checkbox1]').bootstrapSwitch('state')
         }
 
         Meteor.call('room', room, function(error, id) {
@@ -51,7 +52,6 @@ Template.roomSubmit.rendered = function() {
     };
     var t = $("#roomtags").tagging(my_custom_options);
     t[0].addClass("form-control");
-    console.log(t[0]);
 
     var t1 = $("#invites").tagging(my_custom_options);
     t1[0].addClass("form-control");
@@ -60,4 +60,5 @@ Template.roomSubmit.rendered = function() {
     $('#datetimepicker1').datetimepicker();
     $("[name='my-checkbox']").bootstrapSwitch('size', 'mini', 'mini');
     $("[name='my-checkbox0']").bootstrapSwitch('size', 'mini', 'mini');
+    $("[name='my-checkbox1']").bootstrapSwitch('size', 'mini', 'mini');
 };

@@ -22,7 +22,7 @@ Rooms.allow({
 Rooms.deny({
     update: function(userId, room, fieldNames) {
         // may only edit the following fields:
-        return (_.without(fieldNames, 'guests', 'description', 'privacy', 'date').length > 0);
+        return (_.without(fieldNames, 'guests', 'description', 'privacy', 'date', 'name', 'tags', 'scheduled', 'datetime', 'chat').length > 0);
     }
 });
 
@@ -53,7 +53,7 @@ Meteor.methods({
         }
 
         // pick out the whitelisted keys
-        var room = _.extend(_.pick(roomAttributes, 'name', 'description', 'tags', 'guests', 'privacy', 'scheduled', 'datetime'), {
+        var room = _.extend(_.pick(roomAttributes, 'name', 'description', 'tags', 'guests', 'privacy', 'scheduled', 'datetime', 'chat'), {
             userId: user._id,
             creator: user.username,
             submitted: new Date().getTime()

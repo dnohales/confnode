@@ -6,8 +6,16 @@ Template.roomEdit.events({
 
         var roomProperties = {
             url: $(e.target).find('[name=url]').val(),
-            title: $(e.target).find('[name=title]').val()
-        }
+            title: $(e.target).find('[name=title]').val(),
+            name: $(e.target).find('[id=name]').val(),
+            description: $(e.target).find('[id=desc]').val(),
+            tags: $(e.target).find('[id=desc]').val(),
+            guests: $(e.target).find('[id=desc]').val(),
+            privacy: $(e.target).find('[name=my-checkbox0]').bootstrapSwitch('state'),
+            scheduled: $(e.target).find('[name=my-checkbox]').bootstrapSwitch('state'),
+            datetime: $(e.target).find('[id=datetimepicker1]').val(),
+            chat: $(e.target).find('[name=my-checkbox1]').bootstrapSwitch('state')
+        };
 
         Rooms.update(currentRoomId, {$set: roomProperties}, function(error) {
             if (error) {
@@ -24,7 +32,7 @@ Template.roomEdit.events({
         if (confirm("Delete this room?")) {
             var currentRoomId = this._id;
             Rooms.remove(currentRoomId);
-            Router.go('rommsList');
+            Router.go('roomsList');
         }
     }
 });
@@ -45,5 +53,7 @@ Template.roomEdit.rendered = function() {
     t1[0].addClass("form-control");
 
     $('#datetimepicker1').datetimepicker();
-
-}
+    $("[name='my-checkbox']").bootstrapSwitch('size', 'mini', 'mini');
+    $("[name='my-checkbox0']").bootstrapSwitch('size', 'mini', 'mini');
+    $("[name='my-checkbox1']").bootstrapSwitch('size', 'mini', 'mini');
+};

@@ -22,18 +22,25 @@
 
         <div class="form-group">
             <label for="my-checkbox0">Public?</label>
-            <input type="checkbox" name="my-checkbox0" checked>
+            <input type="checkbox" name="my-checkbox0" checked="{{privacy}}">
+        </div>
+
+        <div class="form-group form-group-sm form-inline">
+            <div class="form-group">
+                <label for="my-checkbox">When?</label>
+                <input type="checkbox" name="my-checkbox" checked="{{scheduled}}">
+                <div class='input-group date' id='datetimepicker1'>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <input type='text' class="form-control" data-date-format="DD/MM/YYYY"/>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="my-checkbox">When?</label>
-            <input type="checkbox" name="my-checkbox" checked>
-            <div class='input-group date' id='datetimepicker1'>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-                <input type='text' class="form-control" data-date-format="DD/MM/YYYY"/>
-            </div>
+            <label for="my-checkbox1">Chat?</label>
+            <input type="checkbox" name="my-checkbox1" checked="{{chat}}">
         </div>
 
         <div class="control-group">

@@ -7,10 +7,11 @@
         <div class="panel-body">
             {{#if ownRoom}}
                 <label for="my-checkbox0">Chat?</label>
-                <input type="checkbox" name="my-checkbox0" checked>
+                <input id="chat-checkbox" type="checkbox" name="my-checkbox0" checked="{{chat}}">
             {{/if}}
-
-            {{> roomChat}}
+            {{#if chat}}
+                {{> roomChat}}
+            {{/if}}
 
             <div class="child panel panel-default">
                 <img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
