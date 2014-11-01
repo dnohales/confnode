@@ -1,9 +1,11 @@
 chatStream = new Meteor.Stream('chat');
 chatCollection = new Meteor.Collection(null);
 
-chatStream.on('chat', function(message) {
+chatStream.on('chat', function(message, roomId) {
     chatCollection.insert({
         userId: this.userId,
+        timeStamp: new Date(),
+        roomId: roomId,
         subscriptionId: this.subscriptionId,
         message: message
     });
@@ -11,7 +13,7 @@ chatStream.on('chat', function(message) {
 
 Template.roomChat.helpers({
     "messages": function() {
-        return chatCollection.find();
+        return chatCollection.find({roomId: this._id});
     }
 });
 
@@ -36,13 +38,16 @@ Template.chatMsgMe.helpers({
 });
 
 Template.roomChat.events({
-    "click #send": function() {
+    "submit form": function(e) {
+        e.preventDefault();
         var message = $('#chat-message').val();
         chatCollection.insert({
             userId: 'me',
+            timeStamp: new Date(),
+            roomId: this._id,
             message: message
         });
-        chatStream.emit('chat', message);
+        chatStream.emit('chat', message, this._id);
         $('#chat-message').val('');
     }
 });

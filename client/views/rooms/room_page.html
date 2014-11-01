@@ -13,11 +13,16 @@
                 {{> roomChat}}
             {{/if}}
 
-            <div class="child panel panel-default">
-                <img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
-                <img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
-                <img src="http://placehold.it/100/333/fff" alt="User Avatar" class="img-rounded" />
+            <div class="videoContainer">
+                <video id="localVideo" oncontextmenu="return false;"></video>
+                <div ></div>
             </div>
+
+            <div id="remotes" class="child panel panel-default">
+
+            </div>
+
+
         </div>
     </div>
 </template>

@@ -183,3 +183,15 @@ body {
     position: absolute;
     bottom: 0;
 }
+
+
+.videoContainer {
+    width: 150px;
+    height: 150px;
+}
+video {
+    width: 150px;
+    height: 150px;
+}
+
+div.inline { float:left; }

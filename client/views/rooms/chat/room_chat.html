@@ -9,20 +9,21 @@
         <div class="panel-body">
             <ul class="chat">
                 {{#each messages}}
-                {{> chatMsgMe}}
+                    {{> chatMsgMe}}
                 {{/each}}
             </ul>
         </div>
         <!-- /.panel-body -->
         <div class="panel-footer">
-            <div class="input-group">
-                <input id="chat-message" type="text" class="form-control input-sm" placeholder="Send a message ..." />
-                <span class="input-group-btn">
-                    <button class="btn btn-warning btn-sm" id="send">
-                        Send
-                    </button>
-                </span>
-            </div>
+            <form>
+                <div class="input-group">
+                    <input id="chat-message" type="text" class="form-control input-sm" placeholder="Send a message ..." />
+                    <span class="input-group-btn">
+                        <input type="submit" value="Send" class="btn btn-primary btn-sm"/>
+                    </span>
+                </div>
+            </form>
+
         </div>
         <!-- /.panel-footer -->
     </div>

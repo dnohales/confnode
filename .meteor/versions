@@ -36,6 +36,7 @@ mizzao:bootstrap-3@3.2.0
 mongo-livedata@1.0.3
 mrt:accounts-ui-bs3-and-blaze@0.4.2
 mrt:bootstrap-3-switch@0.0.3
+mrt:rtcmulticonnection@0.0.4
 npm-bcrypt@0.7.7
 observe-sequence@1.0.1
 ordered-dict@1.0.0

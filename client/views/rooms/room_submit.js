@@ -2,25 +2,6 @@ Template.roomSubmit.events({
     'submit form': function(e) {
         e.preventDefault();
 
-/**
-       var tag = $("#roomtags").tagging();
-        if (!tag) {
-            console.log("fail")    ;
-        } else {
-          var tags = $("#tag").tagging("getTags");
-                      console.log("OK")  ;
-
-        }
-  */
-      // We call taggingJS init on all "#tag" divs
-      //t = $( "#roomtags" ).tagging();
-
-      // This is the $tag_box object of the first captured div
-      //$tag_box = t[0];
-
-      // To get all tags inside tag box as an array of String
-      //$tag_box.tagging( "getTags" );
-
         var room = {
             name: $(e.target).find('[id=name]').val(),
             description: $(e.target).find('[id=desc]').val(),
@@ -56,7 +37,6 @@ Template.roomSubmit.rendered = function() {
     var t1 = $("#invites").tagging(my_custom_options);
     t1[0].addClass("form-control");
 
-    //$('.make-switch').bootstrapSwitch();
     $('#datetimepicker1').datetimepicker();
     $("[name='my-checkbox']").bootstrapSwitch('size', 'mini', 'mini');
     $("[name='my-checkbox0']").bootstrapSwitch('size', 'mini', 'mini');
