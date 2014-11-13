@@ -7,14 +7,14 @@ Template.roomSubmit.events({
         var room = {
             name: $form.find('[name="name"]').val(),
             description: $form.find('[name="description"]').val(),
-            tags: $form.find('[name="tags"]').tagging('getTags'),
-            guests: $form.find('[name="guests"]').tagging('getTags'),
             privacy: $form.find('[name="public"]').val()? 'public':'private',
             accessPin: $form.find('[name="accessPin"]').val(),
             scheduled: $form.find('[name="scheduled"]').prop('checked'),
             schedulingTime: $form.find('[name="schedulingTime"]').data("DateTimePicker").getDate(),
             chat: $form.find('[name="chat"]').prop('checked')
         }
+            tags: $form.find('#tags').tagit("assignedTags"),
+            guests: $form.find('#guests').tagit("assignedTags"),
 
         Meteor.call('roomInsert', room, function(error, result) {
             if (error)
@@ -26,11 +26,13 @@ Template.roomSubmit.events({
 });
 
 Template.roomSubmit.rendered = function() {
-    $('.tagging-box').tagging({
-        'no-duplicate': true,
-        'type-zone-class': 'type-zone',
-        'tag-box-class': 'tagging',
-        'forbidden-chars': [',', '?']
+    var tagitOptions = {
+        'removeConfirmation': true,
+        'caseSensitive': false
+    };
+    $('#tags').tagit(tagitOptions);
+    $('#guests').tagit(tagitOptions);
+    
     });
 
     $('.datetimepicker').datetimepicker();

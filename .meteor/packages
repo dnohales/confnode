@@ -9,8 +9,7 @@ sacha:spin@2.0.4
 accounts-password
 mrt:accounts-ui-bs3-and-blaze@0.4.2
 mizzao:bootstrap-3
-mikewhy:taggingjs
 tsega:bootstrap3-datetimepicker
 arunoda:streams
 mrt:rtcmulticonnection
-
+mrt:jquery-ui
