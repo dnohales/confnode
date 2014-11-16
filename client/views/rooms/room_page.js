@@ -1,5 +1,4 @@
 var webrtc;
-
 Template.roomPage.rendered = function () {
     $("[name='my-checkbox0']").bootstrapSwitch('size','mini','mini');
 
@@ -22,7 +21,6 @@ Template.roomPage.rendered = function () {
     // we have to wait until it's ready
     webrtc.on('readyToCall', function () {
         // you can name it anything
-        console.log(roomId);
         webrtc.joinRoom(roomId);
     });
 
@@ -59,7 +57,8 @@ Template.roomPage.rendered = function () {
 };
 
 Template.roomPage.destroyed = function () {
-    console.log('cierre de webrtc');
+    console.log('cierre de webrtc: '+webrtc.roomName);
+
     //webrtc.stopLocalVideo();
     webrtc.leaveRoom();
 };
