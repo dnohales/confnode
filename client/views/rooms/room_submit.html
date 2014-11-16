@@ -1,5 +1,5 @@
 <template name="roomSubmit">
-    <form class="main" role="form">
+    <form id="form_submit" class="main" role="form">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -14,46 +14,46 @@
 
                 <div class="form-group">
                     <label>Tags</label>
-                    <ul id="tags"></ul>
+                    <ul name="tags"></ul>
                 </div>
 
                 <div class="form-group">
                     <label>Guests</label>
-                    <ul id="guests"></ul>
+                    <ul name="guests"></ul>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Public</label>
-                    <input type="checkbox" name="privacy" class="bootstrap-switch" />
+                    <input type="checkbox" name="public" class="bootstrap-switch" checked="checked" />
                 </div>
 
                 <div class="form-group">
-                    <label>Access PIN</label>
-                    <input type="password" name="accessPin" maxlength="6" class="form-control" />
+                    <label>Access password</label>
+                    <input type="password" name="accessPassword" maxlength="6" class="form-control" disabled="disabled" />
                 </div>
 
                 <div class="form-group">
                     <label>Scheduled</label>
-                    <input type="checkbox" name="scheduled" class="bootstrap-switch" />
+                    <input type="checkbox" name="scheduled" class="bootstrap-switch" checked="checked" />
                 </div>
 
                 <div class="form-group">
-                    <label>Scheduling time</label>
-                    <div class="input-group">
-                        <input type="text" name="schedulingTime" class="form-control datetimepicker" />
+                    <label>Scheduled time</label>
+                    <div class="input-group" name="scheduledTime">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
+                        <input type='text' class="form-control" data-date-format="DD/MM/YYYY - HH:mm" />
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label>Chat?</label>
                     <input type="checkbox" name="chat" class="bootstrap-switch" checked="checked" />
                 </div>
             </div>
         </div>
-
 
         <div class="control-group">
             <div class="controls">
