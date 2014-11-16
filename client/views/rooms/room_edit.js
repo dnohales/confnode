@@ -4,20 +4,22 @@ Template.roomEdit.events({
 
         var currentRoomId = this._id;
 
+        var $form = $(e.target);
+
         var roomProperties = {
-            url: $(e.target).find('[name=url]').val(),
-            title: $(e.target).find('[name=title]').val(),
-            name: $(e.target).find('[id=name]').val(),
-            description: $(e.target).find('[id=desc]').val(),
-            privacy: $(e.target).find('[name=my-checkbox0]').bootstrapSwitch('state'),
-            scheduled: $(e.target).find('[name=my-checkbox]').bootstrapSwitch('state'),
-            datetime: $(e.target).find('[id=datetimepicker1]').val(),
-            chat: $(e.target).find('[name=my-checkbox1]').bootstrapSwitch('state')
-            tags: $form.find('#tags').tagit("assignedTags"),
-            guests: $form.find('#guests').tagit("assignedTags"),
+            name: $form.find('[name="name"]').val(),
+            description: $form.find('[name="description"]').val(),
+            tags: $form.find('[name="tags"]').tagit("assignedTags"),
+            guests: $form.find('[name="guests"]').tagit("assignedTags"),
+            public: $form.find('[name="public"]').prop('checked'),
+            accessPassword: $form.find('[name="accessPassword"]').val(),
+            scheduled: $form.find('[name="scheduled"]').prop('checked'),
+            scheduledTime: new Date($form.find('[name="scheduledTime"]')
+                                         .data("DateTimePicker").getDate()),
+            chat: $form.find('[name="chat"]').prop('checked')
         };
 
-        Rooms.update(currentRoomId, {$set: roomProperties}, function(error) {
+        Rooms.update({_id:currentRoomId}, {$set: roomProperties}, function(error) {
             if (error) {
                 // display the error to the user
                 alert(error.reason);
@@ -26,13 +28,27 @@ Template.roomEdit.events({
             }
         });
     },
-    'click .delete': function(e) {
+
+    'click #delete': function(e) {
         e.preventDefault();
 
-        if (confirm("Delete this room?")) {
+        if (confirm("Are you sure you want to delete this room?\nRoom name: " + this.name)) {
             var currentRoomId = this._id;
             Rooms.remove(currentRoomId);
             Router.go('roomsList');
+        }
+    },
+
+    'switchChange.bootstrapSwitch #form_edit [name="public"]': function() {
+        $('#form_edit [name="accessPassword"]').prop('disabled', $('#form_edit [name="public"]').prop('checked'));
+    },
+
+    'switchChange.bootstrapSwitch #form_edit [name="scheduled"]': function() {
+        var dateTimePicker = $('#form_edit [name="scheduledTime"]').data("DateTimePicker")
+        if ($('#form_edit [name="scheduled"]').prop('checked')) {
+            dateTimePicker.enable();
+        } else {
+            dateTimePicker.disable();
         }
     }
 });
@@ -42,28 +58,18 @@ Template.roomEdit.rendered = function() {
         'removeConfirmation': true,
         'caseSensitive': false
     };
-    $('#datetimepicker1').datetimepicker();
-    $("[name='my-checkbox']").bootstrapSwitch('size', 'mini', 'mini');
-    $("[name='my-checkbox0']").bootstrapSwitch('size', 'mini', 'mini');
-    $("[name='my-checkbox1']").bootstrapSwitch('size', 'mini', 'mini');
-    $('#tags').tagit(tagitOptions);
-    $('#guests').tagit(tagitOptions);
-    
-};
+    $('#form_edit [name="tags"]').tagit(tagitOptions);
+    $('#form_edit [name="guests"]').tagit(tagitOptions);
 
-Template.roomEdit.helpers({
-    getTags: function() {
-        var str="";
-        for (var i=0; i<this.tags.length; i++) {
-            str = str + "<li>" + this.tags[i] + "</li>";
-        }
-        return str;
-    },
-    getGuests: function() {
-        var str="";
-        for (var i=0; i<this.guests.length; i++) {
-            str = str + "<li>" + this.guests[i] + "</li>";
-        }
-        return str;
+    var dtp = $('#form_edit [name="scheduledTime"]').datetimepicker({
+        minDate: new Date(),
+    });
+    if (this.data.scheduled) {
+        dtp.data("DateTimePicker").setDate(this.data.scheduledTime);
     }
-});
+    else {
+        dtp.data("DateTimePicker").disable();
+    }
+
+    $('.bootstrap-switch').bootstrapSwitch();
+};
