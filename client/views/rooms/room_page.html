@@ -6,8 +6,8 @@
         </div>
         <div class="panel-body">
             {{#if ownRoom}}
-                <label for="my-checkbox0">Chat?</label>
-                <input id="chat-checkbox" type="checkbox" name="my-checkbox0" checked="{{chat}}">
+                <label for="chat">Chat?</label>
+                <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" />
             {{/if}}
             {{#if chat}}
                 {{> roomChat}}
@@ -21,8 +21,6 @@
             <div id="remotes" class="child panel panel-default">
 
             </div>
-
-
         </div>
     </div>
 </template>
