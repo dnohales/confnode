@@ -1,7 +1,12 @@
+var webrtc;
+
 Template.roomPage.rendered = function () {
     $("[name='my-checkbox0']").bootstrapSwitch('size','mini','mini');
 
-    var webrtc = new SimpleWebRTC({
+    console.log(this.data._id);
+
+    var roomId = this.data._id;
+    webrtc = new SimpleWebRTC({
         // the id/element dom element that will hold "our" video
         localVideoEl: 'localVideo',
         // the id/element dom element that will hold remote videos
@@ -10,13 +15,15 @@ Template.roomPage.rendered = function () {
         autoRequestMedia: true,
         debug: false,
         detectSpeakingEvents: true,
-        autoAdjustMic: false
+        autoAdjustMic: true,
+        signalingOptions:  { "force new connection" : true }
     });
 
     // we have to wait until it's ready
     webrtc.on('readyToCall', function () {
         // you can name it anything
-        webrtc.joinRoom('your awesome room name');
+        console.log(roomId);
+        webrtc.joinRoom(roomId);
     });
 
 
@@ -49,7 +56,13 @@ Template.roomPage.rendered = function () {
         }
     });
 
-}
+};
+
+Template.roomPage.destroyed = function () {
+    console.log('cierre de webrtc');
+    //webrtc.stopLocalVideo();
+    webrtc.leaveRoom();
+};
 
 function showVolume(el, volume) {
     if (!el) return;
@@ -98,6 +111,9 @@ function scaleVideos() {
         if (video)
             video.width = maxVideoWidth - minus;
     }
+
+    console.log(this.userId);
+
 }
 
 Template.roomPage.helpers({
