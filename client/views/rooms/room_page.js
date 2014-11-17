@@ -1,6 +1,6 @@
 var webrtc;
 Template.roomPage.rendered = function () {
-    $("#chat").bootstrapSwitch('size','mini','mini');
+    $("#chat_switch").bootstrapSwitch('size','mini','mini');
 
     console.log(this.data._id);
 
@@ -122,7 +122,7 @@ Template.roomPage.helpers({
 });
 
 Template.roomPage.events({
-    'switchChange.bootstrapSwitch #chat': function() {
+    'switchChange.bootstrapSwitch #chat_switch': function() {
         this.chat = !this.chat;
         Rooms.update(this._id, {$set: {chat: this.chat}}, function(error) {
             if (error) {
