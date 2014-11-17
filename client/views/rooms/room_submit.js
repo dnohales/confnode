@@ -45,7 +45,13 @@ Template.roomSubmit.rendered = function() {
         'caseSensitive': false
     };
     $('#form_submit [name="tags"]').tagit(tagitOptions);
-    $('#form_submit [name="guests"]').tagit(tagitOptions);
+    $('#form_submit [name="guests"]').tagit(_.extend(tagitOptions, {
+        'beforeTagAdded': function(event, ui) {
+            if (!ui.duringInitialization) {
+                return isValidEmail(ui.tagLabel);
+            }
+        }
+    }));
 
     var date = new Date();
     $('#form_submit [name="scheduledTime"]').datetimepicker({

@@ -47,6 +47,9 @@ Meteor.methods({
             throw new Meteor.Error(422, 'The scheduled date must be in the future!!!!11 Are you a time traveller?');
         }
 
+        //Filter to only keep the valid emails from the guest list
+        room.guests = filterEmails(room.guests);
+
         var user = Meteor.user();
         var room = _.extend(room, {
             userId: user._id,
@@ -78,4 +81,29 @@ function compareDates(d1, d2) {
     if (d1.getHours() != d2.getHours())
         return d1.getHours() - d2.getHours();
     return d1.getMinutes() - d2.getMinutes()
+}
+
+/**
+ * Removes invalid emails from an array of them
+ * @param {String[]} emails
+ * @returns {String[]} only valid emails
+ */
+var filterEmails = function(emails) {
+    var validEmails = [];
+    for (var i=0; i<emails.length; i++) {
+        if (isValidEmail(emails[i])) {
+            validEmails.push(emails[i]);
+        }
+    }
+    return validEmails;
+}
+
+/**
+ * Checks if an email is valid
+ * @param {String} email
+ * @returns {Boolean} true if email format is valid, false otherwise
+ */
+isValidEmail = function(email) {
+    var emailFilter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return emailFilter.test(email);
 }

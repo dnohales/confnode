@@ -59,7 +59,13 @@ Template.roomEdit.rendered = function() {
         'caseSensitive': false
     };
     $('#form_edit [name="tags"]').tagit(tagitOptions);
-    $('#form_edit [name="guests"]').tagit(tagitOptions);
+    $('#form_edit [name="guests"]').tagit(_.extend(tagitOptions, {
+        'beforeTagAdded': function(event, ui) {
+            if (!ui.duringInitialization) {
+                return isValidEmail(ui.tagLabel);
+            }
+        }
+    }));
 
     var dtp = $('#form_edit [name="scheduledTime"]').datetimepicker({
         minDate: new Date(),
