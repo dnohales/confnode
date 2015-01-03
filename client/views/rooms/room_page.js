@@ -54,6 +54,7 @@ Template.roomPage.rendered = function () {
         }
     });
 
+    Meteor.call('userAddVisitedRoom', roomId);
 };
 
 Template.roomPage.destroyed = function () {
