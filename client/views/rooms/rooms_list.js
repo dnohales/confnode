@@ -2,7 +2,6 @@ Template.roomsList.helpers({
     rooms: function() {
     	var user = Meteor.user();
         var query = new RegExp(Session.get('search-query'), 'i');
-        console.log(query);
 
         return Rooms.find(
             {
