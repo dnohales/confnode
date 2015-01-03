@@ -58,8 +58,7 @@ Template.roomPage.rendered = function () {
 
 Template.roomPage.destroyed = function () {
     console.log('cierre de webrtc: '+webrtc.roomName);
-
-    //webrtc.stopLocalVideo();
+    webrtc.stopLocalVideo();
     webrtc.leaveRoom();
 };
 

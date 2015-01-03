@@ -18,6 +18,14 @@ Template.roomItem.helpers({
                 + "&dates=" + dateToGoogleISO(this.scheduledTime)
                 + '/' + dateToGoogleISO(this.scheduledTime);
         return url;
+    },
+    getTags: function(input) {
+        var tagArray = [];
+        console.log(input);
+
+        tagArray = input.split(',');
+        console.log(tagArray);
+        return tagArray;
     }
 });
 
