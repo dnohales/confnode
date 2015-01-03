@@ -13,8 +13,8 @@ Template.roomItem.helpers({
         //dear god, where is the Room's URL?
         var roomUrl = window.location.href.slice(0, -1) + Rooms._prefix + this._id;
         var url = "http://www.google.com/calendar/event?action=TEMPLATE&text="
-                + escape("Conf.Node: " + this.name)
-                + "&details=" + escape(this.description + "\n\nJoin at: " + roomUrl)
+                + encodeURIComponent("Conf.Node: " + this.name)
+                + "&details=" + encodeURIComponent(this.description + "\n\nJoin at: " + roomUrl)
                 + "&dates=" + dateToGoogleISO(this.scheduledTime)
                 + '/' + dateToGoogleISO(this.scheduledTime);
         return url;
