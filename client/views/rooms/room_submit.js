@@ -11,7 +11,6 @@ Template.roomSubmit.events({
             guests: $form.find('[name="guests"]').tagit("assignedTags"),
             listed: $form.find('[name="listed"]').prop('checked'),
             public: $form.find('[name="public"]').prop('checked'),
-            accessPassword: $form.find('[name="accessPassword"]').val(),
             scheduled: $form.find('[name="scheduled"]').prop('checked'),
             scheduledTime: new Date($form.find('[name="scheduledTime"]')
                 .data("DateTimePicker").getDate()),
@@ -28,9 +27,6 @@ Template.roomSubmit.events({
         });
     },
 
-    'switchChange.bootstrapSwitch #form_submit [name="public"]': function() {
-        $('#form_submit [name="accessPassword"]').prop('disabled', $('#form_submit [name="public"]').prop('checked'));
-    },
 
     'switchChange.bootstrapSwitch #form_submit [name="scheduled"]': function() {
         var dateTimePicker = $('#form_submit [name="scheduledTime"]').data("DateTimePicker")

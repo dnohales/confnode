@@ -13,7 +13,6 @@ Template.roomEdit.events({
             guests: $form.find('[name="guests"]').tagit("assignedTags"),
             listed: $form.find('[name="listed"]').prop('checked'),
             public: $form.find('[name="public"]').prop('checked'),
-            accessPassword: $form.find('[name="accessPassword"]').val(),
             scheduled: $form.find('[name="scheduled"]').prop('checked'),
             scheduledTime: new Date($form.find('[name="scheduledTime"]')
                 .data("DateTimePicker").getDate()),
@@ -46,9 +45,6 @@ Template.roomEdit.events({
         }
     },
 
-    'switchChange.bootstrapSwitch #form_edit [name="public"]': function() {
-        $('#form_edit [name="accessPassword"]').prop('disabled', $('#form_edit [name="public"]').prop('checked'));
-    },
 
     'switchChange.bootstrapSwitch #form_edit [name="scheduled"]': function() {
         var dateTimePicker = $('#form_edit [name="scheduledTime"]').data("DateTimePicker")

@@ -8,7 +8,7 @@ Rooms.allow({
 Rooms.deny({
     update: function(userId, room, fieldNames) {
         // may only edit the following fields:
-        return (_.without(fieldNames, 'name', 'description', 'tags', 'guests', 'listed', 'public', 'accessPassword', 'scheduled', 'scheduledTime', 'chat').length > 0);
+        return (_.without(fieldNames, 'name', 'description', 'tags', 'guests', 'listed', 'public', 'scheduled', 'scheduledTime', 'chat').length > 0);
     }
 });
 
@@ -22,7 +22,6 @@ Meteor.methods({
             guests: Array,
             listed: Boolean,
             public: Boolean,
-            accessPassword: String,
             scheduled: Boolean,
             // See how the fuck match a Date here, tried but Meteor has decided to kill a kitten instead
             scheduledTime: Date, //Deal with it. (•_•) / ( •_•)>⌐■-■  / (⌐■_■)
@@ -35,8 +34,8 @@ Meteor.methods({
         }
 
         //If Room is not Public then it has to have an Access Password
-        if (!room.public && !room.accessPassword) {
-            throw new Meteor.Error(422, 'Please, provide an access password for private room');
+        if (!room.public && room.guests.length === 0) {
+            throw new Meteor.Error(422, 'Please, provide guests for private room');
         }
 
         //If Room is not Scheduled then no need for a Time

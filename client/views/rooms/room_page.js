@@ -116,6 +116,7 @@ function scaleVideos() {
 
 Template.roomPage.helpers({
     ownRoom: function() {
+        //catch when owner is logged after page was rendered switcher not works
         return this.userId == Meteor.userId();
     }
 });
