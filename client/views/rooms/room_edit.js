@@ -11,20 +11,27 @@ Template.roomEdit.events({
             description: $form.find('[name="description"]').val(),
             tags: $form.find('[name="tags"]').tagit("assignedTags"),
             guests: $form.find('[name="guests"]').tagit("assignedTags"),
+            listed: $form.find('[name="listed"]').prop('checked'),
             public: $form.find('[name="public"]').prop('checked'),
             accessPassword: $form.find('[name="accessPassword"]').val(),
             scheduled: $form.find('[name="scheduled"]').prop('checked'),
             scheduledTime: new Date($form.find('[name="scheduledTime"]')
-                                         .data("DateTimePicker").getDate()),
+                .data("DateTimePicker").getDate()),
             chat: $form.find('[name="chat"]').prop('checked')
         };
 
-        Rooms.update({_id:currentRoomId}, {$set: roomProperties}, function(error) {
+        Rooms.update({
+            _id: currentRoomId
+        }, {
+            $set: roomProperties
+        }, function(error) {
             if (error) {
                 // display the error to the user
                 alert(error.reason);
             } else {
-                Router.go('roomPage', {_id: currentRoomId});
+                Router.go('roomPage', {
+                    _id: currentRoomId
+                });
             }
         });
     },
@@ -72,10 +79,9 @@ Template.roomEdit.rendered = function() {
     });
     if (this.data.scheduled) {
         dtp.data("DateTimePicker").setDate(this.data.scheduledTime);
-    }
-    else {
+    } else {
         dtp.data("DateTimePicker").disable();
     }
 
-    $('.bootstrap-switch').bootstrapSwitch();
+    $('.bootstrap-switch').bootstrapSwitch('size', 'small');
 };

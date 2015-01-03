@@ -9,11 +9,12 @@ Template.roomSubmit.events({
             description: $form.find('[name="description"]').val(),
             tags: $form.find('[name="tags"]').tagit("assignedTags"),
             guests: $form.find('[name="guests"]').tagit("assignedTags"),
+            listed: $form.find('[name="listed"]').prop('checked'),
             public: $form.find('[name="public"]').prop('checked'),
             accessPassword: $form.find('[name="accessPassword"]').val(),
             scheduled: $form.find('[name="scheduled"]').prop('checked'),
             scheduledTime: new Date($form.find('[name="scheduledTime"]')
-                                         .data("DateTimePicker").getDate()),
+                .data("DateTimePicker").getDate()),
             chat: $form.find('[name="chat"]').prop('checked')
         };
 
@@ -21,7 +22,9 @@ Template.roomSubmit.events({
             if (error) {
                 return alert(error.message);
             }
-            Router.go('roomPage', {_id: result._id});
+            Router.go('roomPage', {
+                _id: result._id
+            });
         });
     },
 
@@ -59,5 +62,5 @@ Template.roomSubmit.rendered = function() {
         defaultDate: date
     });
 
-    $('.bootstrap-switch').bootstrapSwitch();
+    $('.bootstrap-switch').bootstrapSwitch('size', 'small');
 };

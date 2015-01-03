@@ -8,7 +8,7 @@ Rooms.allow({
 Rooms.deny({
     update: function(userId, room, fieldNames) {
         // may only edit the following fields:
-        return (_.without(fieldNames, 'name', 'description', 'tags', 'guests', 'public', 'accessPassword', 'scheduled', 'scheduledTime', 'chat').length > 0);
+        return (_.without(fieldNames, 'name', 'description', 'tags', 'guests', 'listed', 'public', 'accessPassword', 'scheduled', 'scheduledTime', 'chat').length > 0);
     }
 });
 
@@ -20,6 +20,7 @@ Meteor.methods({
             description: String,
             tags: Array,
             guests: Array,
+            listed: Boolean,
             public: Boolean,
             accessPassword: String,
             scheduled: Boolean,
@@ -44,7 +45,7 @@ Meteor.methods({
         }
         //If the Room IS Scheduled for a Time, then it cannot be older than right now
         else if (compareDates(room.scheduledTime, new Date()) < 0) {
-            throw new Meteor.Error(422, 'The scheduled date must be in the future!!!!11 Are you a time traveller?');
+            throw new Meteor.Error(422, 'The scheduled date must be in the future!!!! Are you a time traveller?');
         }
 
         //Filter to only keep the valid emails from the guest list
@@ -53,6 +54,7 @@ Meteor.methods({
         var user = Meteor.user();
         var room = _.extend(room, {
             userId: user._id,
+            presenter: user.emails[0].address, 
             creator: user.username,
             submittedTime: new Date()
         });
@@ -90,7 +92,7 @@ function compareDates(d1, d2) {
  */
 var filterEmails = function(emails) {
     var validEmails = [];
-    for (var i=0; i<emails.length; i++) {
+    for (var i = 0; i < emails.length; i++) {
         if (isValidEmail(emails[i])) {
             validEmails.push(emails[i]);
         }

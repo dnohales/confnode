@@ -16,7 +16,7 @@
                     <label>Tags</label>
                     <ul name="tags">
                         {{#each tags}}
-                            <li>{{.}}</li>
+                        <li>{{.}}</li>
                         {{/each}}
                     </ul>
                 </div>
@@ -25,13 +25,17 @@
                     <label>Guests</label>
                     <ul name="guests">
                         {{#each guests}}
-                            <li>{{.}}</li>
+                        <li>{{.}}</li>
                         {{/each}}
                     </ul>
                 </div>
             </div>
 
             <div class="col-md-6">
+                <div class="form-group">
+                    <label>Listed</label>
+                    <input type="checkbox" name="listed" class="bootstrap-switch" checked="{{listed}}" />
+                </div>
                 <div class="form-group">
                     <label>Public</label>
                     <input type="checkbox" name="public" class="bootstrap-switch" checked="{{public}}" />
@@ -67,7 +71,7 @@
 
         <div class="control-group">
             <div class="controls">
-                <input type="submit" value="Submit" class="btn btn-primary submit"/>
+                <input type="submit" value="Submit" class="btn btn-primary submit" />
                 <a class="btn btn-danger" id="delete" href="#">Delete room</a>
             </div>
         </div>
