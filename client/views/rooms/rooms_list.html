@@ -1,7 +1,14 @@
 <template name="roomsList">
+    <form id="search_form">
+        <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search le room..." />
+    </form>
     <div class="rooms">
         {{#each rooms}}
             {{> roomItem}}
+        {{else}}
+            <div class="rooms-empty-container">
+                Cannot find any room
+            </div>
         {{/each}}
     </div>
 </template>

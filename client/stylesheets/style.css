@@ -195,3 +195,22 @@ video {
 }
 
 div.inline { float:left; }
+
+#search_form {
+    width: 50%;
+    margin: 30px auto 30px;
+}
+
+#search_form input {
+    border-radius: 20px;
+    height: 48px;
+    font-size: 21px;
+    padding-left: 22px;
+    box-shadow: 0px 0px 15px lightgray;
+}
+
+.rooms-empty-container {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 70px;
+}
