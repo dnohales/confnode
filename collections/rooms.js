@@ -14,47 +14,13 @@ Rooms.deny({
 
 Meteor.methods({
     roomInsert: function(room) {
-        check(Meteor.userId(), String);
-        check(room, {
-            name: String,
-            description: String,
-            tags: Array,
-            guests: Array,
-            listed: Boolean,
-            public: Boolean,
-            scheduled: Boolean,
-            // See how the fuck match a Date here, tried but Meteor has decided to kill a kitten instead
-            scheduledTime: Date, //Deal with it. (•_•) / ( •_•)>⌐■-■  / (⌐■_■)
-            chat: Boolean
-        });
-
-        //Room Name cannot be empty
-        if (!room.name) {
-            throw new Meteor.Error(422, 'Please, fill in the room name');
-        }
-
-        //If Room is not Public then it has to have an Access Password
-        if (!room.public && room.guests.length === 0) {
-            throw new Meteor.Error(422, 'Please, provide guests for private room');
-        }
-
-        //If Room is not Scheduled then no need for a Time
-        if (!room.scheduled) {
-            room.scheduledTime = null;
-        }
-        //If the Room IS Scheduled for a Time, then it cannot be older than right now
-        else if (compareDates(room.scheduledTime, new Date()) < 0) {
-            throw new Meteor.Error(422, 'The scheduled date must be in the future!!!! Are you a time traveller?');
-        }
-
-        //Filter to only keep the valid emails from the guest list
-        room.guests = filterEmails(room.guests);
+        validateRoom(room);
 
         var user = Meteor.user();
         var room = _.extend(room, {
-            userId: user._id,
-            presenter: user.emails[0].address, 
-            creator: user.username,
+            creatorId: user._id,
+            creatorEmail: user.emails[0].address,
+            creatorName: user.username,
             submittedTime: new Date()
         });
 
@@ -63,8 +29,62 @@ Meteor.methods({
         return {
             _id: roomId
         };
+    },
+    roomUpdate: function(room) {
+
+        var roomId = room._id;
+        delete room._id;
+
+        validateRoom(room);
+
+        Rooms.update({
+            _id: roomId
+        }, {
+            $set: room
+        });
+
+        return {
+            _id: roomId
+        };
     }
 });
+
+var validateRoom = function(room) {
+    check(room, {
+        name: String,
+        description: String,
+        tags: Array,
+        guests: Array,
+        listed: Boolean,
+        public: Boolean,
+        scheduled: Boolean,
+        scheduledTime: Date,
+        chat: Boolean
+    });
+
+    //Room Name cannot be empty
+    if (!room.name) {
+        throw new Meteor.Error(422, 'Please, fill in the room name');
+    }
+
+    //If Room is not Public then it has to have an Access Password
+    if (!room.public && room.guests.length === 0) {
+        throw new Meteor.Error(422, 'Please, provide guests for private room');
+    }
+
+    //If Room is not Scheduled then no need for a Time
+    if (!room.scheduled) {
+        room.scheduledTime = null;
+    }
+    //If the Room IS Scheduled for a Time, then it cannot be older than right now
+    else if (compareDates(room.scheduledTime, new Date()) < 0) {
+        throw new Meteor.Error(422, 'The scheduled date must be in the future!!!! Are you a time traveller?');
+    }
+
+    //Filter to only keep the valid emails from the guest list
+    room.guests = filterEmails(room.guests);
+};
+
 
 /**
  * Compares two dates
@@ -72,7 +92,7 @@ Meteor.methods({
  * @param {Date} d2 second date
  * @returns {integer} =0 if dates are equal, <0 if first date is earlier than second one
  */
-function compareDates(d1, d2) {
+var compareDates = function(d1, d2) {
     if (d1.getYear() != d2.getYear())
         return d1.getYear() - d2.getYear();
     if (d1.getMonth() != d2.getMonth())
@@ -82,7 +102,7 @@ function compareDates(d1, d2) {
     if (d1.getHours() != d2.getHours())
         return d1.getHours() - d2.getHours();
     return d1.getMinutes() - d2.getMinutes()
-}
+};
 
 /**
  * Removes invalid emails from an array of them

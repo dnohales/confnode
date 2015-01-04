@@ -13,7 +13,9 @@ chatStream.on('chat', function(message, roomId) {
 
 Template.roomChat.helpers({
     "messages": function() {
-        return chatCollection.find({roomId: this._id});
+        return chatCollection.find({
+            roomId: this._id
+        });
     }
 });
 

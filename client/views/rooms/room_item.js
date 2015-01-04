@@ -1,6 +1,6 @@
 Template.roomItem.helpers({
     ownRoom: function() {
-        return this.userId == Meteor.userId();
+        return this.creatorId == Meteor.userId();
     },
 
     domain: function() {
@@ -34,13 +34,13 @@ Template.roomItem.helpers({
             } else {
                 userEmail = "";
             };
-            if (this.guests.indexOf(userEmail) !== -1 || this.creator === user.username) {
+            if (this.guests.indexOf(userEmail) !== -1 || this.creatorName === user.username) {
                 return true;
             } else {
                 return false;
             };
         };
-        //mrt:accounts-ui-bs3-and-blaze 
+        //mrt:accounts-ui-bs3-and-blaze
     }
 });
 

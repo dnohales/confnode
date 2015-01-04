@@ -24,7 +24,7 @@ Template.roomsList.helpers({
                 $or: [{
                     listed: true
                 }, {
-                    presenter: {
+                    creatorEmail: {
                         $in: [userEmail]
                     }
                 }, {

@@ -1,6 +1,6 @@
 var webrtc;
-Template.roomPage.rendered = function () {
-    $("#chat_switch").bootstrapSwitch('size','mini','mini');
+Template.roomPage.rendered = function() {
+    $("#chat_switch").bootstrapSwitch('size', 'mini', 'mini');
 
     console.log(this.data._id);
 
@@ -15,17 +15,19 @@ Template.roomPage.rendered = function () {
         debug: false,
         detectSpeakingEvents: true,
         autoAdjustMic: true,
-        signalingOptions:  { "force new connection" : true }
+        signalingOptions: {
+            "force new connection": true
+        }
     });
 
     // we have to wait until it's ready
-    webrtc.on('readyToCall', function () {
+    webrtc.on('readyToCall', function() {
         // you can name it anything
         webrtc.joinRoom(roomId);
     });
 
 
-    webrtc.on('videoAdded', function (video, peer) {
+    webrtc.on('videoAdded', function(video, peer) {
         console.log('video added', peer);
         var remotes = document.getElementById('remotes');
         if (remotes) {
@@ -36,7 +38,7 @@ Template.roomPage.rendered = function () {
             var vol = document.createElement('div');
             vol.id = 'volume_' + peer.id;
             vol.className = 'volume_bar';
-            video.onclick = function () {
+            video.onclick = function() {
                 video.style.width = video.videoWidth + 'px';
                 video.style.height = video.videoHeight + 'px';
             };
@@ -45,7 +47,7 @@ Template.roomPage.rendered = function () {
         }
     });
 
-    webrtc.on('videoRemoved', function (video, peer) {
+    webrtc.on('videoRemoved', function(video, peer) {
         console.log('video removed ', peer);
         var remotes = document.getElementById('remotes');
         var el = document.getElementById('container_' + webrtc.getDomId(peer));
@@ -57,8 +59,8 @@ Template.roomPage.rendered = function () {
     Meteor.call('userAddVisitedRoom', roomId);
 };
 
-Template.roomPage.destroyed = function () {
-    console.log('cierre de webrtc: '+webrtc.roomName);
+Template.roomPage.destroyed = function() {
+    console.log('cierre de webrtc: ' + webrtc.roomName);
     webrtc.stopLocalVideo();
     webrtc.leaveRoom();
 };
@@ -84,7 +86,8 @@ function rotateVideo(mediaElement) {
 
 function scaleVideos() {
     var videos = document.querySelectorAll('video'),
-        length = videos.length, video;
+        length = videos.length,
+        video;
 
     var minus = 100;
     var windowHeight = 300;
@@ -118,14 +121,18 @@ function scaleVideos() {
 Template.roomPage.helpers({
     ownRoom: function() {
         //catch when owner is logged after page was rendered switcher not works
-        return this.userId == Meteor.userId();
+        return this.creatorId == Meteor.userId();
     }
 });
 
 Template.roomPage.events({
     'switchChange.bootstrapSwitch #chat_switch': function() {
         this.chat = !this.chat;
-        Rooms.update(this._id, {$set: {chat: this.chat}}, function(error) {
+        Rooms.update(this._id, {
+            $set: {
+                chat: this.chat
+            }
+        }, function(error) {
             if (error) {
                 alert(error.reason);
             }
