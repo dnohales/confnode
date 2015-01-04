@@ -26,21 +26,16 @@ Template.roomItem.helpers({
     roomGuestsAccess: function() {
         var user = Meteor.user();
         if (user === null) {
-            return true;
+            return false;
         } else {
-            var userEmail;
-            if (user) {
-                userEmail = user.emails[0].address;
-            } else {
-                userEmail = "";
-            };
+            var userEmail = user ? user.emails[0].address : "";
+
             if (this.guests.indexOf(userEmail) !== -1 || this.creatorName === user.username) {
                 return true;
             } else {
                 return false;
             };
         };
-        //mrt:accounts-ui-bs3-and-blaze
     }
 });
 

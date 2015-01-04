@@ -1,6 +1,9 @@
 <template name="accessDenied">
     <div class="alert alert-danger">
-        <h2>Access Denied</h2>
+        <h2>Access Denied</h2> {{#if currentUser }}
+        <p>You can't get here! Please, go back home.</p>
+        {{else}}
         <p>You can't get here! Please log in.</p>
+        {{/if}}
     </div>
 </template>

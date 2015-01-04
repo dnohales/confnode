@@ -1,12 +1,8 @@
 Template.roomsList.helpers({
     rooms: function() {
         var user = Meteor.user();
-        var userEmail;
-        if (user) {
-            userEmail = user.emails[0].address;
-        } else {
-            userEmail = "";
-        };
+        var userEmail = user ? user.emails[0].address : "";
+
         var query = new RegExp(Session.get('search-query'), 'i');
 
         return Rooms.find({
@@ -35,7 +31,7 @@ Template.roomsList.helpers({
             }]
         }, {
             sort: {
-                submitted: -1
+                submittedTime: -1
             }
         });
     }
