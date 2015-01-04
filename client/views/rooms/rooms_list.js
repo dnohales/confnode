@@ -1,43 +1,43 @@
 Template.roomsList.helpers({
     rooms: function() {
-    	var user = Meteor.user();
+        var user = Meteor.user();
+        var userEmail;
+        if (user) {
+            userEmail = user.emails[0].address;
+        } else {
+            userEmail = "";
+        };
         var query = new RegExp(Session.get('search-query'), 'i');
 
-        return Rooms.find(
-            {
-                $and: [
-                    {
-                        $or: [{
-                            name: query
-                        }, {
-                            description: query
-                        }, {
-                            tags: {
-                                $in: [query]
-                            }
-                        }],
-                    },
-                    {
-                        $or: [{
-                            listed: true
-                        }, {
-                            presenter: {
-                                $in: [user.emails[0].address]
-                            }
-                        }, {
-                            guests: {
-                                $in: [user.emails[0].address]
-                            }
-                        }]
+        return Rooms.find({
+            $and: [{
+                $or: [{
+                    name: query
+                }, {
+                    description: query
+                }, {
+                    tags: {
+                        $in: [query]
                     }
-                ]
-            },
-            {
-                sort: {
-                    submitted: -1
-                }
+                }],
+            }, {
+                $or: [{
+                    listed: true
+                }, {
+                    presenter: {
+                        $in: [userEmail]
+                    }
+                }, {
+                    guests: {
+                        $in: [userEmail]
+                    }
+                }]
+            }]
+        }, {
+            sort: {
+                submitted: -1
             }
-        );
+        });
     }
 });
 

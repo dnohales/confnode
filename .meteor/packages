@@ -7,9 +7,9 @@ standard-app-packages
 cmather:iron-router@0.8.2
 sacha:spin@2.0.4
 accounts-password
-mrt:accounts-ui-bs3-and-blaze@0.4.2
-mizzao:bootstrap-3
 tsega:bootstrap3-datetimepicker
 arunoda:streams
 mrt:rtcmulticonnection
 mrt:jquery-ui
+mizzao:bootstrap-3
+yasinuslu:accounts-ui-bootstrap-3

@@ -12,11 +12,7 @@ Template.roomItem.helpers({
     calendarURL: function() {
         //dear god, where is the Room's URL?
         var roomUrl = window.location.href.slice(0, -1) + Rooms._prefix + this._id;
-        var url = "http://www.google.com/calendar/event?action=TEMPLATE&text="
-                + encodeURIComponent("Conf.Node: " + this.name)
-                + "&details=" + encodeURIComponent(this.description + "\n\nJoin at: " + roomUrl)
-                + "&dates=" + dateToGoogleISO(this.scheduledTime)
-                + '/' + dateToGoogleISO(this.scheduledTime);
+        var url = "http://www.google.com/calendar/event?action=TEMPLATE&text=" + encodeURIComponent("Conf.Node: " + this.name) + "&details=" + encodeURIComponent(this.description + "\n\nJoin at: " + roomUrl) + "&dates=" + dateToGoogleISO(this.scheduledTime) + '/' + dateToGoogleISO(this.scheduledTime);
         return url;
     },
     getTags: function(input) {
@@ -26,6 +22,25 @@ Template.roomItem.helpers({
         tagArray = input.split(',');
         console.log(tagArray);
         return tagArray;
+    },
+    roomGuestsAccess: function() {
+        var user = Meteor.user();
+        if (user === null) {
+            return true;
+        } else {
+            var userEmail;
+            if (user) {
+                userEmail = user.emails[0].address;
+            } else {
+                userEmail = "";
+            };
+            if (this.guests.indexOf(userEmail) !== -1 || this.creator === user.username) {
+                return true;
+            } else {
+                return false;
+            };
+        };
+        //mrt:accounts-ui-bs3-and-blaze 
     }
 });
 
@@ -46,5 +61,5 @@ Template.roomsList.events({
 function dateToGoogleISO(date) {
     var str = date.toISOString();
     str = str.replace(/-|:|\./g, '');
-    return str.substr(0,15) + 'Z';
+    return str.substr(0, 15) + 'Z';
 }
