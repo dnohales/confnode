@@ -1,0 +1,16 @@
+<template name="userProfile">
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Info</a></li>
+            <li role="presentation"><a href="#activity" aria-controls="activity" role="tab" data-toggle="tab">Activity</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="profile">{{> userProfileInfo}}</div>
+            <div role="tabpanel" class="tab-pane fade" id="activity">...</div>
+        </div>
+
+    </div>
+</template>
