@@ -1,10 +1,9 @@
 var webrtc;
 Template.roomPage.rendered = function() {
     $("#chat_switch").bootstrapSwitch('size', 'mini', 'mini');
-
-    console.log(this.data._id);
-
     var roomId = this.data._id;
+
+
     webrtc = new SimpleWebRTC({
         // the id/element dom element that will hold "our" video
         localVideoEl: 'localVideo',
@@ -23,8 +22,26 @@ Template.roomPage.rendered = function() {
     // we have to wait until it's ready
     webrtc.on('readyToCall', function() {
         // you can name it anything
+        console.log(roomId);
         webrtc.joinRoom(roomId);
     });
+
+    function showVolume(el, volume) {
+        if (!el) return;
+        if (volume < -45) { // vary between -45 and -20
+            el.style.height = '0px';
+        } else if (volume > -20) {
+            el.style.height = '100%';
+        } else {
+            el.style.height = '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%';
+        }
+    }
+
+    webrtc.on('channelMessage', function (peer, label, data) {
+        if (data.type == 'volume') {
+            showVolume(document.getElementById('volume_' + peer.id), data.volume);
+        }
+    })
 
 
     webrtc.on('videoAdded', function(video, peer) {
@@ -56,6 +73,11 @@ Template.roomPage.rendered = function() {
         }
     });
 
+    // local volume has changed
+    webrtc.on('volumeChange', function (volume, treshold) {
+        showVolume(document.getElementById('localVolume'), volume);
+    });
+
     Meteor.call('userAddVisitedRoom', roomId);
 };
 
@@ -64,18 +86,6 @@ Template.roomPage.destroyed = function() {
     webrtc.stopLocalVideo();
     webrtc.leaveRoom();
 };
-
-function showVolume(el, volume) {
-    if (!el) return;
-    if (volume < -45) { // vary between -45 and -20
-        el.style.height = '0px';
-    } else if (volume > -20) {
-        el.style.height = '100%';
-    } else {
-        el.style.height = '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%';
-    }
-}
-
 
 function rotateVideo(mediaElement) {
     mediaElement.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';

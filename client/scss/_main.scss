@@ -208,3 +208,12 @@ div.inline {
     text-align: center;
     margin-top: 70px;
 }
+
+.volumeBar {
+  position: absolute;
+  width: 5px;
+  height: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: #12acef;
+}

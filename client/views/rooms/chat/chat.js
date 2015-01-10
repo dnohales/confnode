@@ -19,9 +19,6 @@ Template.roomChat.helpers({
     }
 });
 
-
-var subscribedUsers = {};
-
 Template.chatMsgMe.helpers({
     "user": function() {
         if (this.userId == 'me') {
@@ -32,6 +29,7 @@ Template.chatMsgMe.helpers({
                 return username;
             } else {
                 getUsername(this.userId);
+                return Session.get('user-' + this.userId);
             }
         } else {
             return this.subscriptionId;
@@ -56,7 +54,7 @@ Template.roomChat.events({
 
 function getUsername(id) {
     Meteor.subscribe('user-info', id);
-    Deps.autorun(function() {
+    Tracker.autorun(function() {
         var user = Meteor.users.findOne(id);
         if (user) {
             Session.set('user-' + id, user.username);

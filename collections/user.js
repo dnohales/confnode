@@ -14,6 +14,7 @@ function validateUser(user) {
         'profile.timezone': String
     });
 }
+
 Meteor.methods({
     userAddVisitedRoom: function(roomId) {
         var rooms = Rooms.find({
