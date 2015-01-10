@@ -1,80 +1,102 @@
 <template name="userProfileInfo">
-	<div class="row">
-		<!-- edit form column -->
-		<form id="profile_extra" class="form-horizontal" role="form">
+    <div class="row">
+        <!-- edit form column -->
+        <form id="profile_extra" class="form-horizontal" role="form">
 
-			<div class="col-md-6 col-sm-6 col-xs-12 personal-info">
-				<h3>Personal info</h3>
-				<div class="form-group">
-					<label class="col-lg-3 control-label">Name:</label>
-					<div class="col-lg-8">
-						<input class="form-control" value="{{profile.name}}" type="text">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-lg-3 control-label">Company:</label>
-					<div class="col-lg-8">
-						<input class="form-control" value="{{profile.company}}" type="text">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-lg-3 control-label">Email:</label>
-					<div class="col-lg-8">
-						<input class="form-control" value="{{#each emails}} {{address}} {{/each}}" type="text">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-lg-3 control-label">Location:</label>
-					<div class="col-lg-8">
-						<input class="form-control" value="{{profile.location}}" type="text">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-lg-3 control-label">Time Zone:</label>
-					<div class="col-lg-8">
-						<div class="ui-select">
-							<select id="user_time_zone" class="form-control">
-								<option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-3 control-label">Username:</label>
-					<div class="col-md-8">
-						<input class="form-control" value="{{username}}" type="text">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="about-text" class="col-md-3 control-label">About:</label>
-					<div class="col-md-8">
-						<textarea class="form-control" value="{{profile.about}}" id="about-text"></textarea>
-					</div>
-				</div>
-				
-			</div>
-			<!-- right column -->
-			<div class="col-md-6 col-sm-6 col-xs-12">
-				<h3>Extra info</h3>
-				<div class="form-group">
-					<label>Skills</label>
-					<ul name="skills"></ul>
-				</div>
-				<div class="form-group">
-					<label>Interests</label>
-					<ul name="interests"></ul>
-				</div>
+            <div class="col-md-6 col-sm-6 col-xs-12 personal-info">
+                <h3>Personal info</h3>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Username:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" name="username" value="{{username}}" type="text" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="fullname" value="{{profile.fullname}}" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Company:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="company" value="{{profile.company}}" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Email:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="emails" value="{{#each emails}} {{address}} {{/each}}" type="text" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Location:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="location" value="{{profile.location}}" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Time Zone:</label>
+                    <div class="col-lg-8">
+                        <div class="ui-select">
+                          {{> timezonePicker class="form-control" selected=timezone}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Availablility</label>
+                    <div class="btn-group col-md-8" data-toggle="buttons">
+                        <label for="morning" class="btn btn-info">
+                            <input type="checkbox" id="morning" name="morning" autocomplete="off" checked="{{profile.availability.morning}}"> Morning
+                        </label>
+                        <label for="afternoon" class="btn btn-info">
+                            <input type="checkbox" id="afternoon" name="afternoon" autocomplete="off" checked="{{profile.availability.afternoon}}"> Afternoon
+                        </label>
+                        <label for="night" class="btn btn-info">
+                            <input type="checkbox" id="night" name="night" autocomplete="off" checked="{{profile.availability.night}}"> Night
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="submit" class="btn btn-primary" value="Save Changes">
+                        <span></span>
+                        <input class="btn btn-default" value="Cancel" type="reset">
+                    </div>
+                </div>
 
-			</div>  
-			<div class="form-group">
-				<label class="col-md-3 control-label"></label>
-				<div class="col-md-8">
-					<input class="btn btn-primary" value="Save Changes" type="button">
-					<span></span>
-					<input class="btn btn-default" value="Cancel" type="reset">
-				</div>
-			</div>
-		</form>
 
-	</div>
+            </div>
+            <!-- right column -->
+            <div class="col-md-5 col-sm-5 col-xs-12">
+                <h3>Extra info</h3>
+                <div class="form-group">
+                    <label>Skills</label>
+                    <ul name="skills">
+                      {{#each profile.skills}}
+                          <li>{{.}}</li>
+                      {{/each}}
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label>Interests</label>
+                    <ul  name="interests">
+                      {{#each profile.interests}}
+                          <li>{{.}}</li>
+                      {{/each}}
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label for="about-text" class="col-md-3 control-label">About:</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" rows="3" name="about" value="{{profile.about}}" id="about-text"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
 </template>

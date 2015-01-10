@@ -1,3 +1,19 @@
+function validateUser(user) {
+    check(user, {
+        'profile.fullname': String,
+        'profile.company': String,
+        'profile.location': String,
+        'profile.about': String,
+        'profile.skills': Array,
+        'profile.interests': Array,
+        'profile.availability': {
+            morning: Boolean,
+            afternoon: Boolean,
+            night: Boolean
+        },
+        'profile.timezone': String
+    });
+}
 Meteor.methods({
     userAddVisitedRoom: function(roomId) {
         var rooms = Rooms.find({
@@ -35,5 +51,15 @@ Meteor.methods({
                 }
             });
         }
+    },
+    userUpdate: function(user) {
+        validateUser(user);
+
+        Meteor.users.update({
+            _id: Meteor.userId()
+        }, {
+            $set: user
+        });
+
     }
 });

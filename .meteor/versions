@@ -31,6 +31,7 @@ iron:location@1.0.6
 iron:middleware-stack@1.0.6
 iron:router@1.0.6
 iron:url@1.0.6
+joshowens:timezone-picker@0.1.2
 jquery@1.0.2
 json@1.0.2
 launch-screen@1.0.1
@@ -46,6 +47,8 @@ mobile-status-bar@1.0.2
 momentjs:moment@2.8.4
 mongo@1.0.11
 mrt:jquery-ui@1.9.2
+mrt:moment@2.8.1
+mrt:moment-timezone@0.2.1
 mrt:rtcmulticonnection@0.0.4
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4

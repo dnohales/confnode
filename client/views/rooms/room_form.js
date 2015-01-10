@@ -66,7 +66,7 @@ Template.roomForm.helpers({
 
 var isInsert = function(context) {
     return typeof context._id === "undefined";
-}
+};
 
 Template.roomForm.rendered = function() {
     var $form = $('#form_room');
