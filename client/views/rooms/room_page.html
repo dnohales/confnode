@@ -5,8 +5,13 @@
         </div>
         <div class="panel-body">
             {{#if ownRoom}}
-            <label for="chat">Chat?</label>
-            <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" /> {{/if}} {{#if chat}} {{> roomChat}} {{/if}}
+                <label for="chat">Chat?</label>
+                <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" />
+            {{/if}}
+
+            {{#if chat}}
+                {{> roomChat}}
+            {{/if}}
 
             <div class="videoContainer">
                 <video id="localVideo" oncontextmenu="return false;"></video>
