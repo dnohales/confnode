@@ -22,7 +22,12 @@ Template.userProfileInfo.events({
             'profile.timezone': $form.find('[name="pickedTimezone"]').val()
         };
 
-        Meteor.call('userUpdate', user);
+        Meteor.call('userUpdate', user, function(error, result) {
+            if (error) {
+                return alert(error.message);
+            }
+            Router.go('roomsList');
+        });
     }
 });
 
@@ -32,6 +37,7 @@ Template.userProfileInfo.rendered = function() {
         'caseSensitive': false
     };
     var data = this.data;
+    console.log(data);
     var $form = $('#profile_extra');
     var timezoneSelect = $form.find('[name="pickedTimezone"]');
 

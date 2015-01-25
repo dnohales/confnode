@@ -37,7 +37,7 @@ Template.roomPage.rendered = function() {
         }
     }
 
-    webrtc.on('channelMessage', function (peer, label, data) {
+    webrtc.on('channelMessage', function(peer, label, data) {
         if (data.type == 'volume') {
             showVolume(document.getElementById('volume_' + peer.id), data.volume);
         }
@@ -74,7 +74,7 @@ Template.roomPage.rendered = function() {
     });
 
     // local volume has changed
-    webrtc.on('volumeChange', function (volume, treshold) {
+    webrtc.on('volumeChange', function(volume, treshold) {
         showVolume(document.getElementById('localVolume'), volume);
     });
 
@@ -147,5 +147,51 @@ Template.roomPage.events({
                 alert(error.reason);
             }
         });
+    },
+    'submit #form_invite': function(e) {
+        e.preventDefault();
+        var email = $('#form_invite').find('[id="guest_email"]').val();
+        Rooms.update(this._id, {
+            $addToSet: {
+                guests: email
+            }
+        }, function(error) {
+            if (error) {
+                alert(error.reason);
+            }
+        });
+
+        Meteor.call('sendEmail',
+            email,
+            'conf.node@gmail.com',
+            'Hello from Meteor!',
+            'This is a test of Email.send.');
+
+        $('#myModal').modal('toggle');
+
+        $('.modal').on('hidden.bs.modal', function() {
+            $(this).find('form')[0].reset();
+        });
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        toastr.success('Invitación enviada');
+    },
+    'hidden.bs.modal #myModal': function() {
+        $('myModal').find('form')[0].reset();
     }
 });

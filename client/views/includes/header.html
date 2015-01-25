@@ -19,7 +19,9 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{pathFor 'profile'}}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                    {{#if currentUser}} 
+                        <li><a href="{{pathFor 'profile'}}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                    {{/if}}
                     <li>{{> loginButtons}}</li>
                 </ul>
             </div><!-- /.navbar-collapse -->

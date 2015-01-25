@@ -2,20 +2,61 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">{{name}}</h3>
+            {{#each tags}}
+            <span class="label label-default">{{this}}</span> {{/each}}
         </div>
-        <div class="panel-body">
-            {{#if ownRoom}}
-            <label for="chat">Chat?</label>
-            <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" /> {{/if}} {{#if chat}} {{> roomChat}} {{/if}}
+        {{#if ownRoom}}
+        <div class="panel-footer">
+                <label for="chat">Chat?</label>
+                <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" /> 
+            |
+            <button class="btn btn-default btn-xs"  title="Share this content" data-toggle="modal" data-target="#myModal">
+              <i class="fa fa-share-alt"></i> 
+              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+              Invite
+          </button>
+        </div>
+        {{/if}}
 
-            <div class="videoContainer">
-                <video id="localVideo" oncontextmenu="return false;"></video>
-                <div id="localVolume" class="volumeBar"></div>
+
+      <div class="panel-body">
+        {{#if chat}} 
+            {{> roomChat}} 
+        {{/if}}        
+
+        <div class="videoContainer">
+            <video id="localVideo" oncontextmenu="return false;"></video>
+            <div id="localVolume" class="volumeBar"></div>
+        </div>
+
+        <div id="remotes" class="child panel panel-default">
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-share-alt"></i> Invite more guests</h4>
             </div>
-
-            <div id="remotes" class="child panel panel-default">
-
+            <div class="modal-body">
+                <form id="form_invite">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input type="email" id="guest_email" class="form-control" placeholder="guest@email.com">
+                    </div>
+                    <br />
+                    <button type="submit" value="sub" name="sub" class="btn btn-primary pull-right"><i class="fa fa-share"></i> 
+                    Add now!
+                    </button>
+                    <div class="clearfix"></div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </template>

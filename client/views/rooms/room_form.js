@@ -18,6 +18,11 @@ Template.roomForm.events({
             if (error) {
                 return alert(error.message);
             }
+            Meteor.call('sendEmail',
+                room.guests,
+                'conf.node@gmail.com',
+                'Invitacion ' + room.name + " by " + Meteor.user().username,
+                'This is a test of Email.send.');
             Router.go('roomPage', {
                 _id: result._id
             });
@@ -120,7 +125,7 @@ Template.roomForm.rendered = function() {
 
     }
 
-    $('.bootstrap-switch').bootstrapSwitch();
+    $('.bootstrap-switch').bootstrapSwitch('size', 'mini', 'mini');
 };
 
 Template.roomForm.events({
