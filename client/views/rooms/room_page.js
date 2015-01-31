@@ -1,6 +1,13 @@
 var webrtc;
 
 Template.roomPage.rendered = function() {
+    var $form = $('#form_lookfor');
+
+    var tagitOptions = {
+        'removeConfirmation': true,
+        'caseSensitive': false
+    };
+    $form.find('[name="topics"]').tagit(tagitOptions);
     $("#chat_switch").bootstrapSwitch('size', 'mini', 'mini');
     var roomId = this.data._id;
 
@@ -148,6 +155,12 @@ Template.roomPage.events({
                 alert(error.reason);
             }
         });
+    },
+    'submit #form_lookfor': function(e) {
+        e.preventDefault();
+        var $form = $('#form_lookfor');
+        var topics = $form.find('[name="topics"]').tagit("assignedTags");
+        Meteor.call('searchExpert', topics);
     },
     'submit #form_invite': function(e) {
         e.preventDefault();

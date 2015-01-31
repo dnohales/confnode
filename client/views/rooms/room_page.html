@@ -15,8 +15,8 @@
         </div>
         {{#if ownRoom}}
             <div class="panel-footer">
-                    <label for="chat">Chat?</label>
-                    <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" />
+                <label for="chat">Chat?</label>
+                <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" />
                 |
                 <button class="btn btn-default btn-xs" title="Share this content" data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-share-alt"></i>
@@ -51,14 +51,29 @@
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-share-alt"></i> Invite more guests</h4>
                 </div>
                 <div class="modal-body">
+                    <h3>Intelligent recommendation expert</h3>
+                    <form id="form_lookfor">
+                        <div class="input-group">
+                            <label>Topics</label>
+                            <ul name="topics">
+                            </ul>
+                        </div>
+                        <br />
+                        <button type="submit" value="sub" name="sub" class="btn btn-success pull-right"><i class="fa fa-share"></i> 
+                            Search!
+                        </button>
+                        <div class="clearfix"></div>
+                    </form>
+                    <hr>
+                    <h3>Add new guest</h3>
                     <form id="form_invite">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                             <input type="email" id="guest_email" class="form-control" placeholder="guest@email.com">
                         </div>
                         <br />
-                        <button type="submit" value="sub" name="sub" class="btn btn-primary pull-right"><i class="fa fa-share"></i>
-                        Add now!
+                        <button type="submit" value="sub" name="sub" class="btn btn-primary pull-right"><i class="fa fa-share"></i> 
+                            Add now!
                         </button>
                         <div class="clearfix"></div>
                     </form>

@@ -89,6 +89,19 @@ Meteor.methods({
                 }
             });
         }
+    },
+    searchExpert: function(topics) {
+        // IA feature : Intelligent recomendation of an expert in a set of topics
+
+        //OK..magic fingers
+        var query = {
+            tags: {
+                $in: topics
+            }
+        };
+        console.log(topics);
+        var result = Rooms.find().fetch();
+        console.log(result);
     }
 });
 
