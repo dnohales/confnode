@@ -1,20 +1,3 @@
-function validateUser(user) {
-    check(user, {
-        'profile.fullname': String,
-        'profile.company': String,
-        'profile.location': String,
-        'profile.about': String,
-        'profile.skills': Array,
-        'profile.interests': Array,
-        'profile.availability': {
-            morning: Boolean,
-            afternoon: Boolean,
-            night: Boolean
-        },
-        'profile.timezone': String
-    });
-}
-
 Meteor.methods({
     userAddVisitedRoom: function(roomId) {
         var rooms = Rooms.find({
@@ -23,7 +6,7 @@ Meteor.methods({
             _id: 1
         });
         if (rooms.count() === 0) {
-            throw new Meteor.Error(422, 'Room does not exists');
+            throw new Meteor.Error(422, 'Room does not exist');
         }
 
         var users = Meteor.users.find({
@@ -46,13 +29,14 @@ Meteor.methods({
             }, {
                 $push: {
                     visitedRooms: {
-                        room_id: roomId,
-                        when: new Date()
+                        when: new Date(),
+                        room_id: roomId
                     }
                 }
             });
         }
     },
+
     userUpdate: function(user) {
         validateUser(user);
 
@@ -61,6 +45,22 @@ Meteor.methods({
         }, {
             $set: user
         });
-
     }
 });
+
+function validateUser(user) {
+    check(user, {
+        'profile.fullname': String,
+        'profile.company': String,
+        'profile.location': String,
+        'profile.about': String,
+        'profile.skills': Array,
+        'profile.interests': Array,
+        'profile.availability': {
+            morning: Boolean,
+            afternoon: Boolean,
+            night: Boolean
+        },
+        'profile.timezone': String
+    });
+}

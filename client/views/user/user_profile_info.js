@@ -1,6 +1,3 @@
-/**
- * Created by lisandro on 09/01/15.
- */
 Template.userProfileInfo.events({
     'submit form': function(e) {
         e.preventDefault();
@@ -37,7 +34,6 @@ Template.userProfileInfo.rendered = function() {
         'caseSensitive': false
     };
     var data = this.data;
-    console.log(data);
     var $form = $('#profile_extra');
     var timezoneSelect = $form.find('[name="pickedTimezone"]');
 

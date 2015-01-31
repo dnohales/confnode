@@ -1,0 +1,37 @@
+<template name="roomItemVisited">
+    <div class="room">
+        <div class="room-content">
+            <h3><a href="{{pathFor 'roomPage'}}">{{name}}</a></h3>
+            {{#each tags}}
+                <span class="label label-success">{{this}}</span>
+            {{/each}}
+            <div class="extra-info">
+                By {{creatorName}}
+
+                {{#if ownRoom}}
+                    <a href="{{pathFor 'roomEdit'}}" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a href="#" class="btn btn-default btn-xs delete-room-button">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                {{/if}}
+
+                {{#if scheduled}}
+                    <a href="{{calendarURL}}" target="_blank" class="btn btn-xs btn-default calendar">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </a>
+                {{/if}}
+            </div>
+        </div>
+        <div class="join-button-container">
+            {{#if roomGuestsAccess}}
+                <a href="{{pathFor 'roomPage'}}" class="discuss btn btn-primary">Join</a>
+            {{else}}
+                <a href="{{pathFor 'roomPage'}}" class="discuss btn btn-danger">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </a>
+            {{/if}}
+        </div>
+    </div>
+</template>

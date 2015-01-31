@@ -17,10 +17,8 @@ Template.roomItem.helpers({
     },
     getTags: function(input) {
         var tagArray = [];
-        console.log(input);
 
         tagArray = input.split(',');
-        console.log(tagArray);
         return tagArray;
     },
     roomGuestsAccess: function() {

@@ -1,0 +1,67 @@
+<template name="userProfileActivity">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Visited rooms
+                    </a>
+                </h3>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body rooms">
+                    {{#each visitedRooms}}
+                        {{> roomItemVisited}}
+                    {{else}}
+                        <div class="rooms-empty-container">
+                            No rooms have been visited
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h3 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Created rooms
+                    </a>
+                </h3>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body rooms">
+                    {{#each createdRooms}}
+                        {{> roomItem}}
+                    {{else}}
+                        <div class="rooms-empty-container">
+                            No rooms have been created
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                <h3 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Suggested rooms
+                    </a>
+                </h3>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body rooms">
+                    {{#each recommendedRooms}}
+                        {{> roomItem}}
+                    {{else}}
+                        <div class="rooms-empty-container">
+                            No rooms to suggest
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
