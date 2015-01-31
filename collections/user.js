@@ -34,6 +34,14 @@ Meteor.methods({
                     }
                 }
             });
+
+            Rooms.update({
+                _id: roomId
+            }, {
+                $inc: {
+                    visits: 1
+                }
+            });
         }
     },
 
