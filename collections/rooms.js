@@ -56,6 +56,10 @@ Meteor.methods({
             throw new Meteor.Error(422, 'Room does not exists');
         }
 
+        if (Permissions.ownsDocument(Meteor.userId(), room)) {
+            throw new Meteor.Error(422, 'The room owner is not allowed to rate the room');
+        }
+
         var feelingFound = false
 
         for (var i in room.feelings) {
