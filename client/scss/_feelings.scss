@@ -1,0 +1,74 @@
+.feelings-dialog {
+    h1 {
+        text-align: center;
+        font-size: 30px;
+    }
+
+    textarea {
+        margin-top: 10px;
+        min-height: 100px;
+        font-size: 20px;
+    }
+
+    .feelings-stars {
+        // A lot of kittens were killed for centering this shit
+        padding-left: 14%;
+        padding-right: 14%;
+    }
+
+    .cancel-button {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+.feelings-stars {
+    float: left;
+    &:not(:checked) {
+        > input {
+            position: absolute;
+            top: -9999px;
+            clip: rect(0, 0, 0, 0);
+            &:checked {
+                ~ label {
+                    color: #f70;
+                }
+                + label:hover, ~ label:hover {
+                    color: #ea0;
+                    ~ label {
+                        color: #ea0;
+                    }
+                }
+            }
+        }
+        > label {
+            float: right;
+            width: 80px;
+            padding: 0 .1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 400%;
+            line-height: 1.2;
+            color: #ddd;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+            &:before {
+                content: '★ ';
+            }
+            &:hover {
+                color: gold;
+                ~ label {
+                    color: gold;
+                }
+                ~ input:checked ~ label {
+                    color: #ea0;
+                }
+            }
+            &:active {
+                position: relative;
+                top: 2px;
+                left: 2px;
+            }
+        }
+    }
+}

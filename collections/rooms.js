@@ -46,6 +46,49 @@ Meteor.methods({
         return {
             _id: roomId
         };
+    },
+    roomAddFeeling: function(data) {
+        var room = Rooms.findOne({
+            _id: data.roomId
+        });
+
+        if (!room) {
+            throw new Meteor.Error(422, 'Room does not exists');
+        }
+
+        var feelingFound = false
+
+        for (var i in room.feelings) {
+            var feeling = room.feelings[i];
+            if (feeling.user_id == Meteor.userId()) {
+                feelingFound = true;
+                break;
+            }
+        }
+
+        if (feelingFound) {
+            Rooms.update({
+                _id: room._id,
+                'feelings.user_id': Meteor.userId()
+            }, {
+                $set: {
+                    'feelings.$.rating': data.feeling.rating,
+                    'feelings.$.comment': data.feeling.comment
+                }
+            });
+        } else {
+            Rooms.update({
+                _id: room._id,
+            }, {
+                $push: {
+                    'feelings': {
+                        'user_id': Meteor.userId(),
+                        'rating': data.feeling.rating,
+                        'comment': data.feeling.comment
+                    }
+                }
+            });
+        }
     }
 });
 

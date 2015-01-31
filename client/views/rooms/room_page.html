@@ -1,9 +1,17 @@
 <template name="roomPage">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">{{name}}</h3>
-            {{#each tags}}
-            <span class="label label-default">{{this}}</span> {{/each}}
+            <div class="pull-left">
+                <h3 class="panel-title">{{name}}</h3>
+                {{#each tags}}
+                    <span class="label label-default">{{this}}</span>
+                {{/each}}
+
+            </div>
+            {{#unless ownRoom}}
+                <a href="#" id="feelings_button" class="btn btn-warning pull-right">Give feedback</a>
+            {{/unless}}
+            <div class="clearfix"></div>
         </div>
         {{#if ownRoom}}
         <div class="panel-footer">
@@ -17,6 +25,9 @@
           </button>
         </div>
         {{/if}}
+        {{#unless ownRoom}}
+            <a href="#" id="feelings_button" class="btn btn-warning">Give feedback</a>
+        {{/unless}}
 
       <div class="panel-body">
         {{#if chat}} 
@@ -58,4 +69,8 @@
         </div>
     </div>
 </div>
+
+    <div id="feelings_dialog">
+        {{> feelingsDialog}}
+    </div>
 </template>

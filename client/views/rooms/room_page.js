@@ -193,5 +193,8 @@ Template.roomPage.events({
     },
     'hidden.bs.modal #myModal': function() {
         $('myModal').find('form')[0].reset();
+    },
+    'click #feelings_button': function() {
+        $('#feelings_dialog .modal').modal();
     }
 });

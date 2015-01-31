@@ -1,0 +1,41 @@
+<template name="feelingsDialog">
+    <div class="feelings-dialog modal fade">
+        <div class="modal-dialog">
+            <form id="form_feelings_dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h1>How would you rate this conference?</h1>
+                        <div class="center-block">
+                            <div class="feelings-stars">
+                                <input type="radio" id="feelings_stars_star5" name="rating" value="5" required="true" />
+                                <label for="feelings_stars_star5"></label>
+
+                                <input type="radio" id="feelings_stars_star4" name="rating" value="4" required="true" />
+                                <label for="feelings_stars_star4"></label>
+
+                                <input type="radio" id="feelings_stars_star3" name="rating" value="3" required="true" />
+                                <label for="feelings_stars_star3"></label>
+
+                                <input type="radio" id="feelings_stars_star2" name="rating" value="2" required="true" />
+                                <label for="feelings_stars_star2"></label>
+
+                                <input type="radio" id="feelings_stars_star1" name="rating" value="1" required="true" />
+                                <label for="feelings_stars_star1"></label>
+
+                                <script>
+                                    $('#form_feelings_dialog input[name="rating"][value="{{feeling.rating}}"]').prop('checked', true);
+                                </script>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <textarea name="comment" class="form-control" placeholder="Anything to say?" required="true">{{feeling.comment}}</textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="pull-left cancel-button btn btn-lg btn-default" data-dismiss="modal">Cancel</a>
+                        <button type="submit" class="btn btn-lg btn-primary pull-right">Send feedback</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
