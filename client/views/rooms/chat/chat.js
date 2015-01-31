@@ -52,7 +52,7 @@ Template.roomChat.events({
     }
 });
 
-function getUsername(id) {
+var getUsername = function(id) {
     Meteor.subscribe('user-info', id);
     Tracker.autorun(function() {
         var user = Meteor.users.findOne(id);

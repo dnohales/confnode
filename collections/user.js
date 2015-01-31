@@ -48,7 +48,7 @@ Meteor.methods({
     }
 });
 
-function validateUser(user) {
+var validateUser = function(user) {
     check(user, {
         'profile.fullname': String,
         'profile.company': String,
@@ -63,4 +63,4 @@ function validateUser(user) {
         },
         'profile.timezone': String
     });
-}
+};

@@ -43,7 +43,7 @@ Template.roomForm.events({
     }
 });
 
-function getRoom() {
+var getRoom = function() {
     var $form = $('#form_room');
 
     return {
@@ -58,7 +58,7 @@ function getRoom() {
             .data("DateTimePicker").getDate()),
         chat: $form.find('[name="chat"]').prop('checked')
     };
-}
+};
 
 Template.roomForm.helpers({
     isInsert: function() {

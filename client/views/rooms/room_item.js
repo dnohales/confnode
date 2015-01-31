@@ -51,8 +51,8 @@ Template.roomsList.events({
  * @param {Date} date
  * @returns {String} The date ISO 8601 formatted
  */
-function dateToGoogleISO(date) {
+var dateToGoogleISO = function(date) {
     var str = date.toISOString();
     str = str.replace(/-|:|\./g, '');
     return str.substr(0, 15) + 'Z';
-}
+};

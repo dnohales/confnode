@@ -1,4 +1,5 @@
 var webrtc;
+
 Template.roomPage.rendered = function() {
     $("#chat_switch").bootstrapSwitch('size', 'mini', 'mini');
     var roomId = this.data._id;
@@ -25,17 +26,6 @@ Template.roomPage.rendered = function() {
         console.log(roomId);
         webrtc.joinRoom(roomId);
     });
-
-    function showVolume(el, volume) {
-        if (!el) return;
-        if (volume < -45) { // vary between -45 and -20
-            el.style.height = '0px';
-        } else if (volume > -20) {
-            el.style.height = '100%';
-        } else {
-            el.style.height = '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%';
-        }
-    }
 
     webrtc.on('channelMessage', function(peer, label, data) {
         if (data.type == 'volume') {
@@ -87,14 +77,14 @@ Template.roomPage.destroyed = function() {
     webrtc.leaveRoom();
 };
 
-function rotateVideo(mediaElement) {
+var rotateVideo = function(mediaElement) {
     mediaElement.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
     setTimeout(function() {
         mediaElement.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
     }, 1000);
-}
+};
 
-function scaleVideos() {
+var scaleVideos = function() {
     var videos = document.querySelectorAll('video'),
         length = videos.length,
         video;
@@ -126,7 +116,18 @@ function scaleVideos() {
 
     console.log(this.userId);
 
-}
+};
+
+var showVolume = function(el, volume) {
+    if (!el) return;
+    if (volume < -45) { // vary between -45 and -20
+        el.style.height = '0px';
+    } else if (volume > -20) {
+        el.style.height = '100%';
+    } else {
+        el.style.height = '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%';
+    }
+};
 
 Template.roomPage.helpers({
     ownRoom: function() {
