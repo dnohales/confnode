@@ -96,15 +96,30 @@ Meteor.methods({
     },
     searchExpert: function(topics) {
         // IA feature : Intelligent recomendation of an expert in a set of topics
-
         //OK..magic fingers
+
+        for (var i in topics) {
+            topics[i] = new RegExp('^' + topics[i] + '$', 'i');
+        };
+
         var query = {
-            tags: {
+            'tags': {
                 $in: topics
             }
         };
-        console.log(topics);
-        var result = Rooms.find().fetch();
+
+        var options = {
+            'sort': {
+                'feelings.rating': -1
+            },
+            'fields': {
+                'creatorId': 1,
+                'feelings': 1,
+                'tags': 1
+            }
+        };
+        var result = Rooms.find(query, options).fetch();
+
         console.log(result);
     }
 });

@@ -27,12 +27,15 @@ Template.roomItem.helpers({
             return false;
         } else {
             var userEmail = user ? user.emails[0].address : "";
-
-            if (this.guests.indexOf(userEmail) !== -1 || this.creatorName === user.username) {
-                return true;
+            if (!this.public) {
+                if (this.guests.indexOf(userEmail) !== -1 || this.creatorName === user.username) {
+                    return true;
+                } else {
+                    return false;
+                };
             } else {
-                return false;
-            };
+                return true;
+            }
         };
     }
 });
