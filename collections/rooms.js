@@ -142,10 +142,14 @@ Meteor.methods({
         }, {
             $limit: 10
         }];
-        var result = Rooms.aggregate(pipeline);
+        var experts = Rooms.aggregate(pipeline);
+
+        for(var expert in experts){
+            console.log(experts[expert]);
+        }
 
         //  math formula using visits, avg ranking, tags coincidence
-        console.log(result);
+        console.log(experts);
         //return expert usermail, avg ranking & number of visits in rooms
     }
 });
