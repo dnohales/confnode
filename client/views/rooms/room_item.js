@@ -12,14 +12,7 @@ Template.roomItem.helpers({
     calendarURL: function() {
         //dear god, where is the Room's URL?
         var roomUrl = window.location.href.slice(0, -1) + Rooms._prefix + this._id;
-        var url = "http://www.google.com/calendar/event?action=TEMPLATE&text=" + encodeURIComponent("Conf.Node: " + this.name) + "&details=" + encodeURIComponent(this.description + "\n\nJoin at: " + roomUrl) + "&dates=" + dateToGoogleISO(this.scheduledTime) + '/' + dateToGoogleISO(this.scheduledTime);
-        return url;
-    },
-    getTags: function(input) {
-        var tagArray = [];
-
-        tagArray = input.split(',');
-        return tagArray;
+        return "http://www.google.com/calendar/event?action=TEMPLATE&text=" + encodeURIComponent("Conf.Node: " + this.name) + "&details=" + encodeURIComponent(this.description + "\n\nJoin at: " + roomUrl) + "&dates=" + dateToGoogleISO(this.scheduledTime) + '/' + dateToGoogleISO(this.scheduledTime);
     },
     roomGuestsAccess: function() {
         var user = Meteor.user();
@@ -28,15 +21,11 @@ Template.roomItem.helpers({
         } else {
             var userEmail = user ? user.emails[0].address : "";
             if (!this.public) {
-                if (this.guests.indexOf(userEmail) !== -1 || this.creatorName === user.username) {
-                    return true;
-                } else {
-                    return false;
-                };
+                return !!(this.guests.indexOf(userEmail) !== -1 || this.creatorName === user.username);
             } else {
                 return true;
             }
-        };
+        }
     }
 });
 

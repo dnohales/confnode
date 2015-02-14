@@ -15,7 +15,7 @@ Template.roomsList.helpers({
                     tags: {
                         $in: [query]
                     }
-                }],
+                }]
             }, {
                 $or: [{
                     listed: true

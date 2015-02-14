@@ -48,6 +48,7 @@ Meteor.methods({
         };
     },
     roomAddFeeling: function(data) {
+        data.feeling.rating = parseInt(data.feeling.rating, 10);
         var room = Rooms.findOne({
             _id: data.roomId
         });
@@ -60,7 +61,7 @@ Meteor.methods({
             throw new Meteor.Error(422, 'The room owner is not allowed to rate the room');
         }
 
-        var feelingFound = false
+        var feelingFound = false;
 
         for (var i in room.feelings) {
             var feeling = room.feelings[i];
@@ -100,27 +101,52 @@ Meteor.methods({
 
         for (var i in topics) {
             topics[i] = new RegExp('^' + topics[i] + '$', 'i');
-        };
+        }
 
-        var query = {
-            'tags': {
-                $in: topics
+
+        var pipeline = [{
+            $unwind: "$feelings"
+        }, {
+            $match: {
+                tags: {
+                    $in: topics
+                }
             }
-        };
-
-        var options = {
-            'sort': {
-                'feelings.rating': -1
-            },
-            'fields': {
-                'creatorId': 1,
+        }, {
+            $project: {
+                'creatorEmail': 1,
                 'feelings': 1,
-                'tags': 1
+                'tags': 1,
+                'visits': 1
             }
-        };
-        var result = Rooms.find(query, options).fetch();
+        }, {
+            $group: {
+                _id: {
+                    presenter: "$creatorEmail"
+                },
+                avg_rating: {
+                    $avg: "$feelings.rating"
+                },
+                cant_visits: {
+                    $sum: "$visits"
+                },
+                all_tags: {
+                    $addToSet: "$tags"
+                }
+            }
+        }, {
+            $sort: {
+                cant_visits: -1,
+                avg: -1
+            }
+        }, {
+            $limit: 10
+        }];
+        var result = Rooms.aggregate(pipeline);
 
+        //  math formula using visits, avg ranking, tags coincidence
         console.log(result);
+        //return expert usermail, avg ranking & number of visits in rooms
     }
 });
 
@@ -192,7 +218,7 @@ var filterEmails = function(emails) {
         }
     }
     return validEmails;
-}
+};
 
 /**
  * Checks if an email is valid
@@ -202,4 +228,4 @@ var filterEmails = function(emails) {
 isValidEmail = function(email) {
     var emailFilter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return emailFilter.test(email);
-}
+};

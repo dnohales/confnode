@@ -40,7 +40,8 @@ Template.chatMsgMe.helpers({
 Template.roomChat.events({
     "submit form": function(e) {
         e.preventDefault();
-        var message = $('#chat-message').val();
+        var $chat = $('#chat-message');
+        var message = $chat.val();
         chatCollection.insert({
             userId: 'me',
             timeStamp: new Date(),
@@ -48,7 +49,7 @@ Template.roomChat.events({
             message: message
         });
         chatStream.emit('chat', message, this._id);
-        $('#chat-message').val('');
+        $chat.val('');
     }
 });
 
@@ -60,4 +61,4 @@ var getUsername = function(id) {
             Session.set('user-' + id, user.username);
         }
     });
-}
+};

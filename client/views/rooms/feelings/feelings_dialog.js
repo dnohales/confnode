@@ -3,7 +3,7 @@ var getFeeling = function() {
 
     return {
         rating: $form.find('[name="rating"]:checked').val(),
-        comment: $form.find('[name="comment"]').val(),
+        comment: $form.find('[name="comment"]').val()
     };
 };
 

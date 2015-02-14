@@ -34,11 +34,11 @@ Template.roomForm.events({
     },
 
     'switchChange.bootstrapSwitch #form_room [name="public"]': function() {
-        $('#form_room [name="accessPassword"]').prop('disabled', $('#form_room [name="public"]').prop('checked'));
+        $('#form_room').find('[name="accessPassword"]').prop('disabled', $('#form_room [name="public"]').prop('checked'));
     },
 
     'switchChange.bootstrapSwitch #form_room [name="scheduled"]': function() {
-        var dateTimePicker = $('#form_room [name="scheduledTime"]').data("DateTimePicker")
+        var dateTimePicker = $('#form_room [name="scheduledTime"]').data("DateTimePicker");
         if ($('#form_room [name="scheduled"]').prop('checked')) {
             dateTimePicker.enable();
         } else {

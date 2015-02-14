@@ -38,7 +38,7 @@ Template.roomPage.rendered = function() {
         if (data.type == 'volume') {
             showVolume(document.getElementById('volume_' + peer.id), data.volume);
         }
-    })
+    });
 
 
     webrtc.on('videoAdded', function(video, peer) {
@@ -201,7 +201,7 @@ Template.roomPage.events({
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
-        }
+        };
 
         toastr.success('Invitación enviada');
     },
