@@ -18,13 +18,14 @@ Template.roomForm.events({
             if (error) {
                 return alert(error.message);
             }
-            if (room.guests.lenght > 0) {
-                Meteor.call('sendEmail',
-                    room.guests,
-                    'conf.node@gmail.com',
-                    'Invitacion ' + room.name + " by " + Meteor.user().username,
-                    'This is a test of Email.send.');
-            };
+
+            if(room.guests.length > 0){
+              Meteor.call('sendEmail',
+                room.guests,
+                'conf.node@gmail.com',
+                'Invitacion ' + room.name + " by " + Meteor.user().username,
+                'This is a test of Email.send.');
+            }
 
             Router.go('roomPage', {
                 _id: result._id

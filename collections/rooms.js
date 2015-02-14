@@ -82,7 +82,7 @@ Meteor.methods({
             });
         } else {
             Rooms.update({
-                _id: room._id,
+                _id: room._id
             }, {
                 $push: {
                     'feelings': {
