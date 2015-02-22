@@ -4,10 +4,13 @@ Meteor.publish('rooms', function() {
 
 Meteor.publish('userData', function() {
     if (this.userId) {
-        return user = Meteor.users.find({_id: this.userId},
-            { fields: {
+        return Meteor.users.find({
+            _id: this.userId
+        }, {
+            fields: {
                 'visitedRooms': 1
-            }});
+            }
+        });
     } else {
         this.ready();
     }
