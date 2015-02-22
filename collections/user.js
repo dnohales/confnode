@@ -1,5 +1,5 @@
-Meteor.methods({
-    userAddVisitedRoom: function(roomId) {
+Meteor.users.helpers = {
+    addVisitedRoom: function(userId, roomId) {
         var rooms = Rooms.find({
             _id: roomId
         }, {
@@ -11,7 +11,7 @@ Meteor.methods({
 
         var users = Meteor.users.find({
             $and: [{
-                _id: Meteor.userId()
+                _id: userId
             }, {
                 visitedRooms: {
                     $elemMatch: {
@@ -25,7 +25,7 @@ Meteor.methods({
 
         if (users.count() === 0) {
             Meteor.users.update({
-                _id: Meteor.userId()
+                _id: userId
             }, {
                 $push: {
                     visitedRooms: {
@@ -43,6 +43,12 @@ Meteor.methods({
                 }
             });
         }
+    }
+};
+
+Meteor.methods({
+    userAddVisitedRoom: function(roomId) {
+        Meteor.users.helpers.addVisitedRoom(Meteor.userId(), roomId);
     },
 
     userUpdate: function(user) {
