@@ -95,16 +95,35 @@ Meteor.methods({
             });
         }
     },
-    searchExpert: function(topics) {
-        // IA feature : Intelligent recomendation of an expert in a set of topics
-        //OK..magic fingers
+    searchGuests: function(topics) {
+        //TODO
 
+
+        //way 2
+        var usersExperts = Meteor.call('searchExpert', topics);
+
+        //###################
+        //way 1
         for (var i in topics) {
             topics[i] = new RegExp('^' + topics[i] + '$', 'i');
         }
 
+        var users = Meteor.users.find({
+            $or: [
+                {'profile.interests': {$in: topics}},
+                {'profile.skills': {$in: topics}}
+            ]
+        });
 
-        var pipeline = [{
+
+        //return list of users experts/interested in topics
+    },
+    searchExpert: function(topics) {
+        for (var i in topics) {
+            topics[i] = new RegExp('^' + topics[i] + '$', 'i');
+        }
+
+        var filters = [{
             $unwind: "$feelings"
         }, {
             $match: {
@@ -117,7 +136,10 @@ Meteor.methods({
                 'creatorEmail': 1,
                 'feelings': 1,
                 'tags': 1,
-                'visits': 1
+                'visits': 1,
+                "old": {
+                    $subtract: [new Date(), "$submittedTime"]
+                }
             }
         }, {
             $group: {
@@ -132,24 +154,50 @@ Meteor.methods({
                 },
                 all_tags: {
                     $addToSet: "$tags"
+                },
+                cant_feelings: {
+                    $sum: 1
+                },
+                old: {
+                    $min: "$old"
                 }
             }
-        }, {
+        }];
+
+        var pipelineVisitsQuery = filters.concat([{
             $sort: {
-                cant_visits: -1,
-                avg: -1
+                cant_visits: -1
             }
         }, {
-            $limit: 10
-        }];
-        var experts = Rooms.aggregate(pipeline);
+            $limit: 3
+        }]);
+        var resultsByVisits = Rooms.aggregate(pipelineVisitsQuery);
 
-        for(var expert in experts){
-            console.log(experts[expert]);
+        var pipelineTrendsQuery = filters.concat([{
+            $sort: {
+                old: 1
+            }
+        }]);
+
+        var resultsByTrends = Rooms.aggregate(pipelineTrendsQuery);
+
+        for (var expert in resultsByTrends) {
+            var expert = resultsByTrends[expert];
+            expert.old = msToDays(expert.old);
+
+            var trendCoefficient = expert.cant_visits / Math.pow(expert.old, 1.5);
+
+            expert.trendCoefficient = trendCoefficient;
         }
 
-        //  math formula using visits, avg ranking, tags coincidence
-        console.log(experts);
+        resultsByTrends.sort(compare);
+        resultsByTrends.slice(0, 2);
+
+        console.log('########## EXPERTS BY NUMBER OF VISITS ##############');
+        console.info(resultsByVisits);
+        console.log('########## EXPERTS BY TRENDS ##############');
+        console.info(resultsByTrends);
+
         //return expert usermail, avg ranking & number of visits in rooms
     }
 });
@@ -190,6 +238,13 @@ var validateRoom = function(room) {
     room.guests = filterEmails(room.guests);
 };
 
+var msToDays = function(mil) {
+    return Math.floor((mil / (1000 * 60 * 60 * 24)));
+};
+
+var compare = function(a, b) {
+    return b.trendCoefficient - a.trendCoefficient;
+};
 
 /**
  * Compares two dates

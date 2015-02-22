@@ -7,6 +7,8 @@ Template.roomForm.events({
         var method;
         if (isInsert(this)) {
             method = 'roomInsert';
+            //TODO suggest guests based on tags
+            Meteor.call('searchGuests', room.tags);
         } else {
             method = 'roomUpdate';
             _.extend(room, {
@@ -19,12 +21,12 @@ Template.roomForm.events({
                 return alert(error.message);
             }
 
-            if(room.guests.length > 0){
-              Meteor.call('sendEmail',
-                room.guests,
-                'conf.node@gmail.com',
-                'Invitacion ' + room.name + " by " + Meteor.user().username,
-                'This is a test of Email.send.');
+            if (room.guests.length > 0) {
+                Meteor.call('sendEmail',
+                    room.guests,
+                    'conf.node@gmail.com',
+                    'Invitacion ' + room.name + " by " + Meteor.user().username,
+                    'This is a test of Email.send.');
             }
 
             Router.go('roomPage', {
