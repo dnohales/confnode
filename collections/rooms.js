@@ -12,6 +12,57 @@ Rooms.deny({
     }
 });
 
+Rooms.helpers = {
+    addFeeling: function(data, userId) {
+        data.feeling.rating = parseInt(data.feeling.rating, 10);
+        var room = Rooms.findOne({
+            _id: data.roomId
+        });
+
+        if (!room) {
+            throw new Meteor.Error(422, 'Room does not exists');
+        }
+
+        if (Permissions.ownsDocument(userId, room)) {
+            throw new Meteor.Error(422, 'The room owner is not allowed to rate the room');
+        }
+
+        var feelingFound = false;
+
+        for (var i in room.feelings) {
+            var feeling = room.feelings[i];
+            if (feeling.user_id == userId) {
+                feelingFound = true;
+                break;
+            }
+        }
+
+        if (feelingFound) {
+            Rooms.update({
+                _id: room._id,
+                'feelings.user_id': userId
+            }, {
+                $set: {
+                    'feelings.$.rating': data.feeling.rating,
+                    'feelings.$.comment': data.feeling.comment
+                }
+            });
+        } else {
+            Rooms.update({
+                _id: room._id
+            }, {
+                $push: {
+                    'feelings': {
+                        'user_id': userId,
+                        'rating': data.feeling.rating,
+                        'comment': data.feeling.comment
+                    }
+                }
+            });
+        }
+    }
+};
+
 Meteor.methods({
     roomInsert: function(room) {
         validateRoom(room);
@@ -48,52 +99,7 @@ Meteor.methods({
         };
     },
     roomAddFeeling: function(data) {
-        data.feeling.rating = parseInt(data.feeling.rating, 10);
-        var room = Rooms.findOne({
-            _id: data.roomId
-        });
-
-        if (!room) {
-            throw new Meteor.Error(422, 'Room does not exists');
-        }
-
-        if (Permissions.ownsDocument(Meteor.userId(), room)) {
-            throw new Meteor.Error(422, 'The room owner is not allowed to rate the room');
-        }
-
-        var feelingFound = false;
-
-        for (var i in room.feelings) {
-            var feeling = room.feelings[i];
-            if (feeling.user_id == Meteor.userId()) {
-                feelingFound = true;
-                break;
-            }
-        }
-
-        if (feelingFound) {
-            Rooms.update({
-                _id: room._id,
-                'feelings.user_id': Meteor.userId()
-            }, {
-                $set: {
-                    'feelings.$.rating': data.feeling.rating,
-                    'feelings.$.comment': data.feeling.comment
-                }
-            });
-        } else {
-            Rooms.update({
-                _id: room._id
-            }, {
-                $push: {
-                    'feelings': {
-                        'user_id': Meteor.userId(),
-                        'rating': data.feeling.rating,
-                        'comment': data.feeling.comment
-                    }
-                }
-            });
-        }
+        Rooms.helpers.addFeeling(data, Meteor.userId());
     },
     searchGuests: function(topics) {
         //TODO

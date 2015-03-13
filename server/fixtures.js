@@ -1,4 +1,30 @@
 var FixtureManager = {
+    generateTags: function() {
+        var tagsSets = [
+            ['meteor', 'nodejs', 'mongodb', 'npm'],
+            ['symfony', 'php', 'doctrine', 'twig'],
+            ['gaming', 'unity', 'game-engines'],
+            ['economy']
+        ];
+
+        var set = Fake.fromArray(tagsSets);
+        var tags = [];
+        var matchDegrader = 0;
+
+        for (var i in set) {
+            var matchArray = [true];
+            for (var j = 0; j < matchDegrader; j++) {
+                matchArray.push(false);
+            }
+            if (Fake.fromArray(matchArray)) {
+                tags.push(set[i]);
+            }
+            matchDegrader++;
+        }
+
+        return tags;
+    },
+
     run: function() {
         var users = {};
 
@@ -69,7 +95,7 @@ var FixtureManager = {
 
                     name: Fake.sentence(3).replace('.', ''),
                     description: Fake.sentence(20),
-                    tags: [],
+                    tags: FixtureManager.generateTags(),
                     guests: [],
                     listed: true,
                     public: true,
@@ -81,8 +107,19 @@ var FixtureManager = {
                 var users = Meteor.users.find().fetch();
                 for (var k in users) {
                     var u = users[k];
-                    if (_.random(0, 1) === 1) {
-                        Meteor.users.helpers.addVisitedRoom(u._id, roomId);
+                    if (u._id !== user._id) {
+                        if (_.random(0, 1) === 1) {
+                            Meteor.users.helpers.addVisitedRoom(u._id, roomId);
+                            if (Fake.fromArray([0, 0, 1]) === 1) {
+                                Rooms.helpers.addFeeling({
+                                    roomId: roomId,
+                                    feeling: {
+                                        rating: Fake.fromArray([0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5]),
+                                        comment: Fake.sentence(15)
+                                    }
+                                }, u._id);
+                            }
+                        }
                     }
                 }
             }
