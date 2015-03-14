@@ -2,40 +2,32 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <div class="pull-left">
-                <h3 class="panel-title">{{name}}</h3>
-                {{#each tags}}
-                    <span class="label label-default">{{this}}</span>
-                {{/each}}
+                <h3 class="panel-title">{{name}}</h3> {{#each tags}}
+                <span class="label label-default">{{this}}</span> {{/each}}
 
             </div>
             {{#unless ownRoom}}
-                <a href="#" id="feelings_button" class="btn btn-warning pull-right">Give feedback</a>
-            {{/unless}}
+            <a href="#" id="feelings_button" class="btn btn-warning pull-right">Give feedback</a> {{/unless}}
             <div class="clearfix"></div>
         </div>
         {{#if ownRoom}}
-            <div class="panel-footer">
-                <label for="chat">Chat?</label>
-                <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" />
-                |
-                <button class="btn btn-default btn-xs" title="Share this content" data-toggle="modal" data-target="#myModal">
-                    <i class="fa fa-share-alt"></i>
-                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                    Invite
-                </button>
-                |
-                <button class="btn btn-default btn-xs" title="Share this content" data-toggle="modal" data-target="#expertModal">
-                    <i class="fa fa-share-alt"></i>
-                    <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span>
-                    Search an expert
-                </button>
-            </div>
+        <div class="panel-footer">
+            <label for="chat">Chat?</label>
+            <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" /> |
+            <button class="btn btn-default btn-xs" title="Share this content" data-toggle="modal" data-target="#myModal">
+                <i class="fa fa-share-alt"></i>
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite
+            </button>
+            |
+            <button class="btn btn-default btn-xs" title="Share this content" data-toggle="modal" data-target="#expertModal">
+                <i class="fa fa-share-alt"></i>
+                <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span> Search an expert
+            </button>
+        </div>
         {{/if}}
 
         <div class="panel-body">
-            {{#if chat}}
-                {{> roomChat}}
-            {{/if}}
+            {{#if chat}} {{> roomChat}} {{/if}}
 
 
             <div class="videoContainer">
@@ -53,24 +45,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                    </button>
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-share-alt"></i> Invite more guests</h4>
                 </div>
                 <div class="modal-body">
-                    <h3>Intelligent recommendation expert</h3>
-                    <form id="form_lookfor">
-                        <div class="input-group">
-                            <label>Topics</label>
-                            <ul name="topics">
-                            </ul>
-                        </div>
-                        <br />
-                        <button type="submit" value="sub" name="sub" class="btn btn-success pull-right"><i class="fa fa-share"></i> 
-                            Search!
-                        </button>
-                        <div class="clearfix"></div>
-                    </form>
-                    <hr>
                     <h3>Add new guest</h3>
                     <form id="form_invite">
                         <div class="input-group">
@@ -78,11 +57,90 @@
                             <input type="email" id="guest_email" class="form-control" placeholder="guest@email.com">
                         </div>
                         <br />
-                        <button type="submit" value="sub" name="sub" class="btn btn-primary pull-right"><i class="fa fa-share"></i> 
-                            Add now!
+                        <button type="submit" value="sub" name="sub" class="btn btn-primary pull-right"><i class="fa fa-share"></i> Add now!
                         </button>
                         <div class="clearfix"></div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expert Modal -->
+    <div class="modal fade" id="expertModal" tabindex="-1" role="dialog" aria-labelledby="expertModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-share-alt"></i> Invite more guests</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Intelligent recommendation expert</h3>
+                    <form id="form_lookFor">
+                        <div class="input-group">
+                            <label>Topics</label>
+                            <ul name="topics">
+                            </ul>
+                        </div>
+                        <br />
+                        <button type="submit" value="sub" name="sub" class="btn btn-success pull-right"><i class="fa fa-share"></i> Search!
+                        </button>
+                        <div class="clearfix"></div>
+                    </form>
+                    <hr>
+                    <table class="table">
+                        <caption>Best experts by number of visitors</caption>
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Average rating</th>
+                                <th>#Visitors</th>
+                                <th>#Comments</th>
+                                <th>Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each experts}}
+                            <tr>
+                                <td>{{user}}</td>
+                                <td>{{avg_rating}}</td>
+                                <td>{{cant_visits}}</td>
+                                <td>{{cant_feelings}}</td>
+                                <td>{{#each all_tags}}
+                                    <span class="label label-success">{{this}}</span> {{/each}}
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <caption>Best experts by trends</caption>
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Average rating</th>
+                                <th>#Visitors</th>
+                                <th>#Comments</th>
+                                <th>Trend coefficient</th>
+                                <th>Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each expertsTrends}}
+                            <tr>
+                                <td>{{user}}</td>
+                                <td>{{avg_rating}}</td>
+                                <td>{{cant_visits}}</td>
+                                <td>{{cant_feelings}}</td>
+                                <td>{{trend_coefficient}}</td>
+                                <td>{{#each all_tags}}
+                                    <span class="label label-success">{{this}}</span> {{/each}}
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -134,6 +134,9 @@ Meteor.methods({
         //return list of users experts/interested in topics
     },
     searchExpert: function(topics) {
+        if (this.isSimulation) {
+            return []
+        }
         for (var i in topics) {
             if (topics.hasOwnProperty(i)) {
                 topics[i] = new RegExp('^' + topics[i] + '$', 'i');
@@ -205,6 +208,37 @@ Meteor.methods({
                     $sum: "$cant_feelings"
                 }
             }
+        }, {
+            $project: {
+                '_id': 0,
+                'avg_rating': {
+                    $divide: [{
+                            $subtract: [{
+                                $multiply: ['$avg_rating', 100]
+                            }, {
+                                $mod: [{
+                                    $multiply: ['$avg_rating', 100]
+                                }, 1]
+                            }]
+                        },
+                        100
+                    ]
+                },
+                'old': 1,
+                'cant_visits': 1,
+                'all_tags': {
+                    $cond: [{
+                            "$eq": [
+                                "$all_tags", [null]
+                            ]
+                        },
+                        [],
+                        "$all_tags"
+                    ]
+                },
+                'cant_feelings': 1,
+                'user': '$_id.creator'
+            }
         }];
 
         var pipelineVisitsQuery = filters.concat([{
@@ -220,6 +254,8 @@ Meteor.methods({
             $sort: {
                 old: 1
             }
+        }, {
+            $limit: 5
         }]);
 
         var resultsByTrends = Rooms.aggregate(pipelineTrendsQuery);
@@ -228,19 +264,14 @@ Meteor.methods({
             if (resultsByTrends.hasOwnProperty(expertResult)) {
                 var expert = resultsByTrends[expertResult];
                 expert.old = msToDays(expert.old);
-                expert.trendCoefficient = expert.cant_visits / Math.pow(expert.old, 1.5);
+                expert.trend_coefficient = expert.cant_visits / Math.pow(expert.old, 1.5);
             }
         }
 
         resultsByTrends.sort(compare);
         resultsByTrends.slice(0, 2);
 
-        console.log('########## EXPERTS BY NUMBER OF VISITS ##############');
-        console.info(resultsByVisits);
-        console.log('########## EXPERTS BY TRENDS ##############');
-        console.info(resultsByTrends);
-
-        //return expert usermail, avg ranking & number of visits in rooms
+        return [resultsByVisits, resultsByTrends];
     }
 });
 
@@ -285,7 +316,7 @@ var msToDays = function(mil) {
 };
 
 var compare = function(a, b) {
-    return b.trendCoefficient - a.trendCoefficient;
+    return b.trend_coefficient - a.trend_coefficient;
 };
 
 /**

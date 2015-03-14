@@ -1,7 +1,10 @@
 var webrtc;
 
 Template.roomPage.rendered = function() {
-    var $form = $('#form_lookfor');
+    delete Session.keys['search-expert-query'];
+    delete Session.keys['search-expert-trend-query'];
+
+    var $form = $('#form_lookFor');
 
     var tagitOptions = {
         'removeConfirmation': true,
@@ -140,6 +143,12 @@ Template.roomPage.helpers({
     ownRoom: function() {
         //catch when owner is logged after page was rendered switcher not works
         return this.creatorId == Meteor.userId();
+    },
+    experts: function() {
+        return Session.get('search-expert-query');
+    },
+    expertsTrends: function() {
+        return Session.get('search-expert-trend-query');
     }
 });
 
@@ -156,11 +165,18 @@ Template.roomPage.events({
             }
         });
     },
-    'submit #form_lookfor': function(e) {
+    'submit #form_lookFor': function(e) {
         e.preventDefault();
-        var $form = $('#form_lookfor');
+        var $form = $('#form_lookFor');
         var topics = $form.find('[name="topics"]').tagit("assignedTags");
-        Meteor.call('searchExpert', topics);
+        Meteor.call('searchExpert', topics, function(error, result) {
+            if (error) {
+                return alert(error.message);
+            }
+            Session.set('search-expert-query', result[0]);
+            Session.set('search-expert-trend-query', result[1]);
+            console.log(result);
+        });
     },
     'submit #form_invite': function(e) {
         e.preventDefault();
