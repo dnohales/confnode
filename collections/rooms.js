@@ -30,7 +30,7 @@ Rooms.helpers = {
         var feelingFound = false;
 
         for (var i in room.feelings) {
-            if(room.feelings.hasOwnProperty(i)){
+            if (room.feelings.hasOwnProperty(i)) {
                 var feeling = room.feelings[i];
                 if (feeling.user_id == userId) {
                     feelingFound = true;
@@ -113,7 +113,7 @@ Meteor.methods({
         //###################
         //way 1
         for (var i in topics) {
-            if(topics.hasOwnProperty(i)){
+            if (topics.hasOwnProperty(i)) {
                 topics[i] = new RegExp('^' + topics[i] + '$', 'i');
             }
         }
@@ -135,7 +135,7 @@ Meteor.methods({
     },
     searchExpert: function(topics) {
         for (var i in topics) {
-            if(topics.hasOwnProperty(i)){
+            if (topics.hasOwnProperty(i)) {
                 topics[i] = new RegExp('^' + topics[i] + '$', 'i');
             }
         }
