@@ -23,7 +23,8 @@ Template.feelingsDialog.helpers({
 Template.feelingsDialog.events({
     'submit #form_feelings_dialog': function(e) {
         e.preventDefault();
-        var buttonsSelector = $('#feelings_dialog .modal-footer .btn');
+        var feelingsDialog = $('#feelings_dialog');
+        var buttonsSelector = feelingsDialog.find('.modal-footer .btn');
         buttonsSelector.prop('disabled', true);
 
         Meteor.call('roomAddFeeling', {
@@ -36,7 +37,7 @@ Template.feelingsDialog.events({
                 return alert(error.message);
             }
 
-            $('#feelings_dialog .modal').modal('hide');
+            feelingsDialog.find('.modal').modal('hide');
         });
     }
 });

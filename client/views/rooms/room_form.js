@@ -25,7 +25,7 @@ Template.roomForm.events({
                 Meteor.call('sendEmail',
                     room.guests,
                     'conf.node@gmail.com',
-                    'Invitacion ' + room.name + " by " + Meteor.user().username,
+                    'Invite ' + room.name + " by " + Meteor.user().username,
                     'This is a test of Email.send.');
             }
 
@@ -36,12 +36,14 @@ Template.roomForm.events({
     },
 
     'switchChange.bootstrapSwitch #form_room [name="public"]': function() {
-        $('#form_room').find('[name="accessPassword"]').prop('disabled', $('#form_room [name="public"]').prop('checked'));
+        var formRoomDiv = $('#form_room');
+        formRoomDiv.find('[name="accessPassword"]').prop('disabled', formRoomDiv.find('[name="public"]').prop('checked'));
     },
 
     'switchChange.bootstrapSwitch #form_room [name="scheduled"]': function() {
-        var dateTimePicker = $('#form_room [name="scheduledTime"]').data("DateTimePicker");
-        if ($('#form_room [name="scheduled"]').prop('checked')) {
+        var formRoomDiv = $('#form_room');
+        var dateTimePicker = formRoomDiv.find('[name="scheduledTime"]').data("DateTimePicker");
+        if (formRoomDiv.find('[name="scheduled"]').prop('checked')) {
             dateTimePicker.enable();
         } else {
             dateTimePicker.disable();

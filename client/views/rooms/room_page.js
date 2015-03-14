@@ -203,12 +203,12 @@ Template.roomPage.events({
             "hideMethod": "fadeOut"
         };
 
-        toastr.success('Invitación enviada');
+        toastr.success('Invite shipped');
     },
     'hidden.bs.modal #myModal': function() {
         $('myModal').find('form')[0].reset();
     },
     'click #feelings_button': function() {
-        $('#feelings_dialog .modal').modal();
+        $('#feelings_dialog').find('.modal').modal();
     }
 });
