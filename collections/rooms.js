@@ -30,10 +30,12 @@ Rooms.helpers = {
         var feelingFound = false;
 
         for (var i in room.feelings) {
-            var feeling = room.feelings[i];
-            if (feeling.user_id == userId) {
-                feelingFound = true;
-                break;
+            if(room.feelings.hasOwnProperty(i)){
+                var feeling = room.feelings[i];
+                if (feeling.user_id == userId) {
+                    feelingFound = true;
+                    break;
+                }
             }
         }
 
@@ -64,11 +66,11 @@ Rooms.helpers = {
 };
 
 Meteor.methods({
-    roomInsert: function(room) {
-        validateRoom(room);
+    roomInsert: function(infoRoom) {
+        validateRoom(infoRoom);
 
         var user = Meteor.user();
-        var room = _.extend(room, {
+        var room = _.extend(infoRoom, {
             creatorId: user._id,
             creatorEmail: user.emails[0].address,
             creatorName: user.username,
@@ -106,27 +108,36 @@ Meteor.methods({
 
 
         //way 2
-        var usersExperts = Meteor.call('searchExpert', topics);
+        //var usersExperts = Meteor.call('searchExpert', topics);
 
         //###################
         //way 1
         for (var i in topics) {
-            topics[i] = new RegExp('^' + topics[i] + '$', 'i');
+            if(topics.hasOwnProperty(i)){
+                topics[i] = new RegExp('^' + topics[i] + '$', 'i');
+            }
         }
 
-        var users = Meteor.users.find({
-            $or: [
-                {'profile.interests': {$in: topics}},
-                {'profile.skills': {$in: topics}}
-            ]
-        });
+        //var users = Meteor.users.find({
+        //    $or: [{
+        //        'profile.interests': {
+        //            $in: topics
+        //        }
+        //    }, {
+        //        'profile.skills': {
+        //            $in: topics
+        //        }
+        //    }]
+        //});
 
 
         //return list of users experts/interested in topics
     },
     searchExpert: function(topics) {
         for (var i in topics) {
-            topics[i] = new RegExp('^' + topics[i] + '$', 'i');
+            if(topics.hasOwnProperty(i)){
+                topics[i] = new RegExp('^' + topics[i] + '$', 'i');
+            }
         }
 
         var filters = [{
@@ -136,9 +147,13 @@ Meteor.methods({
                 tags: {
                     $in: topics
                 }
+                //, submittedTime : { //Fixture create rooms with date of future OMG
+                //    $lte: new Date()
+                //} 
             }
         }, {
             $project: {
+                '_id': 1,
                 'creatorEmail': 1,
                 'feelings': 1,
                 'tags': 1,
@@ -150,22 +165,44 @@ Meteor.methods({
         }, {
             $group: {
                 _id: {
-                    presenter: "$creatorEmail"
+                    room: "$_id",
+                    creator: "$creatorEmail"
                 },
                 avg_rating: {
                     $avg: "$feelings.rating"
                 },
+                old: {
+                    $min: "$old"
+                },
                 cant_visits: {
-                    $sum: "$visits"
+                    $max: "$visits"
                 },
                 all_tags: {
                     $addToSet: "$tags"
                 },
                 cant_feelings: {
                     $sum: 1
+                }
+            }
+        }, {
+            $group: {
+                _id: {
+                    creator: "$_id.creator"
+                },
+                avg_rating: {
+                    $avg: "$avg_rating"
                 },
                 old: {
                     $min: "$old"
+                },
+                cant_visits: {
+                    $sum: "$cant_visits"
+                },
+                all_tags: {
+                    $addToSet: "$all_tags"
+                },
+                cant_feelings: {
+                    $sum: "$cant_feelings"
                 }
             }
         }];
@@ -187,13 +224,12 @@ Meteor.methods({
 
         var resultsByTrends = Rooms.aggregate(pipelineTrendsQuery);
 
-        for (var expert in resultsByTrends) {
-            var expert = resultsByTrends[expert];
-            expert.old = msToDays(expert.old);
-
-            var trendCoefficient = expert.cant_visits / Math.pow(expert.old, 1.5);
-
-            expert.trendCoefficient = trendCoefficient;
+        for (var expertResult in resultsByTrends) {
+            if (resultsByTrends.hasOwnProperty(expertResult)) {
+                var expert = resultsByTrends[expertResult];
+                expert.old = msToDays(expert.old);
+                expert.trendCoefficient = expert.cant_visits / Math.pow(expert.old, 1.5);
+            }
         }
 
         resultsByTrends.sort(compare);
@@ -256,17 +292,21 @@ var compare = function(a, b) {
  * Compares two dates
  * @param {Date} d1 first date
  * @param {Date} d2 second date
- * @returns {integer} =0 if dates are equal, <0 if first date is earlier than second one
+ * @returns {number} =0 if dates are equal, <0 if first date is earlier than second one
  */
 var compareDates = function(d1, d2) {
-    if (d1.getYear() != d2.getYear())
+    if (d1.getYear() != d2.getYear()) {
         return d1.getYear() - d2.getYear();
-    if (d1.getMonth() != d2.getMonth())
+    }
+    if (d1.getMonth() != d2.getMonth()) {
         return d1.getMonth() - d2.getMonth();
-    if (d1.getDate() != d2.getDate())
+    }
+    if (d1.getDate() != d2.getDate()) {
         return d1.getDate() - d2.getDate();
-    if (d1.getHours() != d2.getHours())
+    }
+    if (d1.getHours() != d2.getHours()) {
         return d1.getHours() - d2.getHours();
+    }
     return d1.getMinutes() - d2.getMinutes()
 };
 
@@ -291,6 +331,6 @@ var filterEmails = function(emails) {
  * @returns {Boolean} true if email format is valid, false otherwise
  */
 isValidEmail = function(email) {
-    var emailFilter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var emailFilter = /^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return emailFilter.test(email);
 };
