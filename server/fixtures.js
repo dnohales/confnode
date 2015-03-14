@@ -85,7 +85,7 @@ var FixtureManager = {
 
             for (var j = 0; j < roomsCount; j++) {
                 var date = new Date();
-                date.setDate(date.getDate() - _.random(-180, -1));
+                date.setDate(date.getDate() - _.random(1, 180));
 
                 roomId = Rooms.insert({
                     creatorId: user._id,
