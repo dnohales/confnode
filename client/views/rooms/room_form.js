@@ -1,4 +1,14 @@
 Template.roomForm.events({
+    'click #delete': function(e) {
+        e.preventDefault();
+
+        if (confirm("Are you sure you want to delete this room?\nRoom name: " + this.name)) {
+            var currentRoomId = this._id;
+            Rooms.remove(currentRoomId);
+            Router.go('roomsList');
+        }
+    },
+
     'submit form': function(e) {
         var room;
         var method;
@@ -36,20 +46,10 @@ Template.roomForm.events({
         });
     },
 
-    'switchChange.bootstrapSwitch #form_room [name="public"]': function() {
-        var formRoomDiv = $('#form_room');
-        formRoomDiv.find('[name="accessPassword"]').prop('disabled', formRoomDiv.find('[name="public"]').prop('checked'));
+    'switchChange.bootstrapSwitch #form_room [name="scheduled"]': function() {
+        refreshScheduledTimeControls();
     },
 
-    'switchChange.bootstrapSwitch #form_room [name="scheduled"]': function() {
-        var formRoomDiv = $('#form_room');
-        var dateTimePicker = formRoomDiv.find('[name="scheduledTime"]').data("DateTimePicker");
-        if (formRoomDiv.find('[name="scheduled"]').prop('checked')) {
-            dateTimePicker.enable();
-        } else {
-            dateTimePicker.disable();
-        }
-    }
 });
 
 var getRoom = function() {
@@ -69,6 +69,11 @@ var getRoom = function() {
     };
 };
 
+var refreshScheduledTimeControls = function() {
+    var $form = $('#form_room');
+    $form.find('.scheduled-time-controls').toggle($form.find('[name="scheduled"]').prop('checked'));
+};
+
 Template.roomForm.helpers({
     isInsert: function() {
         return isInsert(this);
@@ -85,13 +90,6 @@ var isInsert = function(context) {
 Template.roomForm.rendered = function() {
     var $form = $('#form_room');
     var data = this.data;
-    var datePicker;
-    var dateNow;
-    var inputAccessPassword;
-    var checkboxListed;
-    var checkboxChat;
-    var checkboxPublic;
-    var checkboxScheduled;
 
     var tagitOptions = {
         'removeConfirmation': true,
@@ -106,53 +104,34 @@ Template.roomForm.rendered = function() {
         }
     }));
 
-    checkboxScheduled = $form.find('[name="scheduled"]');
-    checkboxPublic = $form.find('[name="public"]');
-    checkboxChat = $form.find('[name="chat"]');
-    checkboxListed = $form.find('[name="listed"]');
-    inputAccessPassword = $form.find('[name="accessPassword"]');
-    dateNow = new Date();
-    datePicker = $form.find('[name="scheduledTime"]').datetimepicker({
+    var checkboxScheduled = $form.find('[name="scheduled"]');
+    var checkboxPublic = $form.find('[name="public"]');
+    var checkboxChat = $form.find('[name="chat"]');
+    var checkboxListed = $form.find('[name="listed"]');
+    var dateNow = new Date();
+    var datePicker = $form.find('[name="scheduledTime"]').datetimepicker({
         minDate: dateNow
     }).data("DateTimePicker");
 
-    if (data === null) { // If this is '/submit'
-        checkboxPublic.prop('checked', true);
+    if (data === null) {
+        // If this is '/submit'
         checkboxScheduled.prop('checked', true);
+        datePicker.setDate(dateNow);
+        checkboxPublic.prop('checked', true);
         checkboxListed.prop('checked', true);
         checkboxChat.prop('checked', true);
-        datePicker.setDate(dateNow);
-    } else { // If this is '/edit'
-        if (data.scheduled) {
-            checkboxScheduled.prop('checked', true);
+    } else {
+        // If this is '/edit'
+        checkboxScheduled.prop('checked', data.scheduled);
+        if (data.scheduledTime) {
             datePicker.setDate(data.scheduledTime);
-        } else {
-            checkboxScheduled.prop('checked', false);
-            datePicker.disable();
         }
-        if (data.public) {
-            checkboxPublic.prop('checked', true);
-            inputAccessPassword.prop('disabled', true);
-        } else {
-            checkboxPublic.prop('checked', false);
-        }
+        checkboxPublic.prop('checked', data.public);
         checkboxListed.prop('checked', data.listed);
         checkboxChat.prop('checked', data.chat);
-
     }
+
+    refreshScheduledTimeControls();
 
     $('.bootstrap-switch').bootstrapSwitch('size', 'mini', 'mini');
 };
-
-Template.roomForm.events({
-    'click #delete': function(e) {
-        var currentRoomId;
-        e.preventDefault();
-
-        if (confirm("Are you sure you want to delete this room?\nRoom name: " + this.name)) {
-            currentRoomId = this._id;
-            Rooms.remove(currentRoomId);
-            Router.go('roomsList');
-        }
-    }
-});
