@@ -139,7 +139,7 @@ Meteor.methods({
         }
         for (var i in topics) {
             if (topics.hasOwnProperty(i)) {
-                topics[i] = new RegExp('^' + topics[i] + '$', 'i');
+                topics[i] = new RegExp('^' + topics[i], 'i');
             }
         }
 
@@ -150,9 +150,6 @@ Meteor.methods({
                 tags: {
                     $in: topics
                 }
-                //, submittedTime : { //Fixture create rooms with date of future OMG
-                //    $lte: new Date()
-                //} 
             }
         }, {
             $project: {
@@ -249,7 +246,12 @@ Meteor.methods({
             $limit: 3
         }]);
         var resultsByVisits = Rooms.aggregate(pipelineVisitsQuery);
-
+        for (var expertVisit in resultsByVisits) {
+            if (resultsByVisits.hasOwnProperty(expertVisit)) {
+                var expert = resultsByVisits[expertVisit];
+                expert.all_tags = _.uniq(_.flatten(expert.all_tags));
+            }
+        }
         var pipelineTrendsQuery = filters.concat([{
             $sort: {
                 old: 1
@@ -264,7 +266,9 @@ Meteor.methods({
             if (resultsByTrends.hasOwnProperty(expertResult)) {
                 var expert = resultsByTrends[expertResult];
                 expert.old = msToDays(expert.old);
-                expert.trend_coefficient = expert.cant_visits / Math.pow(expert.old, 1.5);
+                var coefficient = expert.cant_visits / Math.pow(expert.old, 1.5);
+                expert.trend_coefficient = Math.round(coefficient * 100) / 100;
+                expert.all_tags = _.uniq(_.flatten(expert.all_tags));
             }
         }
 
@@ -274,6 +278,18 @@ Meteor.methods({
         return [resultsByVisits, resultsByTrends];
     }
 });
+
+Array.prototype.unique = function() {
+    var a = this.concat();
+    for (var i = 0; i < a.length; ++i) {
+        for (var j = i + 1; j < a.length; ++j) {
+            if (a[i] === a[j])
+                a.splice(j--, 1);
+        }
+    }
+
+    return a;
+};
 
 var validateRoom = function(room) {
     check(room, {
