@@ -16,7 +16,7 @@
                     <label>Tags</label>
                     <ul name="tags">
                         {{#each tags}}
-                            <li>{{.}}</li>
+                        <li>{{.}}</li>
                         {{/each}}
                     </ul>
                 </div>
@@ -30,7 +30,7 @@
                     <label>Guests</label>
                     <ul name="guests">
                         {{#each guests}}
-                            <li>{{.}}</li>
+                        <li>{{.}}</li>
                         {{/each}}
                     </ul>
                 </div>
@@ -67,10 +67,8 @@
         </div>
 
         <div class="controls">
-            <input type="submit" value="{{submitButtonName}}" class="btn btn-primary" />
-            {{#unless isInsert}}
-                <a class="btn btn-danger" id="delete" href="#">Delete room</a>
-            {{/unless}}
+            <input type="submit" value="{{submitButtonName}}" class="btn btn-primary" /> {{#unless isInsert}}
+            <a class="btn btn-danger" id="delete" href="#">Delete room</a> {{/unless}}
         </div>
     </form>
 </template>

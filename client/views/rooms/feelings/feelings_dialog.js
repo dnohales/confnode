@@ -9,8 +9,9 @@ var getFeeling = function() {
 
 Template.feelingsDialog.helpers({
     feeling: function() {
+        var feeling;
         for (var i in this.feelings) {
-            var feeling = this.feelings[i];
+            feeling = this.feelings[i];
             if (feeling.user_id == Meteor.userId()) {
                 return feeling;
             }
@@ -22,9 +23,11 @@ Template.feelingsDialog.helpers({
 
 Template.feelingsDialog.events({
     'submit #form_feelings_dialog': function(e) {
+        var buttonsSelector;
+        var feelingsDialog;
         e.preventDefault();
-        var feelingsDialog = $('#feelings_dialog');
-        var buttonsSelector = feelingsDialog.find('.modal-footer .btn');
+        feelingsDialog = $('#feelings_dialog');
+        buttonsSelector = feelingsDialog.find('.modal-footer .btn');
         buttonsSelector.prop('disabled', true);
 
         Meteor.call('roomAddFeeling', {

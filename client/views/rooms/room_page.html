@@ -29,14 +29,8 @@
         <div class="panel-body">
             {{#if chat}} {{> roomChat}} {{/if}}
 
+            <iframe src="https://appear.in/{{_id}}" width="800" height="640" frameborder="0"></iframe>
 
-            <div class="videoContainer">
-                <video id="localVideo" oncontextmenu="return false;"></video>
-                <div id="localVolume" class="volumeBar"></div>
-            </div>
-            <div id="remotes" class="child panel panel-default">
-
-            </div>
         </div>
     </div>
 

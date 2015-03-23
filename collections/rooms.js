@@ -67,10 +67,12 @@ Rooms.helpers = {
 
 Meteor.methods({
     roomInsert: function(infoRoom) {
+        var user;
+        var room;
         validateRoom(infoRoom);
 
-        var user = Meteor.user();
-        var room = _.extend(infoRoom, {
+        user = Meteor.user();
+        room = _.extend(infoRoom, {
             creatorId: user._id,
             creatorEmail: user.emails[0].address,
             creatorName: user.username,
@@ -134,6 +136,11 @@ Meteor.methods({
         //return list of users experts/interested in topics
     },
     searchExpert: function(topics) {
+        var resultsByTrends;
+        var pipelineTrendsQuery;
+        var resultsByVisits;
+        var pipelineVisitsQuery;
+        var filters;
         if (this.isSimulation) {
             return []
         }
@@ -143,7 +150,7 @@ Meteor.methods({
             }
         }
 
-        var filters = [{
+        filters = [{
             $unwind: "$feelings"
         }, {
             $match: {
@@ -238,21 +245,21 @@ Meteor.methods({
             }
         }];
 
-        var pipelineVisitsQuery = filters.concat([{
+        pipelineVisitsQuery = filters.concat([{
             $sort: {
                 cant_visits: -1
             }
         }, {
             $limit: 3
         }]);
-        var resultsByVisits = Rooms.aggregate(pipelineVisitsQuery);
+        resultsByVisits = Rooms.aggregate(pipelineVisitsQuery);
         for (var expertVisit in resultsByVisits) {
             if (resultsByVisits.hasOwnProperty(expertVisit)) {
                 var expert = resultsByVisits[expertVisit];
                 expert.all_tags = _.uniq(_.flatten(expert.all_tags));
             }
         }
-        var pipelineTrendsQuery = filters.concat([{
+        pipelineTrendsQuery = filters.concat([{
             $sort: {
                 old: 1
             }
@@ -260,7 +267,7 @@ Meteor.methods({
             $limit: 5
         }]);
 
-        var resultsByTrends = Rooms.aggregate(pipelineTrendsQuery);
+        resultsByTrends = Rooms.aggregate(pipelineTrendsQuery);
 
         for (var expertResult in resultsByTrends) {
             if (resultsByTrends.hasOwnProperty(expertResult)) {
@@ -283,8 +290,9 @@ Array.prototype.unique = function() {
     var a = this.concat();
     for (var i = 0; i < a.length; ++i) {
         for (var j = i + 1; j < a.length; ++j) {
-            if (a[i] === a[j])
+            if (a[i] === a[j]) {
                 a.splice(j--, 1);
+            }
         }
     }
 

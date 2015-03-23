@@ -1,10 +1,11 @@
 Template.roomForm.events({
     'submit form': function(e) {
+        var room;
+        var method;
         e.preventDefault();
 
-        var room = getRoom();
+        room = getRoom();
 
-        var method;
         if (isInsert(this)) {
             method = 'roomInsert';
             //TODO suggest guests based on tags
@@ -84,6 +85,13 @@ var isInsert = function(context) {
 Template.roomForm.rendered = function() {
     var $form = $('#form_room');
     var data = this.data;
+    var datePicker;
+    var dateNow;
+    var inputAccessPassword;
+    var checkboxListed;
+    var checkboxChat;
+    var checkboxPublic;
+    var checkboxScheduled;
 
     var tagitOptions = {
         'removeConfirmation': true,
@@ -98,17 +106,17 @@ Template.roomForm.rendered = function() {
         }
     }));
 
-    var checkboxScheduled = $form.find('[name="scheduled"]');
-    var checkboxPublic = $form.find('[name="public"]');
-    var checkboxChat = $form.find('[name="chat"]');
-    var checkboxListed = $form.find('[name="listed"]');
-    var inputAccessPassword = $form.find('[name="accessPassword"]');
-    var dateNow = new Date();
-    var datePicker = $form.find('[name="scheduledTime"]').datetimepicker({
+    checkboxScheduled = $form.find('[name="scheduled"]');
+    checkboxPublic = $form.find('[name="public"]');
+    checkboxChat = $form.find('[name="chat"]');
+    checkboxListed = $form.find('[name="listed"]');
+    inputAccessPassword = $form.find('[name="accessPassword"]');
+    dateNow = new Date();
+    datePicker = $form.find('[name="scheduledTime"]').datetimepicker({
         minDate: dateNow
     }).data("DateTimePicker");
 
-    if (data == null) { // If this is '/submit'
+    if (data === null) { // If this is '/submit'
         checkboxPublic.prop('checked', true);
         checkboxScheduled.prop('checked', true);
         checkboxListed.prop('checked', true);
@@ -138,10 +146,11 @@ Template.roomForm.rendered = function() {
 
 Template.roomForm.events({
     'click #delete': function(e) {
+        var currentRoomId;
         e.preventDefault();
 
         if (confirm("Are you sure you want to delete this room?\nRoom name: " + this.name)) {
-            var currentRoomId = this._id;
+            currentRoomId = this._id;
             Rooms.remove(currentRoomId);
             Router.go('roomsList');
         }

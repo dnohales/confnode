@@ -1,90 +1,28 @@
-var webrtc;
-
 Template.roomPage.rendered = function() {
+    var $form;
+    var tagitOptions;
+    var roomId;
     delete Session.keys['search-expert-query'];
     delete Session.keys['search-expert-trend-query'];
 
-    var $form = $('#form_lookFor');
+    $form = $('#form_lookFor');
 
-    var tagitOptions = {
+    tagitOptions = {
         'removeConfirmation': true,
         'caseSensitive': false
     };
     $form.find('[name="topics"]').tagit(tagitOptions);
     $("#chat_switch").bootstrapSwitch('size', 'mini', 'mini');
-    var roomId = this.data._id;
+    roomId = this.data._id;
 
-
-    webrtc = new SimpleWebRTC({
-        // the id/element dom element that will hold "our" video
-        localVideoEl: 'localVideo',
-        // the id/element dom element that will hold remote videos
-        remoteVideosEl: '',
-        // immediately ask for camera access
-        autoRequestMedia: true,
-        debug: false,
-        detectSpeakingEvents: true,
-        autoAdjustMic: true,
-        signalingOptions: {
-            "force new connection": true
+    API.isAppearinCompatible(function(data) {
+        if (!data.isSupported) {
+            $('#notSupportedModal').modal();
+            mixpanel.track("Did not pass the technical checks");
         }
-    });
-
-    // we have to wait until it's ready
-    webrtc.on('readyToCall', function() {
-        // you can name it anything
-        console.log(roomId);
-        webrtc.joinRoom(roomId);
-    });
-
-    webrtc.on('channelMessage', function(peer, label, data) {
-        if (data.type == 'volume') {
-            showVolume(document.getElementById('volume_' + peer.id), data.volume);
-        }
-    });
-
-
-    webrtc.on('videoAdded', function(video, peer) {
-        console.log('video added', peer);
-        var remotes = document.getElementById('remotes');
-        if (remotes) {
-            var d = document.createElement('div');
-            //d.className = 'videoContainer';
-            video.id = 'container_' + webrtc.getDomId(peer);
-            //d.appendChild(video);
-            var vol = document.createElement('div');
-            vol.id = 'volume_' + peer.id;
-            vol.className = 'volume_bar';
-            video.onclick = function() {
-                video.style.width = video.videoWidth + 'px';
-                video.style.height = video.videoHeight + 'px';
-            };
-            //d.appendChild(vol);
-            remotes.appendChild(video);
-        }
-    });
-
-    webrtc.on('videoRemoved', function(video, peer) {
-        console.log('video removed ', peer);
-        var remotes = document.getElementById('remotes');
-        var el = document.getElementById('container_' + webrtc.getDomId(peer));
-        if (remotes && el) {
-            remotes.removeChild(el);
-        }
-    });
-
-    // local volume has changed
-    webrtc.on('volumeChange', function(volume, treshold) {
-        showVolume(document.getElementById('localVolume'), volume);
     });
 
     Meteor.call('userAddVisitedRoom', roomId);
-};
-
-Template.roomPage.destroyed = function() {
-    console.log('cierre de webrtc: ' + webrtc.roomName);
-    webrtc.stopLocalVideo();
-    webrtc.leaveRoom();
 };
 
 var rotateVideo = function(mediaElement) {
@@ -129,7 +67,9 @@ var scaleVideos = function() {
 };
 
 var showVolume = function(el, volume) {
-    if (!el) return;
+    if (!el) {
+        return;
+    }
     if (volume < -45) { // vary between -45 and -20
         el.style.height = '0px';
     } else if (volume > -20) {
@@ -166,21 +106,23 @@ Template.roomPage.events({
         });
     },
     'submit #form_lookFor': function(e) {
+        var topics;
+        var $form;
         e.preventDefault();
-        var $form = $('#form_lookFor');
-        var topics = $form.find('[name="topics"]').tagit("assignedTags");
+        $form = $('#form_lookFor');
+        topics = $form.find('[name="topics"]').tagit("assignedTags");
         Meteor.call('searchExpert', topics, function(error, result) {
             if (error) {
                 return alert(error.message);
             }
             Session.set('search-expert-query', result[0]);
             Session.set('search-expert-trend-query', result[1]);
-            console.log(result);
         });
     },
     'submit #form_invite': function(e) {
+        var email;
         e.preventDefault();
-        var email = $('#form_invite').find('[id="guest_email"]').val();
+        email = $('#form_invite').find('[id="guest_email"]').val();
         Rooms.update(this._id, {
             $addToSet: {
                 guests: email

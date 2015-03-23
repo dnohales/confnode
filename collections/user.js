@@ -1,5 +1,6 @@
 Meteor.users.helpers = {
     addVisitedRoom: function(userId, roomId) {
+        var users;
         var rooms = Rooms.find({
             _id: roomId
         }, {
@@ -9,7 +10,7 @@ Meteor.users.helpers = {
             throw new Meteor.Error(422, 'Room does not exist');
         }
 
-        var users = Meteor.users.find({
+        users = Meteor.users.find({
             $and: [{
                 _id: userId
             }, {
