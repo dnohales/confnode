@@ -16,7 +16,8 @@ Template.userProfileInfo.events({
                 afternoon: $form.find('[name="afternoon"]').prop('checked'),
                 night: $form.find('[name="night"]').prop('checked')
             },
-            'profile.timezone': $form.find('[name="pickedTimezone"]').val()
+            'profile.timezone.name': $form.find('[name="pickedTimezone"]').val(),
+            'profile.timezone.offset' : moment.tz.zone(user['profile.timezone']).offset(new Date()/60)
         };
 
         Meteor.call('userUpdate', user, function(error, result) {
