@@ -36,7 +36,7 @@ Template.roomForm.events({
                 Meteor.call('sendEmail',
                     room.guests,
                     'conf.node@gmail.com',
-                    'Invite ' + room.name + " by " + Meteor.user().username,
+                    'Invite ' + room.name + ' by ' + Meteor.user().username,
                     'This is a test of Email.send.');
             }
 
@@ -92,12 +92,44 @@ Template.roomForm.rendered = function() {
     var data = this.data;
 
     var tagitOptions = {
-        'removeConfirmation': true,
-        'caseSensitive': false
+        removeConfirmation: true,
+        caseSensitive: false,
+        preprocessTag: function(val) {
+            if (!val) return '';
+            return val.toLowerCase();
+        }
     };
-    $form.find('[name="tags"]').tagit(tagitOptions);
+
+    var updateAutocompleteTags = function(event, ui) {
+        var tagsWidget = $('#form_room [name="tags"]');
+        var tags = tagsWidget.tagit("assignedTags");
+        Meteor.call('getRelatedTags', tags, 5, function(error, result) {
+            if (error) {
+                console.log(error)
+            }
+            else {
+                Session.set('recommendedTags', result);
+                if (!ui.duringInitialization) {
+                    tagsWidget.data("ui-tagit").tagInput.focus();
+                }
+            }
+        });
+    };
+
+    $form.find('[name="tags"]').tagit(_.extend(tagitOptions, {
+        afterTagAdded: updateAutocompleteTags,
+        afterTagRemoved: updateAutocompleteTags,
+        showAutocompleteOnFocus: true,
+        autocomplete: {
+            delay: 0,
+            source: function(request, response) {
+                response(Session.get('recommendedTags'));
+            }
+        }
+    }));
+
     $form.find('[name="guests"]').tagit(_.extend(tagitOptions, {
-        'beforeTagAdded': function(event, ui) {
+        beforeTagAdded: function(event, ui) {
             if (!ui.duringInitialization) {
                 return isValidEmail(ui.tagLabel);
             }
