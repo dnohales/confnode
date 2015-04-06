@@ -3,7 +3,7 @@ var FixtureManager = {
         var tagsSets = [
             ['meteor', 'nodejs', 'mongodb', 'npm'],
             ['symfony', 'php', 'doctrine', 'twig'],
-            ['gaming', 'unity', 'game-engines'],
+            ['gaming', 'unity', 'game-engines', 'mongodb'],
             ['economy']
         ];
 

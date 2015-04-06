@@ -21,3 +21,4 @@ meteorhacks:aggregate
 anti:fake
 underscore
 mrt:moment-timezone
+percolate:synced-cron
