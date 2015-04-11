@@ -76,6 +76,9 @@ var validateUser = function(user) {
             afternoon: Boolean,
             night: Boolean
         },
-        'profile.timezone': String
+        'profile.timezone': {
+            name: String,
+            offset: Number
+        }
     });
 };

@@ -16,8 +16,10 @@ Template.userProfileInfo.events({
                 afternoon: $form.find('[name="afternoon"]').prop('checked'),
                 night: $form.find('[name="night"]').prop('checked')
             },
-            'profile.timezone.name': $form.find('[name="pickedTimezone"]').val(),
-            'profile.timezone.offset' : moment.tz.zone(user['profile.timezone']).offset(new Date()/60)
+            'profile.timezone': {
+                name: $form.find('[name="pickedTimezone"]').val(),
+                offset: moment.tz.zone($form.find('[name="pickedTimezone"]').val()).offset(new Date() / 60)
+            }
         };
 
         Meteor.call('userUpdate', user, function(error, result) {
@@ -41,10 +43,10 @@ Template.userProfileInfo.rendered = function() {
     $form.find('[name="skills"]').tagit(tagitOptions);
     $form.find('[name="interests"]').tagit(tagitOptions);
 
-    if (!data.profile.timezone) {
-        timezoneSelect.val(TimezonePicker.detectedZone());
+    if (data.profile.timezone.name) {
+        timezoneSelect.val(data.profile.timezone.name);
     } else {
-        timezoneSelect.val(data.profile.timezone);
+        timezoneSelect.val(TimezonePicker.detectedZone());
     }
 
     if (data.profile.availability.morning) {

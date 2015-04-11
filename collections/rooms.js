@@ -105,18 +105,15 @@ Meteor.methods({
     roomAddFeeling: function(data) {
         Rooms.helpers.addFeeling(data, Meteor.userId());
     },
-    searchGuests: function(topics) {
+    searchInterestedGuests: function(topics) {
         //TODO
 
-
-        //way 2
-        //var usersExperts = Meteor.call('searchExpert', topics);
-
-        //###################
-        //way 1
+        if (this.isSimulation) {
+            return []
+        }
         for (var i in topics) {
             if (topics.hasOwnProperty(i)) {
-                topics[i] = new RegExp('^' + topics[i] + '$', 'i');
+                topics[i] = new RegExp('^' + topics[i], 'i');
             }
         }
 
