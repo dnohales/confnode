@@ -50,7 +50,11 @@ var FixtureManager = {
                 fullname: 'Damián Nohales',
                 company: 'conf.node inc.',
                 location: 'Argentina',
-                availability: FixtureManager.generateAvailability()
+                availability: FixtureManager.generateAvailability(),
+                timezone: {
+                    "name" : "America/Argentina/Buenos_Aires",
+                    "offset" : 180
+                }
             }
         });
 
@@ -66,7 +70,11 @@ var FixtureManager = {
                     fullname: fakeUser.fullname,
                     company: Fake.word(),
                     location: Fake.word(),
-                    availability: FixtureManager.generateAvailability()
+                    availability: FixtureManager.generateAvailability(),
+                    timezone: {
+                        "name" : "America/Argentina/Buenos_Aires",
+                        "offset" : 180
+                    }
                 }
             });
         }
