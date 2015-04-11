@@ -25,6 +25,20 @@ var FixtureManager = {
         return tags;
     },
 
+    generateAvailability: function() {
+        var availability = [];
+
+        for (var day = 0; day < 7; day++) {
+            var dayRow = [];
+            for (hour = 0; hour < 24; hour++) {
+                dayRow.push(Fake.fromArray([true, false]));
+            }
+            availability.push(dayRow);
+        }
+
+        return availability;
+    },
+
     run: function() {
         var users = {};
 
@@ -36,11 +50,7 @@ var FixtureManager = {
                 fullname: 'Damián Nohales',
                 company: 'conf.node inc.',
                 location: 'Argentina',
-                availability: {
-                    morning: true,
-                    afternoon: true,
-                    night: true,
-                }
+                availability: FixtureManager.generateAvailability()
             }
         });
 
@@ -56,11 +66,7 @@ var FixtureManager = {
                     fullname: fakeUser.fullname,
                     company: Fake.word(),
                     location: Fake.word(),
-                    availability: {
-                        morning: true,
-                        afternoon: true,
-                        night: true,
-                    }
+                    availability: FixtureManager.generateAvailability()
                 }
             });
         }

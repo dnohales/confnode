@@ -1,0 +1,6 @@
+table.table-availability {
+    tr:nth-child(1), tr:nth-child(2),
+    tr td:nth-child(1), tr td:nth-child(2) {
+        background-color: rgb(233, 232, 255);
+    }
+}

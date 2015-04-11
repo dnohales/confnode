@@ -26,7 +26,6 @@
                         {{> timezonePicker class="form-control" selected=timezone}}
                     </div>
                 </div>
-                <input type="submit" class="btn btn-primary" value="Save Changes">
             </div>
             <!-- right column -->
             <div class="col-md-6">
@@ -57,5 +56,18 @@
                 </div>
             </div>
         </div>
+        <h3>Availability</h3>
+        <table class="table table-bordered table-hover table-availability">
+            <tbody>
+                {{#each availabilityData}}
+                    <tr>
+                    {{#each this}}
+                        <td>{{{ this }}}</td>
+                    {{/each}}
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <input type="submit" class="btn btn-primary" value="Save Changes">
     </form>
 </template>

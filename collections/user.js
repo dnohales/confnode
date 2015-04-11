@@ -71,11 +71,7 @@ var validateUser = function(user) {
         'profile.about': String,
         'profile.skills': Array,
         'profile.interests': Array,
-        'profile.availability': {
-            morning: Boolean,
-            afternoon: Boolean,
-            night: Boolean
-        },
+        'profile.availability': Array,
         'profile.timezone': {
             name: String,
             offset: Number
