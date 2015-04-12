@@ -18,8 +18,6 @@ Template.roomForm.events({
 
         if (isInsert(this)) {
             method = 'roomInsert';
-            //TODO suggest guests based on tags
-            Meteor.call('searchGuests', room.tags);
         } else {
             method = 'roomUpdate';
             _.extend(room, {
@@ -49,6 +47,15 @@ Template.roomForm.events({
     'switchChange.bootstrapSwitch #form_room [name="scheduled"]': function() {
         refreshScheduledTimeControls();
     },
+
+    'focus #form_room [name="guests"]': function(e) {
+        var tags = $('#form_room [name="tags"]').tagit("assignedTags");
+        if (tags.length>1) {
+            Meteor.call('searchInterestedGuests', tags, 5, function(error, result) {
+                Session.set('recommendedGuests', result);
+            });
+        };
+    }
 
 });
 
@@ -90,6 +97,7 @@ var isInsert = function(context) {
 Template.roomForm.rendered = function() {
     var $form = $('#form_room');
     var data = this.data;
+    delete Session.keys['recommendedGuests'];
 
     var tagitOptions = {
         removeConfirmation: true,
@@ -106,9 +114,9 @@ Template.roomForm.rendered = function() {
         Meteor.call('getRelatedTags', tags, 5, function(error, result) {
             if (error) {
                 console.log(error)
-            }
-            else {
+            } else {
                 Session.set('recommendedTags', result);
+                delete Session.keys['recommendedGuests'];
                 if (!ui.duringInitialization) {
                     tagsWidget.data("ui-tagit").tagInput.focus();
                 }
@@ -129,6 +137,13 @@ Template.roomForm.rendered = function() {
     }));
 
     $form.find('[name="guests"]').tagit(_.extend(tagitOptions, {
+        showAutocompleteOnFocus: true,
+        autocomplete: {
+            delay: 0,
+            source: function(request, response) {
+                response(Session.get('recommendedGuests'));
+            }
+        },
         beforeTagAdded: function(event, ui) {
             if (!ui.duringInitialization) {
                 return isValidEmail(ui.tagLabel);

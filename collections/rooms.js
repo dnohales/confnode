@@ -105,33 +105,6 @@ Meteor.methods({
     roomAddFeeling: function(data) {
         Rooms.helpers.addFeeling(data, Meteor.userId());
     },
-    searchInterestedGuests: function(topics) {
-        //TODO
-
-        if (this.isSimulation) {
-            return []
-        }
-        for (var i in topics) {
-            if (topics.hasOwnProperty(i)) {
-                topics[i] = new RegExp('^' + topics[i], 'i');
-            }
-        }
-
-        //var users = Meteor.users.find({
-        //    $or: [{
-        //        'profile.interests': {
-        //            $in: topics
-        //        }
-        //    }, {
-        //        'profile.skills': {
-        //            $in: topics
-        //        }
-        //    }]
-        //});
-
-
-        //return list of users experts/interested in topics
-    },
     searchExpert: function(topics) {
         var resultsByTrends;
         var pipelineTrendsQuery;
@@ -282,19 +255,6 @@ Meteor.methods({
         return [resultsByVisits, resultsByTrends];
     }
 });
-
-Array.prototype.unique = function() {
-    var a = this.concat();
-    for (var i = 0; i < a.length; ++i) {
-        for (var j = i + 1; j < a.length; ++j) {
-            if (a[i] === a[j]) {
-                a.splice(j--, 1);
-            }
-        }
-    }
-
-    return a;
-};
 
 var validateRoom = function(room) {
     check(room, {
