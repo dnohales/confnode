@@ -11,8 +11,6 @@ tsega:bootstrap3-datetimepicker
 arunoda:streams
 mrt:rtcmulticonnection
 mrt:jquery-ui
-mizzao:bootstrap-3
-yasinuslu:accounts-ui-bootstrap-3
 fourseven:scss
 joshowens:timezone-picker
 pcel:toastr
@@ -22,3 +20,6 @@ anti:fake
 underscore
 mrt:moment-timezone
 percolate:synced-cron
+ian:accounts-ui-bootstrap-3
+twbs:bootstrap
+accounts-github
