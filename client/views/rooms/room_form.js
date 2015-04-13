@@ -1,3 +1,5 @@
+var recommendedGuests;
+var recommendedTags
 Template.roomForm.events({
     'click #delete': function(e) {
         e.preventDefault();
@@ -18,8 +20,6 @@ Template.roomForm.events({
 
         if (isInsert(this)) {
             method = 'roomInsert';
-            //TODO suggest guests based on tags
-            Meteor.call('searchGuests', room.tags);
         } else {
             method = 'roomUpdate';
             _.extend(room, {
@@ -49,6 +49,15 @@ Template.roomForm.events({
     'switchChange.bootstrapSwitch #form_room [name="scheduled"]': function() {
         refreshScheduledTimeControls();
     },
+
+    'focus #form_room [name="guests"]': function(e) {
+        var tags = $('#form_room').find('[name="tags"]').tagit("assignedTags");
+        if (tags.length > 1) {
+            Meteor.call('searchInterestedGuests', tags, 5, function(error, result) {
+                recommendedGuests.set(result);
+            });
+        }
+    }
 
 });
 
@@ -91,6 +100,9 @@ Template.roomForm.rendered = function() {
     var $form = $('#form_room');
     var data = this.data;
 
+    recommendedGuests = new ReactiveVar();
+    recommendedTags = new ReactiveVar();
+
     var tagitOptions = {
         removeConfirmation: true,
         caseSensitive: false,
@@ -101,14 +113,15 @@ Template.roomForm.rendered = function() {
     };
 
     var updateAutocompleteTags = function(event, ui) {
-        var tagsWidget = $('#form_room [name="tags"]');
+        var tagsWidget = $('#form_room').find('[name="tags"]');
         var tags = tagsWidget.tagit("assignedTags");
         Meteor.call('getRelatedTags', tags, 5, function(error, result) {
             if (error) {
                 console.log(error)
-            }
-            else {
-                Session.set('recommendedTags', result);
+            } else {
+                recommendedTags.set(result);
+                recommendedGuests.set(null);
+
                 if (!ui.duringInitialization) {
                     tagsWidget.data("ui-tagit").tagInput.focus();
                 }
@@ -123,12 +136,19 @@ Template.roomForm.rendered = function() {
         autocomplete: {
             delay: 0,
             source: function(request, response) {
-                response(Session.get('recommendedTags'));
+                response(recommendedTags.get());
             }
         }
     }));
 
     $form.find('[name="guests"]').tagit(_.extend(tagitOptions, {
+        showAutocompleteOnFocus: true,
+        autocomplete: {
+            delay: 0,
+            source: function(request, response) {
+                response(recommendedGuests.get());
+            }
+        },
         beforeTagAdded: function(event, ui) {
             if (!ui.duringInitialization) {
                 return isValidEmail(ui.tagLabel);
