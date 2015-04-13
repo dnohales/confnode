@@ -1,3 +1,5 @@
+var recommendedGuests;
+var recommendedTags
 Template.roomForm.events({
     'click #delete': function(e) {
         e.preventDefault();
@@ -49,12 +51,12 @@ Template.roomForm.events({
     },
 
     'focus #form_room [name="guests"]': function(e) {
-        var tags = $('#form_room [name="tags"]').tagit("assignedTags");
-        if (tags.length>1) {
+        var tags = $('#form_room').find('[name="tags"]').tagit("assignedTags");
+        if (tags.length > 1) {
             Meteor.call('searchInterestedGuests', tags, 5, function(error, result) {
-                Session.set('recommendedGuests', result);
+                recommendedGuests.set(result);
             });
-        };
+        }
     }
 
 });
@@ -97,7 +99,9 @@ var isInsert = function(context) {
 Template.roomForm.rendered = function() {
     var $form = $('#form_room');
     var data = this.data;
-    delete Session.keys['recommendedGuests'];
+
+    recommendedGuests = new ReactiveVar();
+    recommendedTags = new ReactiveVar();
 
     var tagitOptions = {
         removeConfirmation: true,
@@ -109,14 +113,15 @@ Template.roomForm.rendered = function() {
     };
 
     var updateAutocompleteTags = function(event, ui) {
-        var tagsWidget = $('#form_room [name="tags"]');
+        var tagsWidget = $('#form_room').find('[name="tags"]');
         var tags = tagsWidget.tagit("assignedTags");
         Meteor.call('getRelatedTags', tags, 5, function(error, result) {
             if (error) {
                 console.log(error)
             } else {
-                Session.set('recommendedTags', result);
-                delete Session.keys['recommendedGuests'];
+                recommendedTags.set(result);
+                recommendedGuests.set(null);
+
                 if (!ui.duringInitialization) {
                     tagsWidget.data("ui-tagit").tagInput.focus();
                 }
@@ -131,7 +136,7 @@ Template.roomForm.rendered = function() {
         autocomplete: {
             delay: 0,
             source: function(request, response) {
-                response(Session.get('recommendedTags'));
+                response(recommendedTags.get());
             }
         }
     }));
@@ -141,7 +146,7 @@ Template.roomForm.rendered = function() {
         autocomplete: {
             delay: 0,
             source: function(request, response) {
-                response(Session.get('recommendedGuests'));
+                response(recommendedGuests.get());
             }
         },
         beforeTagAdded: function(event, ui) {
