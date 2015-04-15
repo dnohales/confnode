@@ -14,7 +14,7 @@
         <div class="panel-footer">
             <label for="chat">Chat?</label>
             <input type="checkbox" id="chat_switch" class="bootstrap-switch" checked="{{chat}}" /> |
-            <button class="btn btn-default btn-xs" title="Share this content" data-toggle="modal" data-target="#myModal">
+            <button class="btn btn-default btn-xs" title="Share this content" data-toggle="modal" data-target="#addGuestModal">
                 <i class="fa fa-share-alt"></i>
                 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite
             </button>
@@ -35,13 +35,13 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addGuestModal" tabindex="-1" role="dialog" aria-labelledby="addGuestModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-share-alt"></i> Invite more guests</h4>
+                    <h4 class="modal-title" id="addGuestModalLabel"><i class="fa fa-share-alt"></i> Invite more guests</h4>
                 </div>
                 <div class="modal-body">
                     <h3>Add new guest</h3>
@@ -62,7 +62,7 @@
 
     <!-- Expert Modal -->
     <div class="modal fade" id="expertModal" tabindex="-1" role="dialog" aria-labelledby="expertModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
@@ -83,58 +83,57 @@
                         <div class="clearfix"></div>
                     </form>
                     <hr>
-                    <table class="table">
-                        <caption>Best experts by number of visitors</caption>
-                        <thead>
+
+                    <h3>Results</h3>
+                    <ul class="list-group">
+                        {{#each experts}}
+                            <li class="list-group-item" data-toggle="popover" title="User information"
+                                data-content='<table class="table table-striped table-condensed">
+                            <thead>
                             <tr>
-                                <th>User</th>
-                                <th>Average rating</th>
-                                <th>#Visitors</th>
-                                <th>#Comments</th>
-                                <th>Tags</th>
+                                <th>Rating</th>
+                                <th>Visits</th>
+                                <th>Feedback</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {{#each experts}}
+                            </thead>
+                            <tbody>
                             <tr>
-                                <td>{{user}}</td>
                                 <td>{{avg_rating}}</td>
                                 <td>{{cant_visits}}</td>
                                 <td>{{cant_feelings}}</td>
-                                <td>{{#each all_tags}}
-                                    <span class="label label-success">{{this}}</span> {{/each}}
-                                </td>
                             </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <table class="table">
-                        <caption>Best experts by trends</caption>
-                        <thead>
+                            </tbody>
+                            </table>'>
+                                {{user}}
+                            </li>
+                        {{/each}}
+
+                        {{#each expertsTrends}}
+                            <li class="list-group-item" data-toggle="popover" title="User information"
+                                data-content='<table class="table table-striped table-condensed">
+                            <thead>
                             <tr>
-                                <th>User</th>
-                                <th>Average rating</th>
-                                <th>#Visitors</th>
-                                <th>#Comments</th>
-                                <th>Trend coefficient</th>
-                                <th>Tags</th>
+                                <th>Coeff</th>
+                                <th>Rating</th>
+                                <th>Visits</th>
+                                <th>Feedback</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {{#each expertsTrends}}
+                            </thead>
+                            <tbody>
                             <tr>
-                                <td>{{user}}</td>
-                                <td>{{avg_rating}}</td>
-                                <td>{{cant_visits}}</td>
-                                <td>{{cant_feelings}}</td>
                                 <td>{{trend_coefficient}}</td>
-                                <td>{{#each all_tags}}
-                                    <span class="label label-success">{{this}}</span> {{/each}}
-                                </td>
+                                <td>{{avg_rating}}</td>
+                                <td>{{cant_visits}}</td>
+                                <td>{{cant_feelings}}</td>
                             </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                            </tbody>
+                            </table>'>
+                                {{user}}
+                            </li>
+                        {{/each}}
+
+                    </ul>
+                    <i>Trend coefficient is calculated # of visits / old ^ 1.5</i>
                 </div>
             </div>
         </div>

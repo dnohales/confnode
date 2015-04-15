@@ -220,7 +220,7 @@ Meteor.methods({
                 cant_visits: -1
             }
         }, {
-            $limit: 3
+            $limit: 2
         }]);
         resultsByVisits = Rooms.aggregate(pipelineVisitsQuery);
         for (var expertVisit in resultsByVisits) {
@@ -234,7 +234,7 @@ Meteor.methods({
                 old: 1
             }
         }, {
-            $limit: 5
+            $limit: 3
         }]);
 
         resultsByTrends = Rooms.aggregate(pipelineTrendsQuery);

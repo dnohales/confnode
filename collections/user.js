@@ -150,7 +150,9 @@ Meteor.methods({
         return _.chain(users)
             .sortBy('interestCoefficient')
             .reverse()
-            .map(function(u) { return u.emails[0].address; })
+            .map(function(u) {
+                return u.emails[0].address;
+            })
             .slice(0, limit)
             .value();
     }

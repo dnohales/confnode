@@ -1,5 +1,5 @@
 var recommendedGuests;
-var recommendedTags
+var recommendedTags;
 Template.roomForm.events({
     'click #delete': function(e) {
         e.preventDefault();
