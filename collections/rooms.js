@@ -220,8 +220,9 @@ Meteor.methods({
                 cant_visits: -1
             }
         }, {
-            $limit: 2
+            $limit: 5
         }]);
+
         resultsByVisits = Rooms.aggregate(pipelineVisitsQuery);
         for (var expertVisit in resultsByVisits) {
             if (resultsByVisits.hasOwnProperty(expertVisit)) {
@@ -234,25 +235,25 @@ Meteor.methods({
                 old: 1
             }
         }, {
-            $limit: 3
+            $limit: 5
         }]);
 
         resultsByTrends = Rooms.aggregate(pipelineTrendsQuery);
 
         for (var expertResult in resultsByTrends) {
-            if (resultsByTrends.hasOwnProperty(expertResult)) {
-                var expert = resultsByTrends[expertResult];
-                expert.old = msToDays(expert.old);
-                var coefficient = expert.cant_visits / Math.pow(expert.old, 1.5);
-                expert.trend_coefficient = Math.round(coefficient * 100) / 100;
-                expert.all_tags = _.uniq(_.flatten(expert.all_tags));
-            }
+            var expert = resultsByTrends[expertResult];
+            expert.old = msToDays(expert.old);
+            var coefficient = expert.cant_visits / Math.pow(expert.old, 1.5);
+            expert.trend_coefficient = Math.round(coefficient * 100) / 100;
+            expert.all_tags = _.uniq(_.flatten(expert.all_tags));
         }
 
-        resultsByTrends.sort(compare);
-        resultsByTrends.slice(0, 2);
+        resultsByTrends = resultsByTrends.sort(compare).slice(0, 3);
 
-        return [resultsByVisits, resultsByTrends];
+        //Prevent duplicate experts. The same user may be in results by trends or visits
+        return _.uniq(_.union(resultsByTrends, resultsByVisits), false, function(u) {
+            return u.user
+        }).slice(0, 5);
     }
 });
 

@@ -87,10 +87,17 @@
                     <h3>Results</h3>
                     <ul class="list-group">
                         {{#each experts}}
-                            <li class="list-group-item" data-toggle="popover" title="User information"
+                            <li class="list-group-item"
+                                data-toggle="popover"
+                                data-trigger="hover"
+                                data-html="true"
+                                title="User information"
                                 data-content='<table class="table table-striped table-condensed">
                             <thead>
                             <tr>
+                                {{#if trend_coefficient}}
+                                    <th>Coeff</th>
+                                {{/if}}
                                 <th>Rating</th>
                                 <th>Visits</th>
                                 <th>Feedback</th>
@@ -98,30 +105,9 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{{avg_rating}}</td>
-                                <td>{{cant_visits}}</td>
-                                <td>{{cant_feelings}}</td>
-                            </tr>
-                            </tbody>
-                            </table>'>
-                                {{user}}
-                            </li>
-                        {{/each}}
-
-                        {{#each expertsTrends}}
-                            <li class="list-group-item" data-toggle="popover" title="User information"
-                                data-content='<table class="table table-striped table-condensed">
-                            <thead>
-                            <tr>
-                                <th>Coeff</th>
-                                <th>Rating</th>
-                                <th>Visits</th>
-                                <th>Feedback</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>{{trend_coefficient}}</td>
+                                {{#if trend_coefficient}}
+                                    <td>{{trend_coefficient}}</td>
+                                {{/if}}
                                 <td>{{avg_rating}}</td>
                                 <td>{{cant_visits}}</td>
                                 <td>{{cant_feelings}}</td>

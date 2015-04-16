@@ -1,17 +1,11 @@
+var expertsByVisits;
+Template.roomPage.created = function() {
+    expertsByVisits = new ReactiveVar();
+}
 Template.roomPage.rendered = function() {
     var $form;
     var tagitOptions;
     var roomId;
-    delete Session.keys['search-expert-query'];
-    delete Session.keys['search-expert-trend-query'];
-
-    $('[data-toggle="popover"]').popover({
-        trigger: 'hover',
-        html: true,
-        content: function() {
-            return $('[data-toggle="popover"]').html();
-        }
-    });
 
     tagitOptions = {
         'removeConfirmation': true,
@@ -39,14 +33,20 @@ Template.roomPage.helpers({
         return this.creatorId == Meteor.userId();
     },
     experts: function() {
-        return Session.get('search-expert-query');
-    },
-    expertsTrends: function() {
-        return Session.get('search-expert-trend-query');
+        return expertsByVisits.get();
     }
 });
 
 Template.roomPage.events({
+    'click [data-toggle="popover"]': function() {
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+            html: true,
+            content: function() {
+                return $('[data-toggle="popover"]').html();
+            }
+        });
+    },
     'switchChange.bootstrapSwitch #chat_switch': function() {
         this.chat = !this.chat;
         Rooms.update(this._id, {
@@ -69,8 +69,7 @@ Template.roomPage.events({
             if (error) {
                 return alert(error.message);
             }
-            Session.set('search-expert-query', result[0]);
-            Session.set('search-expert-trend-query', result[1]);
+            expertsByVisits.set(result);
         });
     },
     'submit #form_invite': function(e) {
