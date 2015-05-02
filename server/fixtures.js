@@ -52,8 +52,8 @@ var FixtureManager = {
                 location: 'Argentina',
                 availability: FixtureManager.generateAvailability(),
                 timezone: {
-                    "name" : "America/Argentina/Buenos_Aires",
-                    "offset" : 180
+                    "name": "America/Argentina/Buenos_Aires",
+                    "offset": 180
                 }
             }
         });
@@ -72,8 +72,8 @@ var FixtureManager = {
                     location: Fake.word(),
                     availability: FixtureManager.generateAvailability(),
                     timezone: {
-                        "name" : "America/Argentina/Buenos_Aires",
-                        "offset" : 180
+                        "name": "America/Argentina/Buenos_Aires",
+                        "offset": 180
                     }
                 }
             });
@@ -129,7 +129,8 @@ var FixtureManager = {
                                     roomId: roomId,
                                     feeling: {
                                         rating: Fake.fromArray([0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5]),
-                                        comment: Fake.sentence(15)
+                                        comment: Fake.sentence(15),
+                                        dateRate: new Date().setDate(date.getDate() - _.random(1, 180))
                                     }
                                 }, u._id);
                             }

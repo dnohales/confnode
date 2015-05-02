@@ -46,7 +46,8 @@ Rooms.helpers = {
             }, {
                 $set: {
                     'feelings.$.rating': data.feeling.rating,
-                    'feelings.$.comment': data.feeling.comment
+                    'feelings.$.comment': data.feeling.comment,
+                    'dateRate' : new Date().getTime()
                 }
             });
         } else {
@@ -57,7 +58,8 @@ Rooms.helpers = {
                     'feelings': {
                         'user_id': userId,
                         'rating': data.feeling.rating,
-                        'comment': data.feeling.comment
+                        'comment': data.feeling.comment,
+                        'dateRate' : new Date().getTime()
                     }
                 }
             });

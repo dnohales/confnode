@@ -1,9 +1,11 @@
-var tagRelationsJob = function () {
+var tagRelationsJob = function() {
     var tags = [];
 
     // Get all tags fields with more than one tag.
     var tagsFields = Rooms.find({
-        'tags.1': {$exists: true}
+        'tags.1': {
+            $exists: true
+        }
     }, {
         fields: {
             _id: 0,
@@ -12,8 +14,8 @@ var tagRelationsJob = function () {
     }).fetch();
 
     // Extract from the tags fields found, only the tags without duplicating.
-    tagsFields.forEach(function (tagsField) {
-        tagsField['tags'].forEach(function (tag) {
+    tagsFields.forEach(function(tagsField) {
+        tagsField['tags'].forEach(function(tag) {
             if (tags.indexOf(tag) === -1) {
                 tags.push(tag);
             }
@@ -21,21 +23,21 @@ var tagRelationsJob = function () {
     });
 
     // For each tag, get its tag relations and save them in the collection.
-    tags.forEach(function (tag) {
+    tags.forEach(function(tag) {
         var tagRelations = [];
 
         // Get the tags fields that are related to the current tag.
-        var relatedTagsFields = tagsFields.filter(function (tagsField) {
+        var relatedTagsFields = tagsFields.filter(function(tagsField) {
             return tagsField['tags'].indexOf(tag) !== -1;
         });
 
-        relatedTagsFields.forEach(function (relatedTagsField) {
-            relatedTagsField['tags'].forEach(function (relatedTag) {
+        relatedTagsFields.forEach(function(relatedTagsField) {
+            relatedTagsField['tags'].forEach(function(relatedTag) {
                 if (relatedTag === tag) {
                     return;
                 }
 
-                var relation = tagRelations.filter(function (tagRelation) {
+                var relation = tagRelations.filter(function(tagRelation) {
                     return tagRelation.tag === relatedTag;
                 })[0];
 
@@ -45,23 +47,76 @@ var tagRelationsJob = function () {
                         'tag': relatedTag,
                         'weight': 1
                     });
-                }
-                else {
+                } else {
                     relation.weight++;
                 }
             });
         });
 
         // Save to the collection.
-        TagRelations.upsert({tag: tag}, {
-            $set: {relations: tagRelations}
+        TagRelations.upsert({
+            tag: tag
+        }, {
+            $set: {
+                relations: tagRelations
+            }
         });
     });
 };
 
+
+Meteor.methods({
+    collectingDataPIO: function() {
+        var fs = Npm.require('fs');
+        var path = Npm.require('path');
+        var basePath = path.resolve('.').split('.meteor')[0];
+        var eventsFileName = 'my_events.json';
+
+        fs.exists(basePath + eventsFileName, function(exists) {
+            exists ? fs.unlinkSync(basePath + eventsFileName) : '';
+        });
+
+        var tagRatesData = [];
+        var roomsFeelings = Rooms.find({
+            feelings: {
+                $exists: true
+            }
+        }, {
+            feelings: 1,
+            tags: 1
+        }).fetch();
+
+        roomsFeelings.forEach(function(room) {
+            var tags = room['tags'];
+            var feelings = room['feelings'];
+            tags.forEach(function(tag) {
+                feelings.forEach(function(feeling) {
+                    var rate = {
+                        "event": "rate",
+                        "entityType": "user",
+                        "entityId": feeling.user_id,
+                        "targetEntityType": "tag",
+                        "targetEntityId": tag,
+                        "properties": {
+                            "rating": feeling.rating
+                        },
+                        "eventTime": feeling.dateRate
+                    };
+                    rate = JSON.stringify(rate);
+                    tagRatesData.push(rate);
+                    fs.appendFileSync(basePath + eventsFileName, rate + '\r\n');
+                });
+            });
+        });
+
+    }
+});
+
+Meteor.call('collectingDataPIO');
+
 SyncedCron.add({
     name: 'Calculate and store tag relations',
-    schedule: function (parser) {
+    schedule: function(parser) {
         return parser.text('at 5:00 am');
     },
     job: tagRelationsJob
@@ -72,7 +127,7 @@ SyncedCron.config({
     collectionName: 'jobsHistory'
 });
 
-Meteor.startup(function () {
+Meteor.startup(function() {
     // Start processing jobs.
     SyncedCron.start();
 
