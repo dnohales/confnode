@@ -65,8 +65,39 @@ Template.roomForm.events({
                 recommendedGuests.set(result);
             });
         }
-    }
+    },
 
+    'click .suggested-availability-link': function(e) {
+        var day = parseInt($(e.target).data('day'));
+        var hour = parseInt($(e.target).data('hour'));
+        var datetime = new Date();
+        var todayDay = datetime.getDay();
+        var daysToincrement;
+
+        // Weeks in JS's Date class starts in Sunday, but we start in Monday.
+        if (todayDay === 0) {
+            todayDay = 6;
+        } else {
+            todayDay--;
+        }
+
+        if (todayDay === day) {
+            daysToincrement = 7;
+        } else if (day > todayDay) {
+            daysToincrement = day - todayDay;
+        } else {
+            daysToincrement = 7 - todayDay + day;
+        }
+
+        datetime.setDate(datetime.getDate() + daysToincrement);
+        datetime.setHours(hour);
+        datetime.setMinutes(0);
+        datetime.setSeconds(0);
+        datetime.setMilliseconds(0);
+
+        $('#form_room').find('[name="scheduledTime"]').data("DateTimePicker").setDate(datetime);
+        $('#schedule_suggestion_dialog').modal('hide');
+    }
 });
 
 var getRoom = function() {
@@ -137,17 +168,17 @@ Template.roomForm.helpers({
 
             for (hour = 0; hour < 24; hour++) {
                 var score = _scheduleSuggestion.availabilityData[day][hour];
-                var colorClasses;
+                var cellColor;
 
                 if (_scheduleSuggestion.users.length === score) {
-                    colorClasses = 'text-success bg-success';
+                    cellColor = 'success';
                 } else if (score > 0) {
-                    colorClasses = 'text-warning bg-warning';
+                    cellColor = 'warning';
                 } else {
-                    colorClasses = 'text-danger bg-danger';
+                    cellColor = 'danger';
                 }
 
-                html += '<td class="' + colorClasses + '">' + score + '</td>';
+                html += '<td class="bg-' + cellColor + '"><a href="#" class="suggested-availability-link text-' + cellColor + '" data-day="' + day + '" data-hour="' + hour + '">' + score + '</a></td>';
             }
 
             html += '</tr>';
