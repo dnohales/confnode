@@ -223,5 +223,10 @@ div.inline {
 }
 
 .schedule-suggestion-dialog .modal-dialog {
-    width:850px;
+    width: 920px;
+}
+
+.table-suggested-availability td {
+    text-align: center;
+    min-width: 35px;
 }
