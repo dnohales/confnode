@@ -256,7 +256,82 @@ Meteor.methods({
         return _.uniq(_.union(resultsByTrends, resultsByVisits), false, function(u) {
             return u.user
         }).slice(0, 5);
-    }
+    },
+
+    roomGetAvailability: function(guests) {
+        if (this.isSimulation) {
+            return null;
+        }
+
+        var users = Meteor.users.aggregate([{
+            $unwind: '$emails'
+        }, {
+            $match: {'emails.address' : {$in: guests}}
+        }]);
+
+        if (users.length === 0) {
+            return {
+                message: 'We cannot suggest you a schedule time for your room since none of your guests have account in confnode.',
+                availabilityData: null,
+                users: [],
+                unregisteredEmails: guests
+            };
+        } else {
+            var availabilityData = [];
+            var perfectSchedules = [];
+
+            for (var day = 0; day < 7; day++) {
+                var dayRow = [];
+                for (hour = 0; hour < 24; hour++) {
+                    var isPerfectAvailability = true;
+                    var hourAvailabilityCount = 0;
+                    for (var i in users) {
+                        var user = users[i];
+                        if (user.profile.availability[day][hour]) {
+                            hourAvailabilityCount++;
+                        } else {
+                            isPerfectAvailability = false;
+                        }
+                    }
+
+                    if (isPerfectAvailability) {
+                        perfectSchedules.push(Utils.getDayOfWeek(day) + ' at ' + hour + ':00');
+                    }
+
+                    dayRow.push(hourAvailabilityCount);
+                }
+                availabilityData.push(dayRow);
+            }
+
+            var message = 'According your guests availability. ';
+
+            if (perfectSchedules.length > 0) {
+                message = 'We suggest to schedule your meeting on ';
+                if (perfectSchedules.length <= 3) {
+                    message += perfectSchedules.slice(0, -1).join(', ') + ' and ' +
+                               perfectSchedules[perfectSchedules.length - 1] + '.';
+                } else {
+                    message += perfectSchedules.slice(0, 3).join(', ') + ' and ' +
+                               (perfectSchedules.length - 3) + ' more schedules.';
+                }
+            } else {
+                message = 'We couldn\'t find any suggestion for the schedule.';
+            }
+
+            return {
+                message: message,
+                availabilityData: availabilityData,
+                users: _.map(users, function(u) {
+                    return {
+                        username: u.username,
+                        email: u.emails.address,
+                        profile: _.pick(u.profile, ['fullname', 'availability'])
+                    };
+                }),
+                unregisteredEmails: _.difference(guests, _.map(users, function(u) { return u.emails.address; })),
+            };
+        }
+    },
 });
 
 var validateRoom = function(room) {

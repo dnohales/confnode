@@ -53,7 +53,6 @@ var getAvailabilityData = function() {
 
 Template.userProfileInfo.helpers({
     availabilityData: function() {
-        var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         var data = [];
 
         // Hours row
@@ -70,7 +69,7 @@ Template.userProfileInfo.helpers({
             if (day === -1) {
                 row.push('');
             } else {
-                row.push(daysOfWeek[day]);
+                row.push(Utils.getDayOfWeek(day));
             }
 
             for (hour = -1; hour < 24; hour++) {

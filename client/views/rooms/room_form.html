@@ -45,7 +45,6 @@
                 <div class="form-group">
                     <label>Scheduled</label>
                     <input type="checkbox" name="scheduled" class="bootstrap-switch" />
-
                 </div>
 
                 <div class="scheduled-time-controls">
@@ -57,8 +56,19 @@
                             </span>
                             <input type='text' class="form-control" data-date-format="DD/MM/YYYY - HH:mm" />
                         </div>
+                        {{#if scheduleSuggestion}}
+                            <span class="help-block">
+                                {{scheduleSuggestion.message}}
+                                {{#if scheduleSuggestion.availabilityData}}
+                                    <a class="schedule-suggestion-link" href="#" data-toggle="modal" data-target="#schedule_suggestion_dialog">More information</a>.
+                                {{/if}}
+                            </span>
+                        {{else}}
+                            <span class="help-block">
+                                Advice: Add some guests to your room to get suggestion for the schedule time.
+                            </span>
+                        {{/if}}
                     </div>
-                    <input class="btn btn-default" type="button" value="Recommended time">
                 </div>
 
                 <div class="form-group">
@@ -73,4 +83,27 @@
             <a class="btn btn-danger" id="delete" href="#">Delete room</a> {{/unless}}
         </div>
     </form>
+
+    <div id="schedule_suggestion_dialog" class="schedule-suggestion-dialog modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Schedule suggestions</h4>
+                </div>
+                <div class="modal-body">
+                    <p>This table shows how many guests have availability in the specified time slot. Click in the table cell to set the schedule time for your room.</p>
+                    {{{ suggestedAvailabilityTableHTML }}}
+                    <ul>
+                        <li><span class="bg-success">&nbsp;&nbsp;&nbsp;&nbsp;</span> : All guests have availability.</li>
+                        <li><span class="bg-warning">&nbsp;&nbsp;&nbsp;&nbsp;</span> : Some guests have availability.</li>
+                        <li><span class="bg-danger">&nbsp;&nbsp;&nbsp;&nbsp;</span> : No guest have availability.</li>
+                    </ul>
+                    {{{ unregisteredEmailsNote }}}
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
