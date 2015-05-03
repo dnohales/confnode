@@ -1,7 +1,11 @@
 var recommendedGuests;
 var recommendedTags;
+var scheduleSuggestion;
+
 Template.roomForm.created = function() {
-    this.scheduleSuggestion = new ReactiveVar(null);
+    recommendedGuests = new ReactiveVar();
+    recommendedTags = new ReactiveVar();
+    scheduleSuggestion = new ReactiveVar(null);
 };
 
 Template.roomForm.events({
@@ -87,17 +91,17 @@ var refreshScheduledTimeControls = function() {
     $form.find('.scheduled-time-controls').toggle($form.find('[name="scheduled"]').prop('checked'));
 };
 
-var onGuestChanged = function(template) {
+var onGuestChanged = function() {
     var guests = $('#form_room').find('[name="guests"]').tagit("assignedTags");
 
     if (guests.length === 0) {
-        template.scheduleSuggestion.set(null);
+        scheduleSuggestion.set(null);
     } else {
         Meteor.call('roomGetAvailability', guests, function(error, result) {
             if (error) {
-                template.scheduleSuggestion.set(null);
+                scheduleSuggestion.set(null);
             } else {
-                template.scheduleSuggestion.set(result);
+                scheduleSuggestion.set(result);
             }
         });
     }
@@ -111,13 +115,13 @@ Template.roomForm.helpers({
         return isInsert(this) ? 'Create' : 'Update';
     },
     scheduleSuggestion: function() {
-        return Template.instance().scheduleSuggestion.get();
+        return scheduleSuggestion.get();
     },
     suggestedAvailabilityTableHTML: function() {
-        var scheduleSuggestion = Template.instance().scheduleSuggestion.get();
+        var _scheduleSuggestion = scheduleSuggestion.get();
         var html = '<table class="table table-bordered table-hover table-suggested-availability"><tbody>';
 
-        if (scheduleSuggestion === null || scheduleSuggestion.availabilityData === null) {
+        if (_scheduleSuggestion === null || _scheduleSuggestion.availabilityData === null) {
             return '';
         }
 
@@ -132,10 +136,10 @@ Template.roomForm.helpers({
             html += '<tr><td>' + Utils.getShortDayOfWeek(day) + '</td>';
 
             for (hour = 0; hour < 24; hour++) {
-                var score = scheduleSuggestion.availabilityData[day][hour];
+                var score = _scheduleSuggestion.availabilityData[day][hour];
                 var colorClasses;
 
-                if (scheduleSuggestion.users.length === score) {
+                if (_scheduleSuggestion.users.length === score) {
                     colorClasses = 'text-success bg-success';
                 } else if (score > 0) {
                     colorClasses = 'text-warning bg-warning';
@@ -154,16 +158,12 @@ Template.roomForm.helpers({
         return html;
     },
     unregisteredEmailsNote: function() {
-        var scheduleSuggestion = Template.instance().scheduleSuggestion.get();
+        var _scheduleSuggestion = scheduleSuggestion.get();
 
-        console.log(scheduleSuggestion);
-
-        if (scheduleSuggestion !== null && scheduleSuggestion.unregisteredEmails.length > 0) {
-            console.log('puta');
+        if (_scheduleSuggestion !== null && _scheduleSuggestion.unregisteredEmails.length > 0) {
             return "<p><em>Note, the following guests e-mail addresses are not registered in confnode so we couldn't get availability information from those: " +
-                   scheduleSuggestion.unregisteredEmails.join(', ') + '.';
+                   _scheduleSuggestion.unregisteredEmails.join(', ') + '.';
         } else {
-            console.log('bessy');
             return '';
         }
     }
@@ -177,9 +177,6 @@ Template.roomForm.rendered = function() {
     var $form = $('#form_room');
     var data = this.data;
     var template = this;
-
-    recommendedGuests = new ReactiveVar();
-    recommendedTags = new ReactiveVar();
 
     var tagitOptions = {
         removeConfirmation: true,
