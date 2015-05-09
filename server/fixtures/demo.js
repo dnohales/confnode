@@ -21,8 +21,8 @@ DemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ]
             }
         });
 
@@ -254,16 +254,187 @@ DemoFixtureManager = {
             scheduledTime: null,
             chat: true
         });
+
+
+        var roomsExpert = [{
+            //user1
+            submittedTime: new Date("March 17, 2015 14:24:00"),
+            name: 'Demo room 1',
+            tags: ['mongodb', 'nosql', 'db', 'storage'],
+            visits: 150,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 4,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user1
+            submittedTime: new Date("January 1, 2015 14:24:00"),
+            name: 'Demo room 2',
+            tags: ['mongodb', 'js', 'node', 'web', 'dev'],
+            visits: 200,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 4,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user1
+            submittedTime: new Date("April 1, 2015 14:24:00"),
+            name: 'Demo room 3',
+            tags: ['js', 'back-end', 'web', 'node'],
+            visits: 50,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 4,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user2
+            submittedTime: new Date("February 10, 2015 14:24:00"),
+            name: 'Demo room 4',
+            tags: ['java', 'javascript', 'node', 'db', 'front-end'],
+            visits: 150,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 3.5,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user2
+            submittedTime: new Date("January 1, 2015 14:24:00"),
+            name: 'Demo room 5',
+            tags: ['mongodb', 'js', 'node', 'web', 'dev'],
+            visits: 200,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 3.5,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user2
+            submittedTime: new Date("April 15, 2015 14:24:00"),
+            name: 'Demo room 6',
+            tags: ['js', 'back-end', 'web', 'node'],
+            visits: 50,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 3.5,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user3
+            submittedTime: new Date("December 10, 2014 14:24:00"),
+            name: 'Demo room 7',
+            tags: ['java', 'javascript', 'node', 'db', 'front-end'],
+            visits: 250,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 3,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user3
+            submittedTime: new Date("January 20, 2015 14:24:00"),
+            name: 'Demo room 8',
+            tags: ['mongodb', 'js', 'node', 'web', 'dev'],
+            visits: 70,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 3,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user3
+            submittedTime: new Date("May 1, 2015 14:24:00"),
+            name: 'Demo room 9',
+            tags: ['js', 'back-end', 'web', 'node'],
+            visits: 15,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 3,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user4
+            submittedTime: new Date("November 7, 2014 14:24:00"),
+            name: 'Demo room 10',
+            tags: ['java', 'javascript', 'node', 'db', 'front-end'],
+            visits: 50,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 4.5,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user4
+            submittedTime: new Date("April 20, 2015 14:24:00"),
+            name: 'Demo room 11',
+            tags: ['mongodb', 'js', 'node', 'web', 'dev'],
+            visits: 100,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 4.5,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }, {
+            //user4
+            submittedTime: new Date("March 1, 2015 14:24:00"),
+            name: 'Demo room 12',
+            tags: ['js', 'back-end', 'web', 'node'],
+            visits: 150,
+            feelings: [{
+                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "rating": 4.5,
+                "comment": "Prueba",
+                "dateRate": 1431210098696
+            }]
+        }];
+        //User 1
+        this.generateRoom(users.juanfernandez, roomsExpert[0]);
+        this.generateRoom(users.juanfernandez, roomsExpert[1]);
+        this.generateRoom(users.juanfernandez, roomsExpert[2]);
+        //User 2
+        this.generateRoom(users.johnsmith, roomsExpert[3]);
+        this.generateRoom(users.johnsmith, roomsExpert[4]);
+        this.generateRoom(users.johnsmith, roomsExpert[5]);
+        //User 3
+        this.generateRoom(users.maryjohansson, roomsExpert[6]);
+        this.generateRoom(users.maryjohansson, roomsExpert[7]);
+        this.generateRoom(users.maryjohansson, roomsExpert[8]);
+        //User 4
+        this.generateRoom(users.mikelarbide, roomsExpert[9]);
+        this.generateRoom(users.mikelarbide, roomsExpert[10]);
+        this.generateRoom(users.mikelarbide, roomsExpert[11]);
     },
 
     generateRoom: function(ownerId, room) {
-        var user = Meteor.users.findOne({ _id: ownerId });
+        var user = Meteor.users.findOne({
+            _id: ownerId
+        });
 
-        return Rooms.insert(_.extend(
-            {
+        return Rooms.insert(_.extend({
                 creatorId: user._id,
                 creatorEmail: user.emails[0].address,
                 creatorName: user.username,
+                description: 'Demo room description',
+                guests: [],
+                listed: true,
+                public: true,
+                scheduled: false,
+                scheduledTime: null,
+                chat: true,
             },
             room
         ));
