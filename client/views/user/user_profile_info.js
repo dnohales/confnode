@@ -98,10 +98,7 @@ Template.userProfileInfo.events({
             'profile.skills': $form.find('[name="skills"]').tagit("assignedTags"),
             'profile.interests': $form.find('[name="interests"]').tagit("assignedTags"),
             'profile.availability': getAvailabilityData(),
-            'profile.timezone': {
-                name: $form.find('[name="pickedTimezone"]').val(),
-                offset: moment.tz.zone($form.find('[name="pickedTimezone"]').val()).offset(new Date() / 60)
-            }
+            'profile.timezone': $form.find('[name="pickedTimezone"]').val()
         };
 
         Meteor.call('userUpdate', user, function(error, result) {
@@ -139,8 +136,8 @@ Template.userProfileInfo.rendered = function() {
     $form.find('[name="skills"]').tagit(tagitOptions);
     $form.find('[name="interests"]').tagit(tagitOptions);
 
-    if (data.profile.timezone.name) {
-        timezoneSelect.val(data.profile.timezone.name);
+    if (data.profile.timezone) {
+        timezoneSelect.val(data.profile.timezone);
     } else {
         timezoneSelect.val(TimezonePicker.detectedZone());
     }
