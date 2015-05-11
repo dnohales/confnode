@@ -167,9 +167,6 @@ var validateUser = function(user) {
         'profile.skills': Array,
         'profile.interests': Array,
         'profile.availability': Array,
-        'profile.timezone': {
-            name: String,
-            offset: Number
-        }
+        'profile.timezone': String
     });
 };

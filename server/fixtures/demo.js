@@ -34,8 +34,8 @@ DemoFixtureManager = {
                 fullname: 'Lisandro Falconi',
                 company: '',
                 about: '',
-                skills: [],
-                interests: [],
+                skills: ['javascript', 'front-end'], // Used on interested users recommendation
+                interests: ['mongo', 'web'], // Used on interested users recommendation
                 location: 'Roma, Italia',
                 timezone: 'Europe/Rome',
                 availability: [
@@ -82,8 +82,8 @@ DemoFixtureManager = {
                 fullname: 'Emiliano Lippolis',
                 company: '',
                 about: '',
-                skills: [],
-                interests: [],
+                skills: ['mongo', 'db', 'nosql'], // Used on interested users recommendation
+                interests: ['back', 'javascript'], // Used on interested users recommendation
                 location: 'Atenas, Grecia',
                 timezone: 'Europe/Athens',
                 availability: [
@@ -107,7 +107,7 @@ DemoFixtureManager = {
                 company: '',
                 about: '',
                 skills: [],
-                interests: [],
+                interests: ['mongo', 'node'],
                 location: 'Tokyo, Japón',
                 timezone: 'Asia/Tokyo',
                 availability: [
