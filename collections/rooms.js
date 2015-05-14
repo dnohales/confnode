@@ -47,7 +47,7 @@ Rooms.helpers = {
                 $set: {
                     'feelings.$.rating': data.feeling.rating,
                     'feelings.$.comment': data.feeling.comment,
-                    'dateRate' : new Date().getTime()
+                    'dateRate': new Date().getTime()
                 }
             });
         } else {
@@ -59,7 +59,7 @@ Rooms.helpers = {
                         'user_id': userId,
                         'rating': data.feeling.rating,
                         'comment': data.feeling.comment,
-                        'dateRate' : new Date().getTime()
+                        'dateRate': new Date().getTime()
                     }
                 }
             });
@@ -266,7 +266,11 @@ Meteor.methods({
         var users = Meteor.users.aggregate([{
             $unwind: '$emails'
         }, {
-            $match: {'emails.address' : {$in: guests}}
+            $match: {
+                'emails.address': {
+                    $in: guests
+                }
+            }
         }]);
 
         if (users.length === 0) {
@@ -309,10 +313,10 @@ Meteor.methods({
                 message = 'We suggest to schedule your meeting on ';
                 if (perfectSchedules.length <= 3) {
                     message += perfectSchedules.slice(0, -1).join(', ') + ' and ' +
-                               perfectSchedules[perfectSchedules.length - 1] + '.';
+                        perfectSchedules[perfectSchedules.length - 1] + '.';
                 } else {
                     message += perfectSchedules.slice(0, 3).join(', ') + ' and ' +
-                               (perfectSchedules.length - 3) + ' more schedules.';
+                        (perfectSchedules.length - 3) + ' more schedules.';
                 }
             } else {
                 message = 'We couldn\'t find any suggestion for the schedule.';
@@ -328,7 +332,9 @@ Meteor.methods({
                         profile: _.pick(u.profile, ['fullname', 'availability'])
                     };
                 }),
-                unregisteredEmails: _.difference(guests, _.map(users, function(u) { return u.emails.address; })),
+                unregisteredEmails: _.difference(guests, _.map(users, function(u) {
+                    return u.emails.address;
+                })),
             };
         }
     },

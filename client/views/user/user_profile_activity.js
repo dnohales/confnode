@@ -1,6 +1,6 @@
 Template.userProfileActivity.helpers({
     visitedRooms: function() {
-        var rooms = _.map(this.visitedRooms, _.clone);
+        var rooms = _.map(this.profile.visitedRooms, _.clone);
         var i;
         for (i=0; i<rooms.length; i++) {
             var visitedRoom = rooms[i];

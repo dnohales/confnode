@@ -14,7 +14,7 @@ Meteor.users.helpers = {
             $and: [{
                 _id: userId
             }, {
-                visitedRooms: {
+                'profile.visitedRooms': {
                     $elemMatch: {
                         room_id: roomId
                     }
@@ -29,7 +29,7 @@ Meteor.users.helpers = {
                 _id: userId
             }, {
                 $push: {
-                    visitedRooms: {
+                    'profile.visitedRooms': {
                         when: new Date(),
                         room_id: roomId
                     }
@@ -97,10 +97,12 @@ Meteor.methods({
             var interestsMatches = 0;
             var skills = user.profile.skills;
             var interests = user.profile.interests;
-
-            user.visitedRooms = user.visitedRooms.length;
+            var matches = [];
+            user.profile.visitedRooms = user.profile.visitedRooms.length;
             for (var topic in topics) {
                 topic = topics[topic];
+                var abort = false;
+
                 /**
                  * We want to know how many matches were in skills, then
                  * we analyze where the query match better for the current user and define
@@ -110,6 +112,7 @@ Meteor.methods({
                     for (var skill in skills) {
                         if (skills[skill].match(topic)) {
                             skillsMatches++;
+                            abort = true;
                             break;
                         }
                     }
@@ -118,7 +121,7 @@ Meteor.methods({
                  * Know the matches in interest with the same goal that Skills
                  *
                  */
-                if (typeof interests !== "undefined") {
+                if (typeof interests !== "undefined" && !abort) {
                     for (var interest in interests) {
                         if (interests[interest].match(topic)) {
                             interestsMatches++;
@@ -127,11 +130,7 @@ Meteor.methods({
                     }
                 }
 
-                if (skillsMatches > interestsMatches) {
-                    user.similarity = skillsMatches / topics.length;
-                } else {
-                    user.similarity = interestsMatches / topics.length;
-                }
+                user.similarity = skillsMatches + interestsMatches / topics.length;
 
                 /**
                  * Calc a coefficient to sort the results, based on similarity as the most
@@ -139,7 +138,7 @@ Meteor.methods({
                  * visited rooms with the purpose of known if user is a frequent guest/user
                  * @type {number}
                  */
-                user.interestCoefficient = user.visitedRooms / Math.pow(user.similarity, 2);
+                user.interestCoefficient = user.profile.visitedRooms / Math.pow(user.similarity, 2);
             }
         }
 

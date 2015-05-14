@@ -34,8 +34,8 @@ DemoFixtureManager = {
                 fullname: 'Lisandro Falconi',
                 company: '',
                 about: '',
-                skills: ['javascript', 'front-end'], // Used on interested users recommendation
-                interests: ['mongo', 'web'], // Used on interested users recommendation
+                skills: ['javascript', 'front-end', 'dev', 'ux'], // Used on interested users recommendation
+                interests: ['mongo', 'web', 'ember', 'aws', 'devops'], // Used on interested users recommendation
                 location: 'Roma, Italia',
                 timezone: 'Europe/Rome',
                 availability: [
@@ -47,6 +47,7 @@ DemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                 ],
+                visitedRooms: new Array(150 + 1).join('0').split('')
             }
         });
 
@@ -82,7 +83,7 @@ DemoFixtureManager = {
                 fullname: 'Emiliano Lippolis',
                 company: '',
                 about: '',
-                skills: ['mongo', 'db', 'nosql'], // Used on interested users recommendation
+                skills: ['node', 'db', 'nosql', 'ms', 'linux', 'mobile'], // Used on interested users recommendation
                 interests: ['back', 'javascript'], // Used on interested users recommendation
                 location: 'Atenas, Grecia',
                 timezone: 'Europe/Athens',
@@ -95,6 +96,7 @@ DemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 ],
+                visitedRooms: new Array(30 + 1).join('0').split('')
             }
         });
 
@@ -119,6 +121,7 @@ DemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 ],
+                visitedRooms: new Array(70 + 1).join('0').split('')
             }
         });
 
