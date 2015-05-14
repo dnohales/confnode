@@ -283,14 +283,49 @@ Meteor.methods({
         } else {
             var availabilityData = [];
             var perfectSchedules = [];
+            var user, i, day, hour, dayRow;
+            var ownerTimezone = moment.tz.zone(Meteor.user().profile.timezone).offset(new Date());
 
-            for (var day = 0; day < 7; day++) {
-                var dayRow = [];
+
+            for (i in users) {
+                user = users[i];
+                var userTimezone = moment.tz.zone(user.profile.timezone).offset(new Date());
+                var offset = Math.ceil(ownerTimezone - userTimezone) / 60;
+                var convertedAvailability = new Array(7);
+
+                for (day = 0; day < 7; day++) {
+                    convertedAvailability[day] = new Array(24);
+                }
+
+                console.log(offset);
+
+                for (day = 0; day < 7; day++) {
+                    dayRow = [];
+                    for (hour = 0; hour < 24; hour++) {
+                        var convertedHour = hour - offset;
+                        var convertedDay = day;
+                        if (convertedHour > 23) {
+                            convertedDay = day === 6 ? 0 : day + 1;
+                            convertedHour -= 24;
+                        } else if (convertedHour < 0) {
+                            convertedDay = day === 0 ? 6 : day - 1;
+                            convertedHour += 24;
+                        }
+
+                        convertedAvailability[convertedDay][convertedHour] = user.profile.availability[day][hour];
+                    }
+                }
+
+                user.profile.availability = convertedAvailability;
+            }
+
+            for (day = 0; day < 7; day++) {
+                dayRow = [];
                 for (hour = 0; hour < 24; hour++) {
                     var isPerfectAvailability = true;
                     var hourAvailabilityCount = 0;
-                    for (var i in users) {
-                        var user = users[i];
+                    for (i in users) {
+                        user = users[i];
                         if (user.profile.availability[day][hour]) {
                             hourAvailabilityCount++;
                         } else {
