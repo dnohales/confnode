@@ -1,11 +1,27 @@
 var recommendedGuests;
 var recommendedTags;
 var scheduleSuggestion;
+var popularTags;
 
 Template.roomForm.created = function() {
     recommendedGuests = new ReactiveVar();
     recommendedTags = new ReactiveVar();
     scheduleSuggestion = new ReactiveVar(null);
+    popularTags = new ReactiveVar();
+    Meteor.call('getPioTagRecommendations', Meteor.userId(), 5, function(error, result) {
+        if (!error) {
+            if (result) {
+                var tagLinks = "";
+                result.forEach(function(tag) {
+                    tagLinks = tagLinks + "<a href='#' class='btn btn-default btn-xs popular-tag'>" + tag + "</a>";
+                });
+                popularTags.set(tagLinks);
+            }
+            else {
+                popularTags.set("[No tag suggestions available. More user activity is required.]");
+            }
+        }
+    });
 };
 
 Template.roomForm.events({
@@ -97,6 +113,10 @@ Template.roomForm.events({
 
         $('#form_room').find('[name="scheduledTime"]').data("DateTimePicker").setDate(datetime);
         $('#schedule_suggestion_dialog').modal('hide');
+    },
+
+    'click .popular-tag': function(e) {
+        $('#form_room [name="tags"]' ).tagit("createTag", e.target.innerHTML);
     }
 });
 
@@ -197,6 +217,9 @@ Template.roomForm.helpers({
         } else {
             return '';
         }
+    },
+    popularTags: function() {
+        return popularTags.get();
     }
 });
 
@@ -223,7 +246,7 @@ Template.roomForm.rendered = function() {
         var tags = tagsWidget.tagit("assignedTags");
         Meteor.call('getRelatedTags', tags, 5, function(error, result) {
             if (error) {
-                console.log(error)
+                console.log(error);
             } else {
                 recommendedTags.set(result);
                 recommendedGuests.set(null);

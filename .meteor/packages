@@ -24,4 +24,5 @@ ian:accounts-ui-bootstrap-3
 twbs:bootstrap
 accounts-github
 reactive-var
+http
 mrt:moment

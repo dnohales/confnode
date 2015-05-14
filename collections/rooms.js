@@ -15,30 +15,32 @@ Rooms.deny({
 Rooms.helpers = {
     addFeeling: function(data, userId) {
         data.feeling.rating = parseInt(data.feeling.rating, 10);
-        var room = Rooms.findOne({
+        var room = Rooms.find({
             _id: data.roomId
+        }, {
+            limit: 1
         });
 
-        if (!room) {
-            throw new Meteor.Error(422, 'Room does not exists');
+        if (room.count() === 0) {
+            throw new Meteor.Error(422, 'Room does not exist');
         }
-
+        room = room.fetch()[0];
         if (Permissions.ownsDocument(userId, room)) {
             throw new Meteor.Error(422, 'The room owner is not allowed to rate the room');
         }
 
         var feelingFound = false;
-
         for (var i in room.feelings) {
             if (room.feelings.hasOwnProperty(i)) {
                 var feeling = room.feelings[i];
-                if (feeling.user_id == userId) {
+                if (feeling.user_id === userId) {
                     feelingFound = true;
                     break;
                 }
             }
         }
 
+        var dateRate = new Date();
         if (feelingFound) {
             Rooms.update({
                 _id: room._id,
@@ -47,7 +49,7 @@ Rooms.helpers = {
                 $set: {
                     'feelings.$.rating': data.feeling.rating,
                     'feelings.$.comment': data.feeling.comment,
-                    'dateRate': new Date().getTime()
+                    'dateRate': dateRate.getTime()
                 }
             });
         } else {
@@ -59,11 +61,16 @@ Rooms.helpers = {
                         'user_id': userId,
                         'rating': data.feeling.rating,
                         'comment': data.feeling.comment,
-                        'dateRate': new Date().getTime()
+                        'dateRate': dateRate.getTime()
                     }
                 }
             });
         }
+
+        // Relate user to room tags rating.
+        room.tags.forEach(function(tag) {
+            Meteor.call('sendPioEvent', userId, tag, dateRate, data.feeling.rating);
+        });
     }
 };
 
@@ -114,7 +121,7 @@ Meteor.methods({
         var pipelineVisitsQuery;
         var filters;
         if (this.isSimulation) {
-            return []
+            return [];
         }
         for (var i in topics) {
             if (topics.hasOwnProperty(i)) {
@@ -254,10 +261,9 @@ Meteor.methods({
 
         //Prevent duplicate experts. The same user may be in results by trends or visits
         return _.uniq(_.union(resultsByTrends, resultsByVisits), false, function(u) {
-            return u.user
+            return u.user;
         }).slice(0, 5);
     },
-
     roomGetAvailability: function(guests) {
         if (this.isSimulation) {
             return null;
@@ -369,10 +375,10 @@ Meteor.methods({
                 }),
                 unregisteredEmails: _.difference(guests, _.map(users, function(u) {
                     return u.emails.address;
-                })),
+                }))
             };
         }
-    },
+    }
 });
 
 var validateRoom = function(room) {

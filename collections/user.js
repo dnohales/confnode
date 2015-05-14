@@ -1,16 +1,20 @@
 Meteor.users.helpers = {
     addVisitedRoom: function(userId, roomId) {
-        var users;
-        var rooms = Rooms.find({
+        var user;
+        var room = Rooms.find({
             _id: roomId
         }, {
-            _id: 1
+            limit: 1,
+            fields: {
+                _id: 0,
+                tags: 1
+            }
         });
-        if (rooms.count() === 0) {
+        if (room.count() === 0) {
             throw new Meteor.Error(422, 'Room does not exist');
         }
 
-        users = Meteor.users.find({
+        user = Meteor.users.find({
             $and: [{
                 _id: userId
             }, {
@@ -21,16 +25,18 @@ Meteor.users.helpers = {
                 }
             }]
         }, {
-            _id: 1
+            limit: 1
         });
 
-        if (users.count() === 0) {
+        // If user has not visited this room before.
+        if (user.count() === 0) {
+            var visitDate = new Date();
             Meteor.users.update({
                 _id: userId
             }, {
                 $push: {
                     'profile.visitedRooms': {
-                        when: new Date(),
+                        when: visitDate,
                         room_id: roomId
                     }
                 }
@@ -42,6 +48,11 @@ Meteor.users.helpers = {
                 $inc: {
                     visits: 1
                 }
+            });
+
+            // Relate user to room tags.
+            room.fetch()[0].tags.forEach(function(tag) {
+                Meteor.call('sendPioEvent', userId, tag, visitDate);
             });
         }
     }

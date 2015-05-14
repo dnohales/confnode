@@ -230,3 +230,14 @@ div.inline {
     text-align: center;
     min-width: 35px;
 }
+
+.popular-tags-container {
+    border: 1px solid lightgray;
+    border-top: none;
+    border-radius: 4px;
+    padding: 10px;
+
+    span.help-block {
+        margin-top: 0;
+    }
+}

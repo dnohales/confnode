@@ -16,9 +16,18 @@
                     <label>Tags</label>
                     <ul name="tags">
                         {{#each tags}}
-                        <li>{{.}}</li>
+                            <li>{{.}}</li>
                         {{/each}}
                     </ul>
+                    <div class="popular-tags-container">
+                        <span class="help-block">
+                            Some popular tags you may be interested in:
+                            {{#unless popularTags}}
+                                Loading...
+                            {{/unless}}
+                        </span>
+                        {{{popularTags}}}
+                    </div>
                 </div>
 
 
@@ -30,7 +39,7 @@
                     <label>Guests</label>
                     <ul name="guests">
                         {{#each guests}}
-                        <li>{{.}}</li>
+                            <li>{{.}}</li>
                         {{/each}}
                     </ul>
                 </div>

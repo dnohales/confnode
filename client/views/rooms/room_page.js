@@ -1,7 +1,8 @@
 var expertsByVisits;
 Template.roomPage.created = function() {
     expertsByVisits = new ReactiveVar();
-}
+};
+
 Template.roomPage.rendered = function() {
     var $form;
     var tagitOptions;
@@ -30,7 +31,7 @@ Template.roomPage.rendered = function() {
 Template.roomPage.helpers({
     ownRoom: function() {
         //catch when owner is logged after page was rendered switcher not works
-        return this.creatorId == Meteor.userId();
+        return this.creatorId === Meteor.userId();
     },
     experts: function() {
         return expertsByVisits.get();
@@ -87,10 +88,10 @@ Template.roomPage.events({
         });
 
         Meteor.call('sendEmail',
-            email,
-            'conf.node@gmail.com',
-            'Hello from Meteor!',
-            'This is a test of Email.send.');
+                email,
+                'conf.node@gmail.com',
+                'Hello from Meteor!',
+                'This is a test of Email.send.');
 
         $('#addGuestModal').modal('toggle');
 
