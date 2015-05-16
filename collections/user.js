@@ -149,7 +149,7 @@ Meteor.methods({
                  * visited rooms with the purpose of known if user is a frequent guest/user
                  * @type {number}
                  */
-                user.interestCoefficient = user.profile.visitedRooms / Math.pow(user.similarity, 2);
+                user.interestCoefficient = user.profile.visitedRooms * Math.sqrt(user.similarity);
             }
         }
 
