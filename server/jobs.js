@@ -89,7 +89,7 @@ var producePioRateEvent = function(userId, tag, date, score) {
     };
 };
 
-var pioDataCollect = function() {
+collectPioData = function() {
     var fs = Npm.require('fs');
     var path = Npm.require('path');
     var eventsFilePath = path.resolve('.').split('.meteor')[0] + 'pio_events';
@@ -113,37 +113,39 @@ var pioDataCollect = function() {
     roomFeelings.forEach(function(room) {
         room['feelings'].forEach(function(feeling) {
             room['tags'].forEach(function(tag) {
-                var rate = producePioRateEvent(feeling.user_id, tag, feeling.dateRate, feeling.rating);
+                var rate = producePioRateEvent(feeling.user_id, tag, new Date(feeling.dateRate), feeling.rating);
                 events.push(JSON.stringify(rate));
             });
         });
     });
 
     var userVisits = Meteor.users.find({
-        'visitedRooms.0': {
+        'profile.visitedRooms.0': {
             $exists: true
         }
     }, {
         fields: {
-            visitedRooms: 1
+            'profile.visitedRooms': 1
         }
     }).fetch();
 
     userVisits.forEach(function(visit) {
-        visit.visitedRooms.forEach(function(visitedRoom) {
-            var roomTags = Rooms.findOne({
-                _id: visitedRoom.room_id
-            }, {
-                fields: {
-                    _id: 0,
-                    tags: 1
-                }
-            });
+        visit.profile.visitedRooms.forEach(function(visitedRoom) {
+            if (visitedRoom !== '0') {
+                var roomTags = Rooms.findOne({
+                    _id: visitedRoom.room_id
+                }, {
+                    fields: {
+                        _id: 0,
+                        tags: 1
+                    }
+                });
 
-            roomTags.tags.forEach(function(tag) {
-                var buy = producePioBuyEvent(visit._id, tag, visitedRoom.when);
-                events.push(JSON.stringify(buy));
-            });
+                roomTags.tags.forEach(function(tag) {
+                    var buy = producePioBuyEvent(visit._id, tag, visitedRoom.when);
+                    events.push(JSON.stringify(buy));
+                });
+            }
         });
     });
 
@@ -153,6 +155,7 @@ var pioDataCollect = function() {
         for (var i = 1; i < events.length; i++) {
             fs.appendFileSync(eventsFilePath, '\n' + events[i]);
         }
+        console.log("Events saved to file");
     }
 };
 
@@ -161,11 +164,10 @@ Meteor.methods({
         var event = typeof score === 'undefined'
                 ? producePioBuyEvent(userId, tag, date)
                 : producePioRateEvent(userId, tag, date, score);
-
         HTTP.call('POST',
                 'http://localhost:7070/events.json', {
                     params: {
-                        accessKey: 'KsPMAPVNBNYqFKBNJlOf5xFsmMVWzifJwFiPlP1r8VODpJmLi6ms0aDMQQMJFHqx'
+                        accessKey: 'Hkea97t2ABVOHg8C0kDVd6cKqaa0VI5hCPUjYwFWmeNKGNUSRvlzfCHplEznL4wh'
                     },
                     data: event
                 },
@@ -190,13 +192,11 @@ Meteor.methods({
             response.data.itemScores.forEach(function(tag) {
                 tags.push(tag.item);
             });
-            console.log('tags');
-            console.log(tags);
             return tags.length > 0 ? tags : null;
         }
         catch (exception) {
             console.log('Error sending HTTP request to get PIO tag recommendations.');
-            return null;
+            console.log(exception);
         }
     }
 });
@@ -222,8 +222,5 @@ Meteor.startup(function() {
         console.log('Calculating and storing tag relations...');
         tagRelationsJob();
         console.log('Done calculating and storing tag relations.');
-        console.log('Producing initial PIO events...');
-        pioDataCollect();
-        console.log('Done producing initial PIO events.');
     }
 });
