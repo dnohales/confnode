@@ -45,7 +45,7 @@ noDemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
                 ],
                 visitedRooms: new Array(150 + 1).join('0').split('')
             }
@@ -70,8 +70,8 @@ noDemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
-                ],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0]
+                ]
             }
         });
 
@@ -94,7 +94,7 @@ noDemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 ],
                 visitedRooms: new Array(30 + 1).join('0').split('')
             }
@@ -119,7 +119,7 @@ noDemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 ],
                 visitedRooms: new Array(70 + 1).join('0').split('')
             }
@@ -144,8 +144,8 @@ noDemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ]
             }
         });
 
@@ -168,8 +168,8 @@ noDemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ]
             }
         });
 
@@ -178,7 +178,7 @@ noDemoFixtureManager = {
             email: 'juanfernandez@confnode.com',
             password: '1234',
             profile: {
-                fullname: 'Federico Mazzini',
+                fullname: 'Juan Fernendese',
                 company: '',
                 about: '',
                 skills: [],
@@ -192,8 +192,8 @@ noDemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ]
             }
         });
 
@@ -216,8 +216,8 @@ noDemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ]
             }
         });
 
@@ -240,8 +240,8 @@ noDemoFixtureManager = {
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
-                ],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0]
+                ]
             }
         });
 
@@ -266,7 +266,7 @@ noDemoFixtureManager = {
             tags: ['mongodb', 'nosql', 'db', 'storage' , 'json', 'aws'],
             visits: 150,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.emilianolippolis,
                 "rating": 4,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -278,8 +278,8 @@ noDemoFixtureManager = {
             tags: ['mongodb', 'js', 'node', 'web', 'dev', 'angular'],
             visits: 200,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
-                "rating": 4,
+                "user_id": users.federicomazzini,
+                "rating": 5,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
             }]
@@ -290,7 +290,7 @@ noDemoFixtureManager = {
             tags: ['js', 'back-end', 'web', 'node', 'fullstack', 'html5', 'css3'],
             visits: 50,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.federicomazzini,
                 "rating": 4,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -302,7 +302,7 @@ noDemoFixtureManager = {
             tags: ['java', 'javascript', 'node', 'db', 'front-end', 'mongodb', 'back-end'],
             visits: 150,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.gabrielverdi,
                 "rating": 3.5,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -314,7 +314,7 @@ noDemoFixtureManager = {
             tags: ['mongodb', 'js', 'node', 'web', 'dev', 'npm', 'git'],
             visits: 200,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.johnsmith,
                 "rating": 3.5,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -326,7 +326,7 @@ noDemoFixtureManager = {
             tags: ['js', 'back-end', 'web', 'node'],
             visits: 50,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.juanfernandez,
                 "rating": 3.5,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -338,7 +338,7 @@ noDemoFixtureManager = {
             tags: ['java', 'javascript', 'node', 'db', 'front-end'],
             visits: 250,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.lisandrofalconi,
                 "rating": 3,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -350,7 +350,7 @@ noDemoFixtureManager = {
             tags: ['mongodb', 'js', 'node', 'web', 'dev'],
             visits: 70,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.maryjohansson,
                 "rating": 3,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -362,7 +362,7 @@ noDemoFixtureManager = {
             tags: ['js', 'back-end', 'web', 'node'],
             visits: 15,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.mikelarbide,
                 "rating": 3,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -374,7 +374,7 @@ noDemoFixtureManager = {
             tags: ['java', 'angular', 'node', 'front-end'],
             visits: 50,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.damiannohales,
                 "rating": 4.5,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -386,7 +386,7 @@ noDemoFixtureManager = {
             tags: ['mongodb', 'js', 'node', 'web', 'dev'],
             visits: 100,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.emilianolippolis,
                 "rating": 4.5,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
@@ -398,28 +398,77 @@ noDemoFixtureManager = {
             tags: ['js', 'back-end', 'web', 'node', 'db'],
             visits: 150,
             feelings: [{
-                "user_id": "HPoNgLPMv2iCwRnSQ",
+                "user_id": users.johnsmith,
                 "rating": 4.5,
                 "comment": "Prueba",
                 "dateRate": 1431210098696
             }]
         }];
+
         //User 1
-        this.generateRoom(users.juanfernandez, roomsExpert[0]);
-        this.generateRoom(users.juanfernandez, roomsExpert[1]);
-        this.generateRoom(users.juanfernandez, roomsExpert[2]);
+        var roomId = this.generateRoom(users.juanfernandez, roomsExpert[0]);
+        Meteor.users.helpers.addVisitedRoom(users.juanfernandez, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.federicomazzini, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.emilianolippolis, roomId);
+
+        roomId = this.generateRoom(users.juanfernandez, roomsExpert[1]);
+        Meteor.users.helpers.addVisitedRoom(users.juanfernandez, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.federicomazzini, roomId);
+
+        roomId = this.generateRoom(users.juanfernandez, roomsExpert[2]);
+        Meteor.users.helpers.addVisitedRoom(users.juanfernandez, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.federicomazzini, roomId);
+
         //User 2
-        this.generateRoom(users.johnsmith, roomsExpert[3]);
-        this.generateRoom(users.johnsmith, roomsExpert[4]);
-        this.generateRoom(users.johnsmith, roomsExpert[5]);
+        roomId = this.generateRoom(users.johnsmith, roomsExpert[3]);
+        Meteor.users.helpers.addVisitedRoom(users.johnsmith, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.gabrielverdi, roomId);
+
+        roomId = this.generateRoom(users.johnsmith, roomsExpert[4]);
+        Meteor.users.helpers.addVisitedRoom(users.johnsmith, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+
+        roomId = this.generateRoom(users.johnsmith, roomsExpert[5]);
+        Meteor.users.helpers.addVisitedRoom(users.johnsmith, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.juanfernandez, roomId);
+
         //User 3
-        this.generateRoom(users.maryjohansson, roomsExpert[6]);
-        this.generateRoom(users.maryjohansson, roomsExpert[7]);
-        this.generateRoom(users.maryjohansson, roomsExpert[8]);
+        roomId = this.generateRoom(users.maryjohansson, roomsExpert[6]);
+        Meteor.users.helpers.addVisitedRoom(users.maryjohansson, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.lisandrofalconi, roomId);
+
+        roomId = this.generateRoom(users.maryjohansson, roomsExpert[7]);
+        Meteor.users.helpers.addVisitedRoom(users.maryjohansson, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+
+        roomId = this.generateRoom(users.maryjohansson, roomsExpert[8]);
+        Meteor.users.helpers.addVisitedRoom(users.maryjohansson, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.mikelarbide, roomId);
+
         //User 4
-        this.generateRoom(users.mikelarbide, roomsExpert[9]);
-        this.generateRoom(users.mikelarbide, roomsExpert[10]);
-        this.generateRoom(users.mikelarbide, roomsExpert[11]);
+        roomId = this.generateRoom(users.mikelarbide, roomsExpert[9]);
+        Meteor.users.helpers.addVisitedRoom(users.mikelarbide, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.federicomazzini, roomId);
+
+        roomId = this.generateRoom(users.mikelarbide, roomsExpert[10]);
+        Meteor.users.helpers.addVisitedRoom(users.mikelarbide, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.federicomazzini, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.emilianolippolis, roomId);
+
+        roomId = this.generateRoom(users.mikelarbide, roomsExpert[11]);
+        Meteor.users.helpers.addVisitedRoom(users.mikelarbide, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.damiannohales, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.federicomazzini, roomId);
+        Meteor.users.helpers.addVisitedRoom(users.johnsmith, roomId);
     },
 
     generateRoom: function(ownerId, room) {
@@ -437,7 +486,7 @@ noDemoFixtureManager = {
                 public: true,
                 scheduled: false,
                 scheduledTime: null,
-                chat: true,
+                chat: true
             },
             room
         ));
