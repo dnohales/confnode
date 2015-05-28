@@ -1,4 +1,4 @@
-DemoFixtureManager = {
+noDemoFixtureManager = {
     run: function() {
         var users = {};
 
@@ -263,7 +263,7 @@ DemoFixtureManager = {
             //user1
             submittedTime: new Date("March 17, 2015 14:24:00"),
             name: 'Demo room 1',
-            tags: ['mongodb', 'nosql', 'db', 'storage'],
+            tags: ['mongodb', 'nosql', 'db', 'storage' , 'json', 'aws'],
             visits: 150,
             feelings: [{
                 "user_id": "HPoNgLPMv2iCwRnSQ",
@@ -275,7 +275,7 @@ DemoFixtureManager = {
             //user1
             submittedTime: new Date("January 1, 2015 14:24:00"),
             name: 'Demo room 2',
-            tags: ['mongodb', 'js', 'node', 'web', 'dev'],
+            tags: ['mongodb', 'js', 'node', 'web', 'dev', 'angular'],
             visits: 200,
             feelings: [{
                 "user_id": "HPoNgLPMv2iCwRnSQ",
@@ -287,7 +287,7 @@ DemoFixtureManager = {
             //user1
             submittedTime: new Date("April 1, 2015 14:24:00"),
             name: 'Demo room 3',
-            tags: ['js', 'back-end', 'web', 'node'],
+            tags: ['js', 'back-end', 'web', 'node', 'fullstack', 'html5', 'css3'],
             visits: 50,
             feelings: [{
                 "user_id": "HPoNgLPMv2iCwRnSQ",
@@ -299,7 +299,7 @@ DemoFixtureManager = {
             //user2
             submittedTime: new Date("February 10, 2015 14:24:00"),
             name: 'Demo room 4',
-            tags: ['java', 'javascript', 'node', 'db', 'front-end'],
+            tags: ['java', 'javascript', 'node', 'db', 'front-end', 'mongodb', 'back-end'],
             visits: 150,
             feelings: [{
                 "user_id": "HPoNgLPMv2iCwRnSQ",
@@ -311,7 +311,7 @@ DemoFixtureManager = {
             //user2
             submittedTime: new Date("January 1, 2015 14:24:00"),
             name: 'Demo room 5',
-            tags: ['mongodb', 'js', 'node', 'web', 'dev'],
+            tags: ['mongodb', 'js', 'node', 'web', 'dev', 'npm', 'git'],
             visits: 200,
             feelings: [{
                 "user_id": "HPoNgLPMv2iCwRnSQ",
@@ -371,7 +371,7 @@ DemoFixtureManager = {
             //user4
             submittedTime: new Date("November 7, 2014 14:24:00"),
             name: 'Demo room 10',
-            tags: ['java', 'javascript', 'node', 'db', 'front-end'],
+            tags: ['java', 'angular', 'node', 'front-end'],
             visits: 50,
             feelings: [{
                 "user_id": "HPoNgLPMv2iCwRnSQ",
@@ -395,7 +395,7 @@ DemoFixtureManager = {
             //user4
             submittedTime: new Date("March 1, 2015 14:24:00"),
             name: 'Demo room 12',
-            tags: ['js', 'back-end', 'web', 'node'],
+            tags: ['js', 'back-end', 'web', 'node', 'db'],
             visits: 150,
             feelings: [{
                 "user_id": "HPoNgLPMv2iCwRnSQ",
